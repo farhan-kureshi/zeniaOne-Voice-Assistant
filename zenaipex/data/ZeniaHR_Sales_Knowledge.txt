@@ -1,0 +1,23 @@
+# ZeniaHR Product and Sales Knowledge
+
+## 1. Product Overview
+ZeniaHR is a comprehensive Human Resources Management System (HRMS) designed to streamline and automate core HR operations. It centralizes employee data, attendance tracking, leave management, and payroll processing into a single, secure platform. ZeniaHR empowers HR teams to reduce administrative overhead and improve organizational efficiency.
+
+## 2. Core Features
+- **Centralized Employee Database**: Maintain secure, digital records for all employees including personal details, job history, and documents.
+- **Automated Workflows**: Streamline onboarding, offboarding, and standard HR requests.
+- **Self-Service Portal**: Employees can access their own profiles, request leaves, and download payslips without HR intervention.
+- **Reporting & Analytics**: Generate comprehensive reports on attendance trends, headcount, and payroll distribution.
+
+## 3. HR Modules
+- **Attendance Management**: Real-time tracking of employee check-ins and check-outs, shift scheduling, and integration with biometric devices.
+- **Leave Management**: Configurable leave policies, multi-level approval workflows, and automated accrual calculations.
+- **Payroll Processing**: Automated salary calculation, tax deductions, compliance handling, and direct deposit integration.
+- **Performance Management**: Goal setting, continuous feedback, and standardized appraisal cycles.
+- **Recruitment (ATS)**: Applicant tracking, interview scheduling, and offer letter generation.
+
+## 4. Admin Benefits
+- Reduces manual data entry errors.
+- Ensures regulatory compliance with built-in labor law configurations.
+- Provides granular role-based access control (RBAC) to protect sensitive compensation data.
+- Cloud-based architecture ensures high availability and remote accessibility.

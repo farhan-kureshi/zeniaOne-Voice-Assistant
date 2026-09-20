@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RK Hospital - Knowledge Base Manager</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .status-item .label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .status-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .status-item .value.success {
+            color: #28a745;
+        }
+        
+        .status-item .value.error {
+            color: #dc3545;
+        }
+        
+        .upload-zone {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .upload-zone:hover, .upload-zone.dragover {
+            background: #f0f4ff;
+            border-color: #764ba2;
+        }
+        
+        .upload-zone input[type="file"] {
+            display: none;
+        }
+        
+        .upload-zone .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+        
+        .search-box button {
+            border-radius: 25px;
+            padding: 12px 30px;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+        }
+        
+        .result-box h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .result-box pre {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .file-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        
+        .file-info.show {
+            display: block;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            background: #28a745;
+        }
+        
+        .toast.error {
+            background: #dc3545;
+        }
+        
+        .supported-formats {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 RK Hospital Knowledge Base Manager</h1>
+        
+        <!-- Status Card -->
+        <div class="card">
+            <h2>📊 Status</h2>
+            <div class="status-grid" id="statusGrid">
+                <div class="status-item">
+                    <div class="label">File Search</div>
+                    <div class="value" id="statusEnabled">Loading...</div>
+                </div>
+                <div class="status-item">
+                    <div class="label">Initialized</div>
+                    <div class="value" id="statusInitialized">Loading...</div>
+                </div>
+                <div class="status-item">
+                    <div class="label">API Key</div>
+                    <div class="value" id="statusApiKey">Loading...</div>
+                </div>
+                <div class="status-item">
+                    <div class="label">Active Store</div>
+                    <div class="value" id="statusStore">Loading...</div>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="refreshStatus()">🔄 Refresh Status</button>
+        </div>
+        
+        <!-- Upload Card -->
+        <div class="card">
+            <h2>📤 Upload Document</h2>
+            
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                <input type="file" id="fileInput" accept=".pdf,.doc,.docx,.txt,.md,.html,.json,.xml,.ppt,.pptx,.xls,.xlsx">
+                <div class="icon">📁</div>
+                <p><strong>Click to upload</strong> or drag and drop</p>
+                <p class="supported-formats">PDF, DOCX, TXT, MD, HTML, JSON, XML, PPT, XLS</p>
+            </div>
+            
+            <div class="file-info" id="fileInfo">
+                <strong>Selected file:</strong> <span id="fileName"></span> (<span id="fileSize"></span>)
+            </div>
+            
+            <div class="form-group">
+                <label for="displayName">Display Name (optional)</label>
+                <input type="text" id="displayName" placeholder="e.g., Hospital Pricing Guide 2025">
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category (optional)</label>
+                <select id="category">
+                    <option value="">-- Select Category --</option>
+                    <option value="pricing">Pricing</option>
+                    <option value="schedule">Doctor Schedule</option>
+                    <option value="services">Services</option>
+                    <option value="policies">Policies</option>
+                    <option value="faq">FAQ</option>
+                    <option value="general">General Info</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-primary" id="uploadBtn" onclick="uploadFile()" disabled>
+                📤 Upload to Knowledge Base
+            </button>
+            
+            <div class="result-box" id="uploadResult">
+                <h4>Upload Result</h4>
+                <pre id="uploadResultText"></pre>
+            </div>
+        </div>
+        
+        <!-- Search Card -->
+        <div class="card">
+            <h2>🔍 Search Knowledge Base</h2>
+            
+            <div class="search-box">
+                <input type="text" id="searchQuery" placeholder="Ask anything... e.g., What is the consultation fee?">
+                <button class="btn btn-primary" onclick="searchKnowledge()">🔍 Search</button>
+            </div>
+            
+            <div class="result-box" id="searchResult">
+                <h4>Answer</h4>
+                <pre id="searchResultText"></pre>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+    
+    <script>
+        const API_BASE = window.location.origin;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshStatus();
+            setupDragDrop();
+            setupFileInput();
+        });
+        
+        // File input handler
+        function setupFileInput() {
+            const fileInput = document.getElementById('fileInput');
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    showFileInfo(file);
+                }
+            });
+        }
+        
+        // Drag and drop
+        function setupDragDrop() {
+            const uploadZone = document.getElementById('uploadZone');
+            
+            uploadZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadZone.classList.add('dragover');
+            });
+            
+            uploadZone.addEventListener('dragleave', () => {
+                uploadZone.classList.remove('dragover');
+            });
+            
+            uploadZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadZone.classList.remove('dragover');
+                
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    document.getElementById('fileInput').files = e.dataTransfer.files;
+                    showFileInfo(file);
+                }
+            });
+        }
+        
+        function showFileInfo(file) {
+            const fileInfo = document.getElementById('fileInfo');
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatSize(file.size);
+            fileInfo.classList.add('show');
+            document.getElementById('uploadBtn').disabled = false;
+        }
+        
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        // Refresh status
+        async function refreshStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/knowledge_status`);
+                const data = await response.json();
+                
+                document.getElementById('statusEnabled').textContent = data.enabled ? '✅ Enabled' : '❌ Disabled';
+                document.getElementById('statusEnabled').className = 'value ' + (data.enabled ? 'success' : 'error');
+                
+                document.getElementById('statusInitialized').textContent = data.initialized ? '✅ Yes' : '❌ No';
+                document.getElementById('statusInitialized').className = 'value ' + (data.initialized ? 'success' : 'error');
+                
+                document.getElementById('statusApiKey').textContent = data.api_key_set ? '✅ Set' : '❌ Missing';
+                document.getElementById('statusApiKey').className = 'value ' + (data.api_key_set ? 'success' : 'error');
+                
+                const store = data.stores && data.stores.length > 0 ? data.stores[0].display_name : 'None';
+                document.getElementById('statusStore').textContent = store;
+                
+            } catch (error) {
+                showToast('Failed to fetch status', 'error');
+            }
+        }
+        
+        // Upload file
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                showToast('Please select a file', 'error');
+                return;
+            }
+            
+            const displayName = document.getElementById('displayName').value;
+            const category = document.getElementById('category').value;
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            if (displayName) formData.append('display_name', displayName);
+            if (category) formData.append('category', category);
+            
+            const uploadBtn = document.getElementById('uploadBtn');
+            uploadBtn.disabled = true;
+            uploadBtn.innerHTML = '<span class="loading"></span> Uploading...';
+            
+            try {
+                const response = await fetch(`${API_BASE}/upload_knowledge`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                document.getElementById('uploadResult').classList.add('show');
+                document.getElementById('uploadResultText').textContent = JSON.stringify(data, null, 2);
+                
+                if (data.success) {
+                    showToast('File uploaded successfully!', 'success');
+                    // Reset form
+                    fileInput.value = '';
+                    document.getElementById('fileInfo').classList.remove('show');
+                    document.getElementById('displayName').value = '';
+                    document.getElementById('category').value = '';
+                } else {
+                    showToast(data.error || 'Upload failed', 'error');
+                }
+                
+            } catch (error) {
+                showToast('Upload failed: ' + error.message, 'error');
+                document.getElementById('uploadResult').classList.add('show');
+                document.getElementById('uploadResultText').textContent = 'Error: ' + error.message;
+            } finally {
+                uploadBtn.disabled = false;
+                uploadBtn.innerHTML = '📤 Upload to Knowledge Base';
+            }
+        }
+        
+        // Search knowledge base
+        async function searchKnowledge() {
+            const query = document.getElementById('searchQuery').value.trim();
+            
+            if (!query) {
+                showToast('Please enter a search query', 'error');
+                return;
+            }
+            
+            const searchResult = document.getElementById('searchResult');
+            const searchResultText = document.getElementById('searchResultText');
+            
+            searchResultText.textContent = 'Searching...';
+            searchResult.classList.add('show');
+            
+            try {
+                const response = await fetch(`${API_BASE}/search_knowledge`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    searchResultText.textContent = data.answer || 'No answer found';
+                    showToast(`Search completed in ${data.search_time_seconds.toFixed(2)}s`, 'success');
+                } else {
+                    searchResultText.textContent = 'Error: ' + (data.error || 'Unknown error');
+                    showToast(data.error || 'Search failed', 'error');
+                }
+                
+            } catch (error) {
+                searchResultText.textContent = 'Error: ' + error.message;
+                showToast('Search failed', 'error');
+            }
+        }
+        
+        // Enter key to search
+        document.getElementById('searchQuery').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchKnowledge();
+            }
+        });
+        
+        // Toast notification
+        function showToast(message, type) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type + ' show';
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

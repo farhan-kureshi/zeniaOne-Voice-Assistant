@@ -1,0 +1,122 @@
+Severity,File,Line,Problem,Evidence,Status
+Medium,modules/audio_utils.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,modules/llm_client.py,N/A,Synchronous sleep in potentially async code,time.sleep found,Suspected
+Medium,modules/mongodb.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,modules/mongodb.py,N/A,Synchronous sleep in potentially async code,time.sleep found,Suspected
+Medium,modules/sarvam_stt.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,modules/sarvam_tts.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,modules/vector_store.py,N/A,Synchronous sleep in potentially async code,time.sleep found,Suspected
+Low,zenaipex/enable_sarvam.py,N/A,Print statement in production code,Found print(),Confirmed
+Medium,zenaipex/main.py,N/A,Synchronous sleep in potentially async code,time.sleep found,Suspected
+Low,zenaipex/run_3_queries.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/test_rag.py,N/A,Print statement in production code,Found print(),Confirmed
+Medium,zenaipex/ai/fast_path.py,N/A,Bare except clause,except Exception: found,Confirmed
+Critical,zenaipex/ai/llm.py,N/A,Hardcoded API Key,Found sk- or live_ near api_key,Confirmed
+Medium,zenaipex/ai/llm.py,N/A,Bare except clause,except Exception: found,Confirmed
+Low,zenaipex/ai/llm.py,N/A,Print statement in production code,Found print(),Confirmed
+Medium,zenaipex/ai/vector_store.py,N/A,Synchronous sleep in potentially async code,time.sleep found,Suspected
+Critical,zenaipex/api/v1/agents.py,N/A,Hardcoded API Key,Found sk- or live_ near api_key,Confirmed
+Medium,zenaipex/api/v1/agents.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/channels_twilio.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/companies.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/knowledge.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/sales.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/admin/companies.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/api/v1/admin/providers.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/core/dependencies.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/core/security.py,N/A,Bare except clause,except Exception: found,Confirmed
+Low,zenaipex/scripts/benchmark_knowledge.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/ingest_production.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/ingest_sales.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/init_db.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/migrate_rk_hospital.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/rebuild_knowledge_base.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/run_validator_diagnostic.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/test_lead_api.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/test_sales_orchestration.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/test_sales_summary.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex/scripts/test_staging_rag.py,N/A,Print statement in production code,Found print(),Confirmed
+Medium,zenaipex/services/agent_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/services/channel_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/services/conversation_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/services/knowledge_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/services/tenant_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Medium,zenaipex/services/usage_service.py,N/A,Bare except clause,except Exception: found,Confirmed
+Low,zenaipex/tests/test_idor.py,N/A,Print statement in production code,Found print(),Confirmed
+Low,zenaipex-frontend/app/layout.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/(auth)/signup/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/layout.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/agents/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/ai-playground/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/channels/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/companies/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/companies/[id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/companies/[id]/sales/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/companies/[id]/sales/[call_id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/conversations/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/knowledge/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/knowledge/companies/[id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/knowledge/companies/[id]/kbs/[kb_id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/knowledge/companies/[id]/kbs/[kb_id]/documents/[doc_id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/logs/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/my-ai/chat/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/my-ai/conversations/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/settings/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/subscriptions/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/system/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/system/ai-providers/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/usage/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/admin/users/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/api/lead/route.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/layout.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/agents/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/agents/new/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/ai-playground/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/analytics/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/billing/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/channels/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/channels/voice/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/channels/web-chat/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/channels/web-chat/[id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/channels/web-chat/[id]/settings/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/conversations/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/conversations/[id]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/knowledge/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/my-ai/chat/page.tsx,N/A,Console log left in code,Found console.log,Confirmed
+Low,zenaipex-frontend/app/dashboard/my-ai/chat/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/my-ai/history/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/my-ai/usage/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/settings/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/dashboard/usage/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/onboarding/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/privacy/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/terms/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/verify-email/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/app/widget/[identifier]/page.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/chat-composer.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/chat-message.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/expanded-ai-bot.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/floating-ai-bot.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/hero-ai-bot.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/ai-bot/voice-mode-overlay.tsx,N/A,Console log left in code,Found console.log,Confirmed
+Low,zenaipex-frontend/components/ai-bot/voice-mode-overlay.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/dashboard/overview/overview-activity-chart.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/dashboard/overview/overview-ai-analytics.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/landing/features-section.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/components/landing/lead-form.tsx,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/hooks/use-branding.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/hooks/use-company.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/hooks/use-public-ai-chat.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/agents.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/analytics.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/channels.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/client.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/companies.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/conversations.ts,N/A,Console log left in code,Found console.log,Confirmed
+Low,zenaipex-frontend/lib/api/conversations.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/knowledge.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/api/settings.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected
+Low,zenaipex-frontend/lib/data/countries.ts,N/A,Usage of ''any'' type,TypeScript any type used,Suspected

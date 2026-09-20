@@ -1,0 +1,39 @@
+Severity,File,Line,Problem,Evidence,Status
+Medium,./audit_script.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./audit_script.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Medium,./audit_script_v2.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./audit_script_v2.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Critical,./audit_script_v2.py,N/A,Hardcoded Secret,Looks like a real API key,Confirmed Bug
+Medium,./modules/audio_utils.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./modules/llm_client.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Medium,./modules/mongodb.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./modules/mongodb.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Medium,./modules/sarvam_stt.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./modules/sarvam_tts.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./modules/vector_store.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+High,./zenaipex/main.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Medium,./zenaipex/ai/fast_path.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/ai/llm.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+High,./zenaipex/ai/vector_store.py,N/A,Synchronous Sleep,time.sleep blocks event loop in asyncio,Suspected Bug
+Medium,./zenaipex/api/v1/agents.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/api/v1/channels_twilio.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/api/v1/companies.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/api/v1/knowledge.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/api/v1/sales.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Low,./zenaipex/api/v1/admin/agents.py,N/A,Async without await,Async function doesn't await anything,Confirmed Code Smell
+Medium,./zenaipex/api/v1/admin/companies.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Low,./zenaipex/api/v1/admin/logs.py,N/A,Async without await,Async function doesn't await anything,Confirmed Code Smell
+Medium,./zenaipex/api/v1/admin/providers.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/core/dependencies.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/core/security.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Low,./zenaipex/modules/telephony/provider.py,N/A,Async without await,Async function doesn't await anything,Confirmed Code Smell
+Medium,./zenaipex/services/agent_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/services/channel_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/services/conversation_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/services/knowledge_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Low,./zenaipex/services/storage_service.py,N/A,Async without await,Async function doesn't await anything,Confirmed Code Smell
+Medium,./zenaipex/services/tenant_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Medium,./zenaipex/services/usage_service.py,N/A,Bare Exception,"Catches all exceptions, hides errors",Confirmed Code Smell
+Low,./zenaipex-frontend/app/dashboard/my-ai/chat/page.tsx,N/A,Console Log,Leftover debugging,Confirmed Code Smell
+Low,./zenaipex-frontend/components/ai-bot/voice-mode-overlay.tsx,N/A,Console Log,Leftover debugging,Confirmed Code Smell
+Low,./zenaipex-frontend/lib/api/conversations.ts,N/A,Console Log,Leftover debugging,Confirmed Code Smell

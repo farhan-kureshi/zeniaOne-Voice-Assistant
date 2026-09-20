@@ -1,0 +1,4 @@
+SUPER ADMIN SECRET PROTOCOL 42:
+The internal codename for the next version of ZeniaAI is "Project Phoenix".
+It is scheduled for release in Q4 2027.
+The core engine will be rewritten in Rust.

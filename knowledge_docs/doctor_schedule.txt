@@ -1,0 +1,41 @@
+# RK Hospital - Doctor Schedule
+
+## General Physician
+- Dr. Ramesh Kumar
+  - Monday to Saturday: 9:00 AM - 1:00 PM, 5:00 PM - 8:00 PM
+  - Sunday: Emergency only
+
+- Dr. Priya Sharma
+  - Monday, Wednesday, Friday: 10:00 AM - 2:00 PM
+  - Tuesday, Thursday, Saturday: 4:00 PM - 8:00 PM
+
+## Cardiologist
+- Dr. Suresh Reddy (Senior Cardiologist)
+  - Tuesday, Thursday, Saturday: 10:00 AM - 1:00 PM
+  - Appointments recommended
+
+## Orthopedic Specialist
+- Dr. Arun Prakash
+  - Monday, Wednesday, Friday: 3:00 PM - 7:00 PM
+  - Saturday: 10:00 AM - 2:00 PM
+
+## ENT Specialist
+- Dr. Lakshmi Narayanan
+  - Monday to Friday: 4:00 PM - 8:00 PM
+  - Saturday: 9:00 AM - 12:00 PM
+
+## Pediatrician
+- Dr. Kavitha Murthy
+  - Monday to Saturday: 9:00 AM - 12:00 PM
+  - Evening: 5:00 PM - 7:00 PM (Mon, Wed, Fri only)
+
+## Dentist
+- Dr. Vijay Kumar
+  - Monday to Saturday: 10:00 AM - 1:00 PM, 3:00 PM - 7:00 PM
+
+## Emergency Doctors
+- Available 24/7
+- Rotating duty schedule
+
+Note: Doctors' schedules may change due to emergencies. 
+Please call ahead to confirm availability for specific doctors.

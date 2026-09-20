@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RK Hospital - Test Call System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hospital-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #2c5aa0;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .call-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .call-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .call-button:active {
+            transform: translateY(0);
+        }
+
+        .call-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #dc3545;
+            display: block;
+        }
+
+        .status-message.loading {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+            display: block;
+        }
+
+        .hint {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+        }
+
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .examples h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .examples p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="hospital-icon">🏥</div>
+            <h1>RK Hospital</h1>
+            <p class="subtitle">AI Appointment Booking Test System</p>
+        </div>
+
+        <div class="form-group">
+            <label for="phoneNumber">📱 Your Phone Number</label>
+            <input 
+                type="tel" 
+                id="phoneNumber" 
+                placeholder="+919944559392"
+                value="+91"
+            >
+            <p class="hint">Include country code (e.g., +91 for India)</p>
+        </div>
+
+        <button class="call-button" id="callButton" onclick="makeCall()">
+            <span id="buttonText">📞 Call Me Now</span>
+        </button>
+
+        <div id="statusMessage" class="status-message"></div>
+
+        <div class="examples">
+            <h3>📝 Phone Number Examples:</h3>
+            <p>🇮🇳 India: <code>+919944559392</code></p>
+            <p>🇺🇸 USA: <code>+12025551234</code></p>
+            <p>🇬🇧 UK: <code>+447911123456</code></p>
+        </div>
+    </div>
+
+    <script>
+        async function makeCall() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const statusDiv = document.getElementById('statusMessage');
+            const callButton = document.getElementById('callButton');
+            const buttonText = document.getElementById('buttonText');
+            
+            // Validation
+            if (!phoneNumber || phoneNumber === '+91' || phoneNumber === '+') {
+                showStatus('error', '❌ Please enter a valid phone number');
+                return;
+            }
+
+            if (!phoneNumber.startsWith('+')) {
+                showStatus('error', '❌ Phone number must start with + and country code');
+                return;
+            }
+
+            // Disable button and show loading
+            callButton.disabled = true;
+            buttonText.innerHTML = '<span class="spinner"></span> Calling...';
+
+            try {
+                showStatus('loading', '⏳ Initiating call to ' + phoneNumber + '...');
+
+                const response = await fetch(`http://localhost:7000/make_call?phone_number=${encodeURIComponent(phoneNumber)}`, {
+                    method: 'POST'
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('success', `✅ Success! Call initiated to ${phoneNumber}
+                    
+Your phone should ring in 5-10 seconds. 
+Please answer to speak with RK Hospital AI assistant.
+
+Call SID: ${data.call_sid || 'N/A'}`);
+                } else {
+                    showStatus('error', `❌ Error: ${data.error || data.detail || 'Failed to make call'}
+
+Please check:
+- FastAPI app is running (Terminal 2)
+- ngrok is running (Terminal 1)
+- Phone number format is correct`);
+                }
+            } catch (error) {
+                showStatus('error', `❌ Connection Error: ${error.message}
+
+Make sure:
+- FastAPI app is running on http://localhost:7000
+- ngrok tunnel is active`);
+            } finally {
+                // Re-enable button
+                callButton.disabled = false;
+                buttonText.innerHTML = '📞 Call Me Now';
+            }
+        }
+
+        function showStatus(type, message) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = `status-message ${type}`;
+            statusDiv.innerHTML = message.replace(/\n/g, '<br>');
+        }
+
+        // Allow Enter key to trigger call
+        document.getElementById('phoneNumber').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                makeCall();
+            }
+        });
+    </script>
+</body>
+</html>

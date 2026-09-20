@@ -1,0 +1,48 @@
+# RK Hospital - Service Pricing Guide
+
+## Consultation Fees
+
+### General Consultation
+- General Physician: ₹300 - ₹500
+- Follow-up visit (within 7 days): ₹200
+
+### Specialist Consultation
+- Cardiologist: ₹600 - ₹800
+- Orthopedic: ₹500 - ₹700
+- ENT Specialist: ₹500 - ₹700
+- Pediatrician: ₹400 - ₹600
+- Dentist: ₹400 - ₹600
+
+### Emergency Services
+- Emergency consultation: ₹1000 - ₹1500
+- Night charges (after 9 PM): Additional ₹500
+
+## Diagnostic Tests
+
+### Blood Tests
+- Complete Blood Count (CBC): ₹350
+- Blood Sugar (Fasting/PP): ₹100 each
+- Lipid Profile: ₹600
+- Thyroid Profile: ₹800
+- Liver Function Test: ₹700
+- Kidney Function Test: ₹700
+
+### Imaging
+- X-Ray: ₹300 - ₹800 (depends on area)
+- Ultrasound: ₹800 - ₹1500
+- ECG: ₹300
+- Echo: ₹1500 - ₹2000
+
+## Room Charges (per day)
+- General Ward: ₹1500
+- Semi-Private: ₹3000
+- Private Room: ₹5000
+- ICU: ₹8000 - ₹15000
+
+## Payment Options
+- Cash
+- Credit/Debit Cards
+- UPI
+- Health Insurance (Cashless for empaneled insurers)
+
+Note: Prices are subject to change. Please confirm at the time of service.

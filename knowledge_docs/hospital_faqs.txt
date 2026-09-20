@@ -1,0 +1,53 @@
+# RK Hospital - Frequently Asked Questions
+
+## Hospital Timings
+Q: What are the hospital timings?
+A: OPD (Out-Patient Department) is open Monday to Saturday, 9:00 AM to 9:00 PM. 
+   Emergency services are available 24/7, including nights and holidays.
+
+Q: Is the hospital open on Sundays?
+A: OPD is closed on Sundays. However, Emergency services are available 24/7.
+
+Q: Can I visit after 9 PM?
+A: Yes, for emergencies. Emergency doctors are available round the clock.
+
+## Doctors & Departments
+Q: What specialists are available?
+A: We have:
+   - General Physician: For fever, cold, headache, general checkup
+   - Orthopedic Specialist: Bone issues, joint pain, back pain
+   - Cardiologist: Heart problems, blood pressure, chest pain
+   - Dentist: Dental issues, tooth pain
+   - Pediatrician: Children's health
+   - ENT Specialist: Ear, nose, throat problems
+
+Q: How can I book an appointment?
+A: You can call our hospital or use our voice assistant to book an appointment.
+   Just tell us your symptoms and preferred time.
+
+## Pricing
+Q: What is the consultation fee?
+A: General consultation: ₹300-500
+   Specialist consultation: ₹500-800
+   Emergency consultation: ₹1000-1500
+
+Q: Do you accept insurance?
+A: Yes, we accept most major health insurance providers.
+
+## Location
+Q: Where is RK Hospital located?
+A: 123 Main Road, Anna Nagar, Chennai, Tamil Nadu - 600040
+   Landmark: Near Anna Nagar Tower, Opposite City Mall
+
+Q: Is parking available?
+A: Yes, free parking is available for patients.
+
+## Services
+Q: Do you have ambulance service?
+A: Yes, 24/7 ambulance service is available. Call our emergency number.
+
+Q: Is inpatient facility available?
+A: Yes, we have inpatient rooms and wards for admitted patients.
+
+Q: Do you have a pharmacy?
+A: Yes, 24-hour pharmacy is available inside the hospital.

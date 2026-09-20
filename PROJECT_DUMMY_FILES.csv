@@ -1,0 +1,2 @@
+File,Reason,Referenced,SafeToRemove,Confidence
+zenaipex/modules/telephony/mock_provider.py,Looks like scratch/mock file,Unknown,No,Medium
