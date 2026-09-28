@@ -1,25 +1,25 @@
-# RK Hospital Voice Agent
+# ZeniaOne Voice Assistant
 
-A real-time multilingual voice agent for RK Hospital. Handles patient queries and appointment booking over phone calls using Twilio, Sarvam AI, and Pinecone.
+A real-time multilingual voice agent for ZeniaOne. Handles patient queries and appointment booking over phone calls using Exotel, Sarvam AI, and Pinecone.
 
 ## Architecture
 
 ```
-Twilio (caller) → Sarvam STT (saarika:v2.5) → Pinecone RAG → Sarvam-105B → Sarvam TTS (bulbul:v3) → Twilio (caller)
+Exotel (caller) → Sarvam STT (saarika:v2.5) → Pinecone RAG → Sarvam-105B → Sarvam TTS (bulbul:v3) → Exotel (caller)
 ```
 
 - **STT**: Sarvam `saarika:v2.5` — real-time streaming speech-to-text
 - **RAG**: Pinecone vector search with `sentence-transformers/all-MiniLM-L6-v2` embeddings
 - **LLM**: Sarvam `sarvam-105b` — multilingual reasoning (English, Hindi, Gujarati, Hinglish)
 - **TTS**: Sarvam `bulbul:v3` — streaming text-to-speech
-- **Telephony**: Twilio Media Streams (WebSocket)
+- **Telephony**: Exotel Media Streams (WebSocket)
 - **Terminal Chatbot**: `chat.py` — RAG chatbot without voice, for testing
 
 ## Folder Structure
 
 ```
 .
-├── realtime_app.py       # FastAPI production server (Twilio + full voice pipeline)
+├── realtime_app.py       # FastAPI production server (Exotel + full voice pipeline)
 ├── config.py             # All configuration (loaded from .env)
 ├── chat.py               # Terminal RAG chatbot for testing
 ├── seed_knowledge.py     # Script to load hospital docs into Pinecone
@@ -53,10 +53,10 @@ cp .env.example .env
 | `SARVAM_API_KEY` | Sarvam AI API key | ✅ |
 | `PINECONE_API_KEY` | Pinecone API key | ✅ |
 | `PINECONE_INDEX_NAME` | Pinecone index name (e.g. `hospital-knowledge`) | ✅ |
-| `TWILIO_ACCOUNT_SID` | Twilio Account SID | ✅ (voice calls) |
-| `TWILIO_AUTH_TOKEN` | Twilio Auth Token | ✅ (voice calls) |
-| `TWILIO_PHONE_NUMBER` | Twilio phone number | ✅ (voice calls) |
-| `NGROK_URL` | Your public ngrok URL (for Twilio webhook) | ✅ (voice calls) |
+| `EXOTEL_ACCOUNT_SID` | Exotel Account SID | ✅ (voice calls) |
+| `EXOTEL_AUTH_TOKEN` | Exotel Auth Token | ✅ (voice calls) |
+| `EXOTEL_PHONE_NUMBER` | Exotel phone number | ✅ (voice calls) |
+| `NGROK_URL` | Your public ngrok URL (for Exotel webhook) | ✅ (voice calls) |
 | `MONGODB_URI` | MongoDB connection string | Optional |
 | `GOOGLE_SHEET_ID` | Google Sheets ID for appointment export | Optional |
 
@@ -107,7 +107,7 @@ Supports English, Hindi (Devanagari), Gujarati, and Hinglish queries. Type `exit
 uvicorn realtime_app:app --host 0.0.0.0 --port 8000
 ```
 
-> ⚠️ Requires a running ngrok tunnel and Twilio webhook pointed to `https://<your-ngrok>.ngrok.io/incoming-call`.
+> ⚠️ Requires a running ngrok tunnel and Exotel webhook pointed to `https://<your-ngrok>.ngrok.io/incoming-call`.
 
 ## Paid APIs Used
 
@@ -117,7 +117,7 @@ uvicorn realtime_app:app --host 0.0.0.0 --port 8000
 | LLM | Sarvam AI (`sarvam-105b`) | Charged per token |
 | TTS | Sarvam AI (`bulbul:v3`) | Charged per character |
 | Vector Storage | Pinecone | Free tier available |
-| Telephony | Twilio | Charged per minute |
+| Telephony | Exotel | Charged per minute |
 
 ## Token Settings
 
