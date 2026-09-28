@@ -272,6 +272,9 @@ async def _process_document_task(company_id: str, kb_id: str, doc_id: str, stora
                     "company_id": company_id,
                     "chunk_index": i,
                     "chunk_id": vector_id,
+                    "module_number": chunk_meta.get("module_number", ""),
+                    "module_name": chunk_meta.get("module_name", ""),
+                    "role": chunk_meta.get("role", ""),
                     "section": chunk_meta.get("section", "General"),
                     "subsection": chunk_meta.get("subsection", ""),
                     "content_type": chunk_meta.get("content_type", "paragraph"),
@@ -411,19 +414,21 @@ async def get_document_chunks(company_id: str, kb_id: str, doc_id: str) -> List[
         module_number = meta.get("module_number", "") if hasattr(meta, "get") else getattr(meta, "module_number", "")
         module_name = meta.get("module_name", "") if hasattr(meta, "get") else getattr(meta, "module_name", "")
         
-        if text.startswith("[Module:") and not module_number:
+        if not module_number and not module_name:
             import re
-            header_match = re.search(r"\[Module:\s*(\d{2})?\s*([^|]+?)\s*\|", text)
+            header_match = re.search(r"\[(?:Module:\s*(\d{2})?\s*([^|\]]+)|Section:\s*([^|\]]+))", text)
             if header_match:
                 module_number = header_match.group(1) or ""
-                module_name = header_match.group(2).strip() or ""
+                module_name = (header_match.group(2) or header_match.group(3) or "").strip()
+
+        display_module = f"{module_number} {module_name}".strip() if (module_number and module_name) else (module_name or module_number or "")
 
         chunks.append({
             "chunk_id": vid,
             "chunk_index": int(meta.get("chunk_index", 0) if hasattr(meta, "get") else getattr(meta, "chunk_index", 0)),
             "text": text,
             "section": meta.get("section", "") if hasattr(meta, "get") else getattr(meta, "section", ""),
-            "module_number": module_number,
+            "module_number": display_module or "General",
             "module_name": module_name,
             "role": meta.get("role", "") if hasattr(meta, "get") else getattr(meta, "role", ""),
             "chunk_type": meta.get("chunk_type", "") if hasattr(meta, "get") else getattr(meta, "chunk_type", ""),
@@ -456,6 +461,32 @@ async def reprocess_document(company_id: str, doc_id: str) -> Dict[str, Any]:
     storage_path = doc.get("storage_path")
     if not storage_path:
         raise ValueError("Cannot reprocess: original file storage path missing")
+
+    # If this document is auto-sync from a URL, fetch fresh content before reprocessing!
+    source_url = doc.get("source_url")
+    if source_url:
+        try:
+            from services.document_extractor import extract_url_text
+            import os, aiofiles
+            from core.config import settings
+            
+            logger.info(f"[MANUAL_SYNC] Fetching fresh content for {source_url}")
+            text_content = await extract_url_text(source_url)
+            content_bytes = text_content.encode("utf-8")
+            
+            full_path = os.path.join(settings.storage_dir, storage_path)
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            async with aiofiles.open(full_path, "wb") as f:
+                await f.write(content_bytes)
+                
+            # Update file size in DB
+            await col_documents().update_one(
+                {"_id": ObjectId(doc_id)},
+                {"$set": {"file_size_bytes": len(content_bytes)}}
+            )
+            logger.info(f"[MANUAL_SYNC] Saved {len(content_bytes)} bytes to {storage_path}")
+        except Exception as e:
+            logger.warning(f"[MANUAL_SYNC] Failed to fetch URL {source_url}, falling back to cached file: {e}")
 
     # If document has existing vectors, we should delete them first before reprocessing
     old_vector_ids = doc.get("vector_ids", [])

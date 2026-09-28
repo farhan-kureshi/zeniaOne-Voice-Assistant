@@ -24,7 +24,7 @@ _FOLLOWUP_PATTERNS = re.compile(
     r"^("
     # English
     r"tell\s+me\s+more(?:\s+about\s+(?:it|this|that))?"
-    r"|explain\s+(?:more|that|it|this)"
+    r"|explain\s+(?:more|that|it|this|in\s+detail|deeply)?"
     r"|more\s+details?"
     r"|more\s+about\s+(?:it|this|that)"
     r"|what\s+(?:about|else)\s+(?:it|this|that)"
@@ -33,7 +33,12 @@ _FOLLOWUP_PATTERNS = re.compile(
     r"|elaborate"
     r"|can\s+you\s+(?:explain|tell)\s+more"
     r"|what\s+more\s+can\s+you\s+tell\s+me"
-    # Hindi / Hinglish
+    r"|(?:in\s+)?details?(?:\s+deep)?"
+    r"|(?:in\s+)?deep(?:\s+details?)?"
+    r"|deep\s+explanation"
+    r"|deeply"
+    r"|in\s+depth"
+    # Hindi / Hinglish / Gujarati
     r"|aur\s+batao"
     r"|aur\s+bataye"
     r"|aur\s+bata(?:\s+do)?"
@@ -47,7 +52,9 @@ _FOLLOWUP_PATTERNS = re.compile(
     r"|iske?\s+(?:features?|modules?)\s+(?:kya\s+hain|batao|aur\s+batao)"
     r"|aur\s+(?:kya|kuch)\s+batao"
     r"|vistar\s+se\s+batao"
+    r"|vistar\s+thi\s+(?:samjavo|janavo)"
     r"|detail\s+me(?:in)?\s+batao"
+    r"|deep\s+me(?:in)?\s+samjhao"
     r"|kya\s+kya\s+features?\s+h(?:ai|e)(?:\s+isme(?:in)?)?"
     r"|konse\s+konse\s+features?\s+h(?:ai|e)(?:\s+isme(?:in)?)?"
     r"|isme(?:in)?\s+kya\s+kya\s+h(?:ai|e)"
@@ -59,9 +66,9 @@ _FOLLOWUP_PATTERNS = re.compile(
 # ── Explicit Feature Query Routing ───────────────────────────────────────────
 # Deterministic RAG routing for full feature questions to bypass LLM
 _FEATURE_PATTERNS = re.compile(
-    r"^(?:kya\s+kya\s+features\s+h(?:ai|e)|konse\s+konse\s+features\s+h(?:ai|e)|what\s+features\s+does)(?:\s+(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|it|this))?(?:\s+(?:me|have|ma|ni))?$|"
-    r"^(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|it|this)(?:\s+(?:ke|na|me|ma))?\s+(?:kya\s+kya\s+h(?:ai|e)|features\s+batao|kya\s+kya\s+features\s+(?:h(?:ai|e)|che|chhe)|kaya\s+kaya\s+features\s+(?:che|chhe)|features\s+vishe\s+janavo|features\s+kya\s+hain)$|"
-    r"^(what\s+are\s+the\s+features\s+of|features\s+of)\s+(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|it|this)$",
+    r"^(?:kya\s+kya\s+features\s+h(?:ai|e)|konse\s+konse\s+features\s+h(?:ai|e)|what\s+features\s+does)(?:\s+(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|janya\s+one|janya|zinnia|zenia|rithan|rithan\s+ai|it|this))?(?:\s+(?:me|have|ma|ni))?$|"
+    r"^(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|janya\s+one|janya|zinnia|zenia|rithan|rithan\s+ai|it|this)(?:\s+(?:ke|na|me|ma))?\s+(?:kya\s+kya\s+h(?:ai|e)|features\s+batao|kya\s+kya\s+features\s+(?:h(?:ai|e)|che|chhe)|kaya\s+kaya\s+features\s+(?:che|chhe)|features\s+vishe\s+janavo|features\s+kya\s+hain)$|"
+    r"^(what\s+are\s+the\s+features\s+of|features\s+of)\s+(zeniaone|zeniahr|zinnia\s+one|zenia\s+one|zenya\s+one|janya\s+one|janya|zinnia|zenia|rithan|rithan\s+ai|it|this)$",
     re.IGNORECASE
 )
 
@@ -77,6 +84,13 @@ _KNOWN_SUBJECTS = {
     "zinnia hr": "ZeniaHR",
     "zenya one": "ZeniaOne",
     "zenya hr": "ZeniaHR",
+    "janya one": "ZeniaOne",
+    "janya hr": "ZeniaHR",
+    "janya": "ZeniaOne",
+    "zinnia": "ZeniaOne",
+    "zenia": "ZeniaOne",
+    "rithan": "RitHan AI",
+    "rithan ai": "RitHan AI",
     "attendance": "attendance",
     "payroll": "payroll",
     "leave": "leave policy",

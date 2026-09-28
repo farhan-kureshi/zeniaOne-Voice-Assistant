@@ -1,0 +1,25 @@
+﻿### 15. FINAL SUMMARY
+
+**VOICE FILES TOTAL**: 10
+**ACTIVE**: 6
+**HISTORICAL**: 3
+**TEST/DEBUG**: 1
+**DUPLICATE**: 0
+**DELETED**: 0
+**RENAMED**: 0
+
+**CURRENT MAIN VOICE FILE**: zenaipex-frontend/components/ai-bot/voice-mode-overlay.tsx (Untracked)
+**LAST KNOWN WORKING VERSION**: Unknown (No Git History available for the frontend overlay).
+**MOST IMPORTANT DIFFERENCES**: Concurrent TTS/Mic startup vs. Sequential TTS/Mic startup.
+**CONFIRMED ROOT CAUSE**: A race condition where ws.onopen transitions the UI to "Listening" and activates the VAD microphone *before* the welcome TTS finishes fetching from the /speak endpoint. This guarantees the microphone will pick up the AI's own welcome TTS and cause an STT feedback loop.
+**LIKELY ROOT CAUSES**: The 
+avigator.mediaDevices.getUserMedia() call is executed asynchronously following the /speak API promise or gentsApi.createConversation promise, which strips the synchronous browser user-gesture context. Strict browsers silently swallow or block the microphone prompt, resulting in a total silent halt.
+**UNKNOWN AREAS**: Whether the current development environment has a functioning physical microphone device, which would cause an unlogged fallback abort.
+
+### THE IMPORTANT QUESTION
+"Which exact version/file should we use as the foundation for rebuilding Voice Mode, and why?"
+
+Because oice-mode-overlay.tsx was never tracked in Git, **you MUST use the current local version of oice-mode-overlay.tsx as your foundation.** There is no historical Git commit to revert to. 
+
+When rebuilding, you should strip out the complex concurrency logic and revert to a strict, sequential state machine that guarantees user-gesture inheritance:
+1. User Click -> 2. getUserMedia() (Synchronous) -> 3. createConversation() -> 4. udio.play() -> 5. startStreamingRecorder() (onended).

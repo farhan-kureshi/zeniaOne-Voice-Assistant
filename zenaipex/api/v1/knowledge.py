@@ -12,6 +12,7 @@ DELETE /api/v1/companies/{id}/knowledge-bases/{kb}/documents/{doc} Delete docume
 POST   /api/v1/companies/{id}/knowledge-bases/{kb}/search          Search knowledge base
 """
 from fastapi import APIRouter, Depends, Path, Query, UploadFile, File, Form
+from pydantic import BaseModel
 from typing import Optional
 from bson import ObjectId
 from datetime import datetime, timezone
@@ -54,6 +55,8 @@ def _fmt_doc(doc: dict) -> dict:
         "error_message": doc.get("error_message"),
         "created_at": doc.get("created_at"),
         "updated_at": doc.get("updated_at"),
+        "source_url": doc.get("source_url"),
+        "auto_sync": doc.get("auto_sync", False)
     }
 
 
@@ -218,6 +221,138 @@ async def upload_document(
         existing_doc=target_existing_doc
     )
     return _fmt_doc(doc)
+
+class UrlUploadRequest(BaseModel):
+    url: str
+
+@router.post(
+    "/companies/{company_id}/knowledge-bases/{kb_id}/url",
+    status_code=201,
+    summary="Scrape and index a website URL",
+)
+async def upload_url(
+    req: UrlUploadRequest,
+    company_id: str = Path(...),
+    kb_id: str = Path(...),
+    ctx: AuthContext = Depends(require_onboarding_admin),
+):
+    """
+    Scrape text from a URL and index it into the knowledge base.
+    """
+    from services.document_extractor import extract_url_text
+    from fastapi import HTTPException
+    
+    url = req.url.strip()
+    if not url.startswith("http"):
+        raise HTTPException(status_code=400, detail="Invalid URL. Must start with http:// or https://")
+        
+    # Fetch content (this blocks briefly, but requests has a 15s timeout)
+    try:
+        text_content = await extract_url_text(url)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+        
+    content_bytes = text_content.encode("utf-8")
+    
+    # Create a safe filename from URL
+    import re
+    safe_name = re.sub(r'[^a-zA-Z0-9]', '_', url.split("://")[-1])[:50]
+    filename = f"{safe_name}.txt"
+    content_type = "text/plain"
+    
+    # Deduplication
+    existing_docs = await col_documents().find({
+        "company_id": company_id,
+        "knowledge_base_id": kb_id,
+        "filename": filename
+    }).to_list(length=10)
+    
+    target_existing_doc = None
+    for existing_doc in existing_docs:
+        if existing_doc.get("status") in ["ready", "processing"]:
+            target_existing_doc = existing_doc
+            break
+            
+    storage_path = await save_upload(company_id, filename, content_bytes)
+    
+    doc = await knowledge_service.ingest_document(
+        company_id=company_id,
+        kb_id=kb_id,
+        filename=filename,
+        content_type=content_type,
+        storage_path=storage_path,
+        file_size_bytes=len(content_bytes),
+        existing_doc=target_existing_doc
+    )
+    
+    # Tag URL for daily automated re-sync
+    await col_documents().update_one(
+        {"_id": doc["_id"]},
+        {"$set": {"source_url": url, "auto_sync": True}}
+    )
+    doc["source_url"] = url
+    doc["auto_sync"] = True
+    
+    return _fmt_doc(doc)
+
+
+class TextUploadRequest(BaseModel):
+    title: str
+    content: str
+
+@router.post(
+    "/companies/{company_id}/knowledge-bases/{kb_id}/text",
+    status_code=201,
+    summary="Index raw text as a document",
+)
+async def upload_text(
+    req: TextUploadRequest,
+    company_id: str = Path(...),
+    kb_id: str = Path(...),
+    ctx: AuthContext = Depends(require_onboarding_admin),
+):
+    """
+    Take raw text, save it as a .txt file, and index it into the knowledge base.
+    """
+    from fastapi import HTTPException
+    import re
+    
+    if not req.title.strip() or not req.content.strip():
+        raise HTTPException(status_code=400, detail="Title and content are required.")
+        
+    content_bytes = req.content.encode("utf-8")
+    
+    # Create a safe filename from the title
+    safe_name = re.sub(r'[^a-zA-Z0-9]', '_', req.title.strip())[:50]
+    filename = f"{safe_name}.txt"
+    content_type = "text/plain"
+    
+    # Deduplication
+    existing_docs = await col_documents().find({
+        "company_id": company_id,
+        "knowledge_base_id": kb_id,
+        "filename": filename
+    }).to_list(length=10)
+    
+    target_existing_doc = None
+    for existing_doc in existing_docs:
+        if existing_doc.get("status") in ["ready", "processing"]:
+            target_existing_doc = existing_doc
+            break
+            
+    storage_path = await save_upload(company_id, filename, content_bytes)
+    
+    doc = await knowledge_service.ingest_document(
+        company_id=company_id,
+        kb_id=kb_id,
+        filename=filename,
+        content_type=content_type,
+        storage_path=storage_path,
+        file_size_bytes=len(content_bytes),
+        existing_doc=target_existing_doc
+    )
+    return _fmt_doc(doc)
+
 
 @router.post(
     "/companies/{company_id}/knowledge-bases/{kb_id}/documents/{doc_id}/retry",

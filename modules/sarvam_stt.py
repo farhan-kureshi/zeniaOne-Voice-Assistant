@@ -303,6 +303,14 @@ class TrueStreamingSTT:
             pass
         except Exception as e:
             print(f"  ❌ [VOICE_STT_RESPONSE_ERROR] Background listener error: {e}")
+            err_str = str(e).lower()
+            if "credits exhausted" in err_str or "1003" in err_str or "rate limit" in err_str:
+                print(f"  ⛔ [VOICE_STT] Credits exhausted or rate limited. Aborting Sarvam STT reconnect.")
+                self.state.is_listening = False
+                self.state.is_connected = False
+                self.state.is_reconnecting = False
+                self._credits_exhausted = True
+                return
             import traceback
             traceback.print_exc()
             self.state.is_listening = False
@@ -365,6 +373,9 @@ class TrueStreamingSTT:
         Args:
             pcm_chunk: PCM 16-bit audio at configured sample rate
         """
+        if getattr(self, '_credits_exhausted', False):
+            return
+
         if self.state.is_reconnecting:
             # Buffer audio during reconnect
             self.state.accumulated_pcm += pcm_chunk
@@ -929,6 +940,10 @@ class StreamingAudioPipeline:
         
     async def start(self) -> bool:
         """Initialize and start the streaming pipeline."""
+        from modules.sarvam_tts import is_sarvam_available
+        if not is_sarvam_available():
+            return False
+
         self.stt = TrueStreamingSTT(
             language=self.language,
             sample_rate=self.sample_rate
@@ -984,14 +999,14 @@ class StreamingAudioPipeline:
         # Also accumulate for fallback
         self._accumulated_pcm += pcm_chunk
     
-    async def force_finalize(self) -> StreamingSTTResult:
+    async def force_finalize(self, timeout: float = 10.0) -> StreamingSTTResult:
         """
         Force finalization of current audio.
         Use this when silence is detected by local VAD.
         """
         if self.stt:
             await self.stt.flush()
-            return await self.stt.get_final_transcript(timeout=3.0)
+            return await self.stt.get_final_transcript(timeout=timeout)
         return StreamingSTTResult(transcript="", is_final=True)
     
     async def get_transcript(self, timeout: float = 5.0) -> StreamingSTTResult:

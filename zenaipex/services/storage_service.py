@@ -27,17 +27,21 @@ async def save_upload(company_id: str, filename: str, content: bytes) -> str:
     Returns:
         The relative or absolute path to the stored file.
     """
-    # Create isolated directory: data/uploads/{company_id}
-    company_dir = os.path.join(STORAGE_ROOT, company_id)
-    os.makedirs(company_dir, exist_ok=True)
-    
-    # Generate unique safe filename
-    safe_filename = f"{uuid.uuid4().hex}_{os.path.basename(filename)}"
-    file_path = os.path.join(company_dir, safe_filename)
-    
-    with open(file_path, "wb") as f:
-        f.write(content)
+    import asyncio
+    def _write_file():
+        # Create isolated directory: data/uploads/{company_id}
+        company_dir = os.path.join(STORAGE_ROOT, company_id)
+        os.makedirs(company_dir, exist_ok=True)
         
+        # Generate unique safe filename
+        safe_filename = f"{uuid.uuid4().hex}_{os.path.basename(filename)}"
+        file_path = os.path.join(company_dir, safe_filename)
+        
+        with open(file_path, "wb") as f:
+            f.write(content)
+        return file_path
+            
+    file_path = await asyncio.to_thread(_write_file)
     logger.info(f"Saved file {filename} to {file_path}")
     return file_path
 
@@ -45,9 +49,15 @@ async def delete_file(file_path: str) -> bool:
     """
     Delete a file from storage.
     """
-    try:
+    import asyncio
+    def _del_file():
         if os.path.exists(file_path):
             os.remove(file_path)
+            return True
+        return False
+
+    try:
+        if await asyncio.to_thread(_del_file):
             logger.info(f"Deleted file {file_path}")
             return True
         return False

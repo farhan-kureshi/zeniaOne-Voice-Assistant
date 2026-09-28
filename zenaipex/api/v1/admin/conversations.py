@@ -14,6 +14,10 @@ def _fmt_conv(doc: dict) -> dict:
         "company_id": str(doc["company_id"]),
         "agent_id": str(doc["agent_id"]) if doc.get("agent_id") else None,
         "caller_phone": doc.get("caller_phone"),
+        "caller_to": doc.get("caller_to"),
+        "call_sid": doc.get("call_sid"),
+        "recording_url": doc.get("recording_url"),
+        "recording_sid": doc.get("recording_sid"),
         "direction": doc.get("direction", "inbound"),
         "language": doc.get("language", "en-IN"),
         "status": doc.get("status", "completed"),
@@ -24,6 +28,7 @@ def _fmt_conv(doc: dict) -> dict:
         "duration_seconds": doc.get("duration_seconds", 0),
         "turn_count": doc.get("turn_count", 0),
         "title": doc.get("title", "New Chat"),
+        "last_message": doc.get("last_message", ""),
         "message_count": doc.get("message_count", 0),
     }
 
@@ -33,7 +38,7 @@ async def list_conversations(
     status: Optional[str] = Query(default=None),
     is_archived: Optional[bool] = Query(default=False),
     skip: int = Query(default=0, ge=0),
-    limit: int = Query(default=50, le=200),
+    limit: int = Query(default=10000, le=100000),
     user: dict = Depends(get_platform_admin),
 ):
     """List all conversations across all companies."""
@@ -178,3 +183,26 @@ async def bulk_delete(
         count += await conversation_service.bulk_delete_conversations(comp_id, ids)
     return {"success": True, "count": count}
 
+
+@router.get("/{company_id}/{conv_id}/messages")
+async def get_conversation_messages(
+    company_id: str = Path(...),
+    conv_id: str = Path(...),
+    user: dict = Depends(get_platform_admin),
+):
+    """Get transcript messages for a specific conversation (admin access, any company)."""
+    from core.database import col_messages
+    cursor = col_messages().find(
+        {"conversation_id": conv_id}
+    ).sort("timestamp", 1)
+    msgs = []
+    async for doc in cursor:
+        msgs.append({
+            "id": str(doc["_id"]),
+            "role": doc.get("role", "user"),
+            "content": doc.get("text") or doc.get("content") or "",
+            "text": doc.get("text") or doc.get("content") or "",
+            "timestamp": doc.get("timestamp"),
+            "sources": doc.get("sources", []),
+        })
+    return {"messages": msgs, "count": len(msgs)}

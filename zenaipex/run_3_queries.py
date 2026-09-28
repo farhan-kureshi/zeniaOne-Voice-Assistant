@@ -16,9 +16,9 @@ async def main():
     agent_id = '6a990b403e9b17bef89acf8b'
     
     queries = [
-        "Payroll aur attendance ka relationship kya hai?",
-        "Net salary kaise calculate hoti hai?",
-        "ZeniaHR kis type ke external systems se connect kar sakta hai?"
+        "What features does ZeniaOne provide?",
+        "Which AI models/providers are supported?",
+        "How does voice interaction work?"
     ]
     
     class MockAuthContext:

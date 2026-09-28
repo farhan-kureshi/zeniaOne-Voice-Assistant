@@ -16,6 +16,9 @@ from typing import List, Optional
 from bson import ObjectId
 from datetime import datetime, timezone
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 from core.dependencies import (
     get_verified_user, get_current_user, get_auth_context, require_admin, require_owner,
@@ -130,6 +133,94 @@ async def get_company(
     return _fmt_company(ctx.company)
 
 
+@router.post("/{company_id}/autofill-from-kb", summary="Auto-fill company profile from KB")
+async def autofill_company_profile(
+    company_id: str = Path(...),
+    ctx: AuthContext = Depends(require_owner),
+):
+    """Extract business info from the default knowledge base and return JSON."""
+    from services.knowledge_service import list_documents, get_document_chunks, get_or_create_default_kb
+    from ai.llm import AgentLLMClient
+    import json
+    
+    # 1. Get default KB
+    kb = await get_or_create_default_kb(company_id, ctx.company.get("name", "Company"))
+    
+    # 2. Get all documents
+    docs = await list_documents(company_id, kb_id=str(kb["_id"]), skip=0, limit=20)
+    
+    if not docs:
+        raise HTTPException(status_code=400, detail="Knowledge base is empty. Please upload documents or crawl a website first.")
+        
+    # 3. Get representative chunks from all docs
+    all_text = []
+    for doc in docs:
+        chunks = await get_document_chunks(company_id, str(kb["_id"]), str(doc["_id"]))
+        # Take up to 50 chunks per document to ensure deep coverage of contact sections
+        for c in chunks[:50]:
+            all_text.append(c["text"])
+            
+        if len(all_text) > 300:
+            break
+            
+    if not all_text:
+        raise HTTPException(status_code=400, detail="No text found in knowledge base.")
+        
+    context_text = "\n\n".join(all_text)
+    
+    query = f'''You are a data extractor. Based on the provided context, extract the following company information into a strict JSON object.
+Knowledge Base Text:
+{context_text}
+
+Fields:
+- legal_name (string)
+- industry (string)
+- business_email (string)
+- phone (string)
+- website (string)
+- address (string)
+- business_description (string)
+- business_hours (object with monday, tuesday, wednesday, thursday, friday, saturday, sunday; each having active(bool), start(string), end(string))
+
+IMPORTANT: For email, phone, website, and address, if you cannot find them for the specific product, you MUST extract the contact details of the parent company (e.g. ZeniaPex) if available in the text.
+Only output valid JSON without any markdown formatting like ```json. If you still cannot find a field, leave it null.'''
+
+    dummy_agent = {
+        "_id": "dummy",
+        "company_id": company_id,
+        "name": "Dummy",
+        "system_prompt": "You are a helpful assistant.",
+        "model": "llama-3.3-70b-versatile",
+        "temperature": 0.1,
+    }
+    
+    async with await AgentLLMClient.create(dummy_agent) as llm:
+        resp, usage = await llm.generate(
+            user_message=query,
+            conversation_history=[],
+            context_docs=[],
+            language="en-IN",
+        )
+        
+    response_text = resp or "{}"
+    # Strip markdown block if it exists
+    if response_text.startswith("```json"):
+        response_text = response_text[7:]
+    if response_text.startswith("```"):
+        response_text = response_text[3:]
+    if response_text.endswith("```"):
+        response_text = response_text[:-3]
+        
+    response_text = response_text.strip()
+    
+    try:
+        data = json.loads(response_text)
+        return data
+    except Exception as e:
+        logger.error(f"Failed to parse LLM JSON: {e}, Response: {response_text}")
+        raise HTTPException(status_code=500, detail="Failed to extract data in a valid format.")
+
+
 @router.patch("/{company_id}", summary="Update company")
 async def update_company(
     body: CompanyUpdate,
@@ -180,6 +271,22 @@ async def update_company(
         raise NotFoundError("Company")
     return _fmt_company(company)
 
+from fastapi.responses import FileResponse
+import os
+
+@router.get("/{company_id}/logo", summary="Get company logo")
+async def get_company_logo(company_id: str = Path(...)):
+    """Serve the company logo."""
+    company = await tenant_service.get_company(company_id)
+    if not company:
+        raise NotFoundError("Company")
+        
+    logo_path = company.get("settings", {}).get("logo_url")
+    if not logo_path or not os.path.exists(logo_path):
+        raise HTTPException(status_code=404, detail="Logo not found")
+        
+    return FileResponse(logo_path)
+
 
 @router.post("/{company_id}/logo", summary="Upload company logo")
 async def upload_company_logo(
@@ -215,6 +322,8 @@ async def upload_company_logo(
     # Update DB
     db_settings = company.get("settings", {})
     db_settings["logo_url"] = storage_path
+    db_settings["logo_size"] = size
+    db_settings["logo_uploaded_at"] = datetime.now(timezone.utc).isoformat()
     
     await col_companies().update_one(
         {"_id": ObjectId(company_id)},

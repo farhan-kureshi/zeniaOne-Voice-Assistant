@@ -9,6 +9,9 @@ DELETE /api/v1/companies/{id}/agents/{aid}   Soft-delete agent
 POST   /api/v1/companies/{id}/agents/{aid}/activate  Activate draft agent
 """
 from fastapi import APIRouter, Body, Depends, Path, Query, UploadFile, File, Form, HTTPException, WebSocket, WebSocketDisconnect
+import re
+import asyncio
+import base64
 from typing import Optional
 from bson import ObjectId
 
@@ -279,6 +282,7 @@ class AgentTestChatRequest(BaseModel):
     history: List[Dict[str, str]] = []
     conversation_id: Optional[str] = None
     document_ids: Optional[List[str]] = None
+    language_preference: Optional[str] = None
 
 
 @router.post(
@@ -300,6 +304,7 @@ async def agent_test_chat(
         raise HTTPException(status_code=404, detail="Agent not found")
         
     import uuid
+    import re
     
     req_id = f"REQ-{uuid.uuid4().hex[:8].upper()}"
     total_start_time = time.perf_counter()
@@ -307,18 +312,76 @@ async def agent_test_chat(
     agent_name = agent.get('name', 'Unknown')
     logger.info(f"[{req_id}] AI REQUEST START\nAgent: {agent_name} ({agent_id})\nCompany ID: {company_id}\nQuery: {body.message}")
         
-    # --- DETERMINISTIC GREETING GUARD ---
-    from ai.language_detector import detect_language as _detect_lang, get_fallback_message as _get_fallback, get_error_fallback_message as _get_error_fallback
+    # --- LANGUAGE PERSISTENCE & OVERRIDE ---
+    from core.database import col_companies, col_conversations
+    from bson import ObjectId
+    company = await col_companies().find_one({"_id": ObjectId(company_id)})
+
+    # 1. Check conversation for existing preferred_language
+    conversation_preferred_lang = None
+    if body.conversation_id and ObjectId.is_valid(body.conversation_id):
+        conv_doc = await col_conversations().find_one({
+            "company_id": company_id,
+            "_id": ObjectId(body.conversation_id)
+        })
+        if conv_doc:
+            conversation_preferred_lang = conv_doc.get("preferred_language")
+
+    # 2. Check for explicit language switch command in user query
+    msg_clean_lower = body.message.lower().strip()
+    msg_clean_no_punct = re.sub(r"[^\w\s]", "", msg_clean_lower)
     
-    # Detect language once upfront — used for both greeting localization and fallback strings
+    explicit_switch = None
+    if re.search(r"\b(hinglish|roman\s+hindi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "me", "mein"]):
+        explicit_switch = "hinglish"
+    elif re.search(r"\b(gujarati|gujrati)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "vaat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "ma", "me"]):
+        explicit_switch = "gujarati"
+    elif re.search(r"\b(english|angrezi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "in"]):
+        explicit_switch = "english"
+    elif re.search(r"\b(hindi|shuddh\s+hindi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use"]):
+        explicit_switch = "hindi"
+
+    # Detect language upfront from the current message & history
+    from ai.language_detector import detect_language as _detect_lang, get_fallback_message as _get_fallback, get_error_fallback_message as _get_error_fallback
     _lang_result = _detect_lang(body.message, body.history)
     _detected_lang = _lang_result.lang
     _detected_script = _lang_result.script
-    
-    # Fetch company name & profile info
-    from core.database import col_companies
-    from bson import ObjectId
-    company = await col_companies().find_one({"_id": ObjectId(company_id)})
+
+    # Apply explicit language switch if the user explicitly requested one
+    if explicit_switch:
+        active_lang = explicit_switch
+        if explicit_switch == "english":
+            _detected_lang = "english"
+            _detected_script = "latin"
+        elif explicit_switch == "gujarati":
+            _detected_lang = "gujarati"
+            _detected_script = "gujarati_script"
+        elif explicit_switch == "hindi":
+            _detected_lang = "hindi"
+            _detected_script = "devanagari"
+        elif explicit_switch == "hinglish":
+            _detected_lang = "hinglish"
+            _detected_script = "latin"
+    elif _detected_lang and _detected_lang != "unknown":
+        # Honor the dynamically detected language of the user's message
+        active_lang = _detected_lang
+    else:
+        # Fall back to user or agent preference if message language is ambiguous
+        active_lang = body.language_preference or conversation_preferred_lang
+        if not active_lang:
+            agent_def_lang = str(agent.get("default_language", "")).lower()
+            if "gu" in agent_def_lang:
+                active_lang = "gujarati"
+                _detected_lang = "gujarati"
+                _detected_script = "gujarati_script"
+            elif "en" in agent_def_lang and "in" not in agent_def_lang:
+                active_lang = "english"
+                _detected_lang = "english"
+                _detected_script = "latin"
+            else:
+                active_lang = "hinglish"
+                _detected_lang = "hinglish"
+                _detected_script = "latin"
     
     from ai.fast_path import check_deterministic_fast_path
     fast_response = check_deterministic_fast_path(
@@ -326,7 +389,8 @@ async def agent_test_chat(
         company=company,
         agent=agent,
         detected_lang=_detected_lang,
-        detected_script=_detected_script
+        detected_script=_detected_script,
+        preferred_lang=active_lang
     )
     
     if fast_response:
@@ -382,7 +446,7 @@ async def agent_test_chat(
         else:
             try:
                 llm = await AgentLLMClient.create(agent, request_id=req_id)
-                llm.set_budget(10.0)
+                llm.set_budget(25.0)
             except RuntimeError as e:
                 return {"answer": str(e), "sources": []}
                 
@@ -403,14 +467,21 @@ async def agent_test_chat(
                 if not search_queries:
                     search_queries = [intent_data.get("search_query", body.message)]
                 
-                # If extract_intent failed totally, fallback safely without failing
-                if intent == "failed" and "All enabled LLM providers failed" in str(intent_data):
-                    logger.warning(f"[{req_id}] INTENT EXHAUSTED: Returning localized safe error message.")
-                    response = _get_error_fallback(_detected_lang, _detected_script)
-                    is_generation_fallback = True
-                    intent = "failed"
-                    token_usage = {}
-                    context_docs = []
+                # If extract_intent failed totally, fallback safely to document_query using original user message
+                if intent == "failed" or not search_queries:
+                    logger.warning(f"[{req_id}] Intent engine had a hiccup — gracefully falling back to direct document query using user message.")
+                    intent = "document_query"
+                    from ai.language_detector import normalize_query_for_retrieval
+                    clean_query = normalize_query_for_retrieval(body.message)
+                    search_queries = [clean_query, body.message] if clean_query != body.message else [body.message]
+                    intent_data = {
+                        "intent": "document_query",
+                        "search_queries": search_queries,
+                        "is_multi_hop": False,
+                        "reasoning_type": "none"
+                    }
+                else:
+                    intent_data["search_queries"] = search_queries
                 
                 # 2. Routing based on Intent
                 if intent == "ambiguous":
@@ -435,31 +506,7 @@ async def agent_test_chat(
                     token_usage = {}
                     logger.info(f"[{req_id}] AI REQUEST SUCCESS\nTotal Latency: {(time.perf_counter() - total_start_time):.2f}s\nResolution: system_query_fallback")
                 
-                elif intent == "general_query":
-                    # Deterministic greeting fallback (preserves intended behavior for casual questions that bypassed the fast-path regex)
-                    c_name = company.get("name", "our company") if company else "our company"
-                    if c_name.upper() == "INTERNAL / PLATFORM" or c_name == "ZeniaAI Internal Workspace":
-                        c_name = "ZeniaOne"
-                
-                    # Override name if this is the internal admin workspace but a custom customer agent
-                    if c_name == "ZeniaOne" and agent.get("agent_type") != "platform_admin":
-                        c_name = agent.get("name", "our company").replace(" Agent", "").replace("ZeniaAI", "ZeniaOne").replace("Zenia AI", "ZeniaOne").strip() or "our company"
-                    
-                    if _detected_script == "devanagari":
-                        response = f"मैं ठीक हूँ, धन्यवाद! आप {c_name} के बारे में क्या जानना चाहेंगे?"
-                    elif _detected_script == "gujarati_script":
-                        response = f"હું મજામાં છું, આભાર! તમે {c_name} વિશે શું જાણવા માંગો છો?"
-                    elif _detected_lang in ["hindi", "hinglish"]:
-                        response = f"Main theek hoon, shukriya! Aap {c_name} ke baare mein kya jaanna chahenge?"
-                    elif _detected_lang == "gujarati":
-                        response = f"Hu majama chu, aabhar! Tame {c_name} vishe shu janva mango cho?"
-                    else:
-                        response = f"I'm doing well, thank you! What would you like to know about {c_name}?"
-                    
-                    token_usage = {}
-                    logger.info(f"[{req_id}] AI REQUEST SUCCESS\nTotal Latency: {(time.perf_counter() - total_start_time):.2f}s\nResolution: general_query_greeting")
-                
-                elif intent in ["document_query", "company_info_query", "discovery_query"]:
+                elif intent in ["document_query", "company_info_query", "discovery_query", "general_query"]:
                     from ai.evaluation import RAGEvaluator
                     rag = TenantRAGPipeline(namespace=company_id, agent_doc=agent)
                 
@@ -468,11 +515,11 @@ async def agent_test_chat(
                             all_raw_docs = []
                             seen_texts = set()
                         
-                            if intent == "discovery_query":
+                            if intent in ["discovery_query", "general_query"]:
                                 all_raw_docs = []
                                 all_candidates_pool = []
                                 retrieval_latency = 0.0
-                                logger.info(f"[{req_id}] FAST-PATH: discovery_query bypassing Pinecone.")
+                                logger.info(f"[{req_id}] FAST-PATH: {intent} bypassing Pinecone.")
                             else:
                                 # Phase 11: Multi-Hop & Dependent Reasoning Engine
                                 from ai.multi_hop import MultiHopEngine
@@ -534,6 +581,7 @@ async def agent_test_chat(
                                 conversation_history=body.history,
                                 context_docs=context_docs,
                                 intent=intent,
+                                language=active_lang or "hinglish",
                             )
                             generation_latency = time.time() - gen_start
                             if intent == "company_info_query":
@@ -580,17 +628,19 @@ async def agent_test_chat(
             request_id=req_id
         )
         
-        # Increment Usage
-        await usage_service.increment_usage(
-            company_id=company_id,
-            call_duration_seconds=0,
-            llm_calls=1,
-            rag_queries=1 if context_docs else 0,
-            input_tokens=token_usage.get("prompt_tokens", 0),
-            output_tokens=token_usage.get("completion_tokens", 0),
-            total_tokens=token_usage.get("total_tokens", 0),
-            direction="test-chat"
-        )
+        # Step 4: Token Accounting & Deductions
+        try:
+            total_tokens = token_usage.get("total_tokens", 0) if token_usage else 0
+            from services.usage_service import record_interaction_tokens
+            await record_interaction_tokens(
+                company_id=company_id,
+                input_tokens=token_usage.get("prompt_tokens", 0) if token_usage else 0,
+                output_tokens=token_usage.get("completion_tokens", 0) if token_usage else 0,
+                total_tokens=total_tokens,
+                direction="test-chat"
+            )
+        except Exception as acct_err:
+            logger.warning(f"[{req_id}] Token accounting warning: {acct_err}")
 
     recent_conv = None
     if body.conversation_id:
@@ -625,6 +675,15 @@ async def agent_test_chat(
     conv_id = str(recent_conv["_id"])
     await conversation_service.add_message(company_id, conv_id, "user", body.message)
     await conversation_service.add_message(company_id, conv_id, "assistant", response)
+    
+    # Persist preferred_language in conversation
+    if active_lang:
+        from core.database import col_conversations
+        from bson import ObjectId
+        await col_conversations().update_one(
+            {"_id": ObjectId(conv_id)},
+            {"$set": {"preferred_language": active_lang}}
+        )
     
     # Step 6: Record subject for contextual follow-up fast route
     from ai.context_resolver import record_subject
@@ -803,7 +862,7 @@ async def agent_speak(
     import base64
 
     lang    = agent.get("default_language", "en-IN")
-    speaker = agent.get("tts_voice", "anushka")
+    speaker = agent.get("tts_voice", "ritu")
 
     logger.info(f"[VOICE_SPEAK_TTS] text_len={len(text)} lang={lang} speaker={speaker}")
     try:
@@ -816,11 +875,48 @@ async def agent_speak(
         raise HTTPException(status_code=502, detail="TTS synthesis failed")
 
     if not tts_bytes:
-        raise HTTPException(status_code=502, detail="TTS returned empty audio")
+        logger.warning(f"[VOICE_SPEAK_TTS_EMPTY] Sarvam TTS returned empty audio (credits exhausted). Returning fallback_tts flag.")
+        return {"audio_base64": "", "audio_bytes": 0, "fallback_tts": True}
 
     audio_b64 = base64.b64encode(tts_bytes).decode("utf-8")
     logger.info(f"[VOICE_SPEAK_TTS_OK] audio_bytes={len(tts_bytes)}")
-    return {"audio_base64": audio_b64, "audio_bytes": len(tts_bytes)}
+    return {"audio_base64": audio_b64, "audio_bytes": len(tts_bytes), "fallback_tts": False}
+
+
+@router.post(
+    "/companies/{company_id}/voices/preview",
+    summary="TTS preview: synthesise a sample text using a chosen voice speaker",
+)
+async def voice_preview(
+    company_id: str = Path(...),
+    body: dict = Body(...),
+    ctx: AuthContext = Depends(get_unverified_auth_context),
+):
+    """
+    Lightweight TTS preview endpoint for listening to voice samples in the UI.
+    """
+    speaker = (body.get("voice") or "ritu").strip().lower()
+    text = (body.get("text") or "Hello! Main aapki ZeniaOne voice assistant hoon. Aap mujhse koi bhi sawal pooch sakte hain.").strip()
+    lang = (body.get("language") or "hi-IN").strip()
+
+    from modules.sarvam_tts import realtime_tts
+    import base64
+
+    logger.info(f"[VOICE_PREVIEW] speaker={speaker} lang={lang} text_len={len(text)}")
+    try:
+        tts_bytes = await realtime_tts(text=text, language=lang, speaker=speaker)
+    except ValueError as exc:
+        logger.error(f"[VOICE_PREVIEW_ERROR] Invalid voice: {exc}")
+        raise HTTPException(status_code=400, detail=str(exc))
+    except Exception as exc:
+        logger.error(f"[VOICE_PREVIEW_ERROR] {exc}")
+        return {"audio_base64": "", "audio_bytes": 0, "fallback_tts": True, "error": str(exc)}
+
+    if not tts_bytes:
+        return {"audio_base64": "", "audio_bytes": 0, "fallback_tts": True}
+
+    audio_b64 = base64.b64encode(tts_bytes).decode("utf-8")
+    return {"audio_base64": audio_b64, "audio_bytes": len(tts_bytes), "fallback_tts": False}
 
 def normalize_known_entities(transcript: str, company_name: str) -> tuple[str, bool, str, float, str]:
     """
@@ -1298,7 +1394,7 @@ async def test_agent_voice_chat(
     tts_start_time = time.perf_counter()
     
     if answer_text:
-        speaker = agent.get("tts_voice", "anushka")
+        speaker = agent.get("tts_voice", "ritu")
         
         # Step 6: TTS Cache for deterministic fast-path responses
         # We only cache if the answer came from the deterministic fast path, ensuring dynamic RAG answers aren't cached.
@@ -1384,7 +1480,6 @@ async def voice_stream(
 ):
     await websocket.accept()
     import uuid
-    import time
     voice_session_id = uuid.uuid4().hex
     logger.info(f"[VOICE_WS_OPEN] session={voice_session_id} agent={agent_id}")
     
@@ -1395,18 +1490,24 @@ async def voice_stream(
         token = config_data.get("token")
         conversation_id = config_data.get("conversation_id")
         
+        logger.info(f"[VOICE_WS_AUTH] Authentication attempt")
+        logger.info(f"[VOICE_WS_AUTH] Token received={bool(token)}")
+        
         if not token:
+            logger.error("[VOICE_WS_AUTH][ERROR] Invalid or expired token (missing)")
             raise ValueError("No token provided")
             
         user_id = decode_access_token(token)
         if not user_id:
+            logger.error("[VOICE_WS_AUTH][ERROR] Invalid or expired token (decode failed)")
             raise ValueError("Invalid token")
             
         user = await col_users().find_one({"_id": ObjectId(user_id)})
         if not user:
-            logger.error("[VOICE_WS_AUTH_FAILURE] User not found")
+            logger.error("[VOICE_WS_AUTH][ERROR] Invalid or expired token (user not found)")
             raise ValueError("User not found")
             
+        logger.info(f"[VOICE_WS_AUTH] Authentication result=success")
         logger.info(f"[VOICE_WS_AUTH_SUCCESS] Authenticated user {user_id}")
             
     except Exception as e:
@@ -1425,20 +1526,55 @@ async def voice_stream(
         return
         
     lang = agent.get("default_language", "en-IN")
-    speaker = agent.get("tts_voice", "anushka")
+    speaker = agent.get("tts_voice", "ritu")
 
     # 2. Pipeline setup
     latest_transcript = ""
+    latest_client_lang = "hinglish"
     is_processing = False
     processing_task = None
     
+    # 2.1 Preload multi-turn conversation history for context-aware voice turns
+    session_history: List[Dict[str, str]] = []
+    if conversation_id:
+        try:
+            from services import conversation_service
+            raw_msgs = await conversation_service.get_conversation_messages(company_id, conversation_id)
+            if raw_msgs:
+                session_history = [
+                    {"role": m.get("role", "user"), "content": m.get("text", "") or m.get("content", "")}
+                    for m in raw_msgs[-20:]
+                    if m.get("text") or m.get("content")
+                ]
+                logger.info(f"[VOICE_WS_HISTORY_LOADED] turns={len(session_history)} conv={conversation_id}")
+            
+            # Fallback: if conversation_service returned nothing, try col_messages directly (voice-saved turns)
+            if not session_history:
+                from core.database import col_messages
+                cursor = col_messages().find(
+                    {"company_id": company_id, "conversation_id": conversation_id},
+                    sort=[("timestamp", 1)],
+                    limit=20
+                )
+                async for m in cursor:
+                    content = m.get("content") or m.get("text", "")
+                    if content:
+                        session_history.append({"role": m.get("role", "user"), "content": content})
+                if session_history:
+                    logger.info(f"[VOICE_WS_HISTORY_LOADED_FALLBACK] turns={len(session_history)} conv={conversation_id}")
+        except Exception as _hist_err:
+            logger.warning(f"[VOICE_WS_CONTEXT_LOAD_FAILED] {_hist_err}")
+    
     async def on_transcript_ready(transcript: str):
-        nonlocal latest_transcript
+        nonlocal latest_transcript, is_processing, processing_task
         latest_transcript = transcript
         await websocket.send_json({"type": "transcript", "text": transcript, "is_final": True})
+        if transcript.strip() and not is_processing and (processing_task is None or processing_task.done()):
+            logger.info(f"[VOICE_TRANSCRIPT_TRIGGER] Triggering AI speech task from transcript={transcript} session={voice_session_id}")
+            processing_task = asyncio.create_task(_process_speech_task())
 
     async def _process_speech_task():
-        nonlocal latest_transcript, is_processing, conversation_id
+        nonlocal latest_transcript, is_processing, conversation_id, session_history
         is_processing = True
         start_t = time.perf_counter()
         try:
@@ -1446,27 +1582,62 @@ async def voice_stream(
             
             # Setup AuthContext manually
             from core.dependencies import AuthContext
-            ctx = AuthContext()
-            ctx.user = user
-            ctx.company_ids = [company_id]
-            ctx.is_member = True
+            ctx = AuthContext(
+                user_id=str(user_id),
+                user_doc=user,
+                company_id=company_id,
+                role="owner"
+            )
             
-            # Prepare Request
+            # 1. Clean & Normalize Voice Transcript for better accuracy
+            clean_raw = latest_transcript.strip()
+            # Deduplicate stutter repeats (e.g., 'dhanyvad hello dhanyvad dhanyvad' -> 'hello dhanyvad')
+            words = clean_raw.split()
+            if len(words) >= 3:
+                dedup = []
+                for w in words:
+                    if not dedup or w.lower() != dedup[-1].lower():
+                        dedup.append(w)
+                clean_raw = " ".join(dedup)
+            
+            # Phonetic repairs for common browser speech recognition confusions:
+            clean_raw = re.sub(r'^(?:up|app|ap)\s+(mujhe|humein|aap|kya|bata|kaise|kis)', r'Aap \1', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\b(?:semia|semiya|sania|zenya|vrindavan|xenia|zenia)\s*(?:one|1|won)?\b', 'ZeniaOne', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\b(?:xenia|zenya|senia|zenia)\s*(?:hr|h r|aitch ar)\b', 'ZeniaHR', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bbest\s+akshara\b', 'best features', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bwhat\s+is\s+1\b', 'what is ZeniaOne', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bjankari\b', 'jaankari', clean_raw, flags=re.IGNORECASE)
+            
+            # Gujarati phonetic repairs (browser STT often mistranscribes Gujarati to English-like text)
+            # "Tommy money so janavi Saxo Tamara information Che" → "Tamaro maahe shu jaankaari che Tamari information che"
+            clean_raw = re.sub(r'\btommy\b', 'tamaro', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bjohnny\b', 'janavi', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bjanavi\b', 'jaankari', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bsaxo\b', 'shaxo', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\b(?:tamara|tamaro)\b', 'tamari', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bche\b', 'chhe', clean_raw, flags=re.IGNORECASE)  # Gujarati "is"
+            clean_raw = re.sub(r'\bketli\b', 'ketli', clean_raw, flags=re.IGNORECASE)
+            clean_raw = re.sub(r'\bshu\b', 'shu', clean_raw, flags=re.IGNORECASE)    # Gujarati "what"
+
+
+            # Prepare Request with actual session conversation history
             from api.v1.agents import AgentTestChatRequest, agent_test_chat
             req = AgentTestChatRequest(
-                message=latest_transcript,
-                history=[],
-                conversation_id=conversation_id
+                message=clean_raw,
+                history=session_history[-10:],  # Use last 10 messages (5 turns) for richer context
+                conversation_id=conversation_id,
+                language_preference=latest_client_lang
             )
             
             try:
-                logger.info(f"[VOICE_AI_TURN_START] Starting agent_test_chat with transcript len={len(latest_transcript)} session={voice_session_id}")
+                logger.info(f"[VOICE_AI_TURN_START] Starting agent_test_chat with transcript='{clean_raw}' (history_turns={len(session_history)//2}) session={voice_session_id}")
                 resp = await agent_test_chat(
-                body=req,
-                company_id=company_id,
-                agent_id=agent_id,
-                ctx=ctx
-            )
+                    body=req,
+                    company_id=company_id,
+                    agent_id=agent_id,
+                    ctx=ctx
+                )
+
                 logger.info(f"[VOICE_AI_TURN_COMPLETE] Finished agent_test_chat session={voice_session_id}")
             except Exception as e:
                 logger.error(f"[VOICE_AI_ERROR] session={voice_session_id} err={e}")
@@ -1477,49 +1648,114 @@ async def voice_stream(
             conversation_id = resp.get("conversation_id", conversation_id)
             answer = resp.get("answer", "")
             
+            # Update session history for next turn
+            session_history.append({"role": "user", "content": clean_raw})
+            session_history.append({"role": "assistant", "content": answer})
+            if len(session_history) > 20:
+                session_history = session_history[-20:]
+            
+            # Persist voice Q&A to DB so history survives across sessions
+            if conversation_id:
+                try:
+                    from core.database import col_messages
+                    from datetime import datetime, timezone
+                    import bson
+                    now = datetime.now(timezone.utc)
+                    await col_messages().insert_many([
+                        {
+                            "company_id": company_id,
+                            "conversation_id": conversation_id,
+                            "role": "user",
+                            "content": clean_raw,
+                            "source": "voice",
+                            "timestamp": now,
+                        },
+                        {
+                            "company_id": company_id,
+                            "conversation_id": conversation_id,
+                            "role": "assistant",
+                            "content": answer,
+                            "source": "voice",
+                            "timestamp": now,
+                        },
+                    ])
+                    logger.info(f"[VOICE_MSG_SAVED] Saved Q&A to DB conv={conversation_id}")
+                except Exception as db_err:
+                    logger.warning(f"[VOICE_MSG_SAVE_WARN] Could not save messages: {db_err}")
+            
             await websocket.send_json({
                 "type": "ai_text", 
                 "text": answer, 
-                "conversation_id": conversation_id
+                "conversation_id": conversation_id,
+                "user_message": clean_raw
             })
             
-            # TTS
-            from modules.sarvam_tts import realtime_tts_stream
+            # Clean text for TTS (remove suggested questions and markdown formatting)
+            tts_text = re.sub(r'Suggested questions.*', '', answer, flags=re.IGNORECASE | re.DOTALL).strip()
+            # Strip markdown and common emojis
+            tts_text = re.sub(r'[\*#_~`✨🚀⭐🔥👍🙏😊🤖]', '', tts_text)
+            # Use regex to remove all other emojis and non-speech symbols
+            import regex as re_ext
+            tts_text = re_ext.sub(r'[^\p{L}\p{M}\p{N}\s\.,\?!;:\-\'"।]', '', tts_text)
+            tts_text = tts_text.strip()
             
-            tts_attempts = 0
+            # 2. TTS with Instant Neural Fallback (No 4-second delay)
+            from modules.sarvam_tts import realtime_tts_stream, fallback_neural_tts, is_sarvam_available
+            
             tts_success = False
-            first_chunk = True
             
-            while tts_attempts < 2 and not tts_success:
-                tts_attempts += 1
-                logger.info(f"[VOICE_TTS_STREAM_START] attempt={tts_attempts}")
-                
-                if tts_attempts == 1:
-                    await websocket.send_json({"type": "state", "state": "speaking"})
-                
-                try:
-                    async for chunk in realtime_tts_stream(text=answer, language=lang, speaker=speaker):
-                        if first_chunk:
-                            logger.info(f"[VOICE_TTS_FIRST_CHUNK] latency={time.perf_counter() - ai_t:.2f}s")
-                            first_chunk = False
-                        audio_base64 = base64.b64encode(chunk).decode('utf-8')
-                        await websocket.send_json({"type": "ai_audio_pcm", "audio_base64": audio_base64})
-                    tts_success = True
-                    if tts_attempts > 1:
-                        logger.info("[VOICE_TTS_RECOVERY_SUCCESS]")
-                except Exception as e:
-                    logger.error(f"[VOICE_TTS_ERROR] session={voice_session_id} err={e}")
-                    if not first_chunk:
-                        # Already played audio, do not retry and risk duplicate speech
-                        logger.error("[VOICE_TTS_PROVIDER_DROP] Mid-stream TTS failure. Aborting to avoid duplicates.")
-                        break
-                    else:
-                        logger.warning("[VOICE_TTS_RECOVERY_START] Retrying TTS...")
-                        continue
+            if is_sarvam_available():
+                tts_attempts = 0
+                first_chunk = True
+                while tts_attempts < 2 and not tts_success:
+                    tts_attempts += 1
+                    logger.info(f"[VOICE_TTS_STREAM_START] attempt={tts_attempts}")
+                    if tts_attempts == 1:
+                        await websocket.send_json({"type": "state", "state": "speaking"})
+                    try:
+                        async for chunk in realtime_tts_stream(text=tts_text, language=lang, speaker=speaker):
+                            if first_chunk:
+                                logger.info(f"[VOICE_TTS_FIRST_CHUNK] latency={time.perf_counter() - ai_t:.2f}s")
+                                first_chunk = False
+                            audio_base64 = base64.b64encode(chunk).decode('utf-8')
+                            await websocket.send_json({"type": "ai_audio_pcm", "audio_base64": audio_base64})
+                        tts_success = not first_chunk
+                        if tts_attempts > 1 and tts_success:
+                            logger.info("[VOICE_TTS_RECOVERY_SUCCESS]")
+                    except Exception as e:
+                        logger.error(f"[VOICE_TTS_ERROR] session={voice_session_id} err={e}")
+                        if not first_chunk:
+                            # If we already sent partial PCM, falling back to full neural TTS would cause overlapping double audio.
+                            # We just abort the current stream and consider it done.
+                            tts_success = True
+                            break
+                        else:
+                            continue
             
             if not tts_success:
-                logger.error("[VOICE_TTS_RECOVERY_FAILED] Returning to listening state cleanly.")
-                await websocket.send_json({"type": "ai_audio_pcm_done", "error": True})
+                logger.info(f"[VOICE_TTS_DIRECT_NEURAL] Synthesizing instant neural speech for speaker={speaker}")
+                try:
+                    await websocket.send_json({"type": "state", "state": "speaking"})
+                    fb_bytes = await fallback_neural_tts(tts_text, speaker)
+                    if fb_bytes and len(fb_bytes) > 0:
+                        fb_b64 = base64.b64encode(fb_bytes).decode('utf-8')
+                        await websocket.send_json({
+                            "type": "ai_audio_mp3",
+                            "audio_base64": fb_b64,
+                            "speaker": speaker
+                        })
+                        tts_success = True
+                except Exception as fb_err:
+                    logger.error(f"[VOICE_TTS_NEURAL_FALLBACK_ERR] {fb_err}")
+
+            if not tts_success:
+                logger.warning("[VOICE_TTS_FALLBACK] Sarvam TTS unavailable or empty. Triggering client browser TTS fallback.")
+                await websocket.send_json({
+                    "type": "ai_audio_pcm_done", 
+                    "error": True, 
+                    "fallback_tts": True, 
+                    "fallback_text": tts_text
+                })
             else:
                 await websocket.send_json({"type": "ai_audio_pcm_done"})
             logger.info(f"[VOICE_TTS_STREAM_END] session={voice_session_id} total_ms={(time.perf_counter()-start_t)*1000:.0f}")
@@ -1556,7 +1792,8 @@ async def voice_stream(
             is_processing = False
             return
             
-        processing_task = asyncio.create_task(_process_speech_task())
+        if processing_task is None or processing_task.done():
+            processing_task = asyncio.create_task(_process_speech_task())
 
     pipeline = StreamingAudioPipeline(
         language=lang,
@@ -1565,9 +1802,12 @@ async def voice_stream(
         on_speech_end=on_speech_end
     )
     
-    if not await pipeline.start():
-        await websocket.close(code=1011, reason="Failed to start STT pipeline")
-        return
+    pipeline_started = await pipeline.start()
+    if not pipeline_started:
+        logger.warning(f"[VOICE_STT_PIPELINE] Sarvam STT pipeline failed to start or credits exhausted. Client-side STT mode active.")
+        await websocket.send_json({"type": "info", "message": "Using browser speech recognition"})
+    else:
+        logger.info(f"[VOICE_STT_PIPELINE] Sarvam STT pipeline started successfully.")
         
     await websocket.send_json({"type": "state", "state": "listening"})
     
@@ -1575,18 +1815,23 @@ async def voice_stream(
     try:
         audio_recv_count = 0
         audio_recv_last_log_time = 0
+        total_audio_bytes = 0
         while True:
             msg = await websocket.receive()
             
             if "bytes" in msg:
                 data = msg["bytes"]
+                total_audio_bytes += len(data)
                 now = time.time()
+                if audio_recv_count == 0:
+                    logger.info(f"[VOICE] Audio stream received session={voice_session_id}")
+                
                 if audio_recv_count < 3 or now - audio_recv_last_log_time > 2.0:
-                    logger.info(f"[VOICE_WS_AUDIO_RECEIVE] bytes={len(data)} session={voice_session_id}")
+                    logger.info(f"[VOICE] Audio bytes received={total_audio_bytes} session={voice_session_id}")
                     audio_recv_count += 1
                     audio_recv_last_log_time = now
                     
-                if not is_processing:
+                if not is_processing and pipeline_started:
                     await pipeline.process_audio_chunk(data)
             
             elif "text" in msg:
@@ -1601,19 +1846,33 @@ async def voice_stream(
                         if processing_task and not processing_task.done():
                             processing_task.cancel()
                             logger.info("[VOICE_BARGE_IN] Cancelled backend LLM/TTS task")
-                        await pipeline.stt.reset_for_new_turn()
+                        if pipeline_started and pipeline.stt:
+                            await pipeline.stt.reset_for_new_turn()
+                        continue
+                    if text_data.get("type") == "user_transcript":
+                        user_text = text_data.get("text", "").strip()
+                        if text_data.get("language"):
+                            latest_client_lang = text_data.get("language")
+                        if user_text and not is_processing:
+                            logger.info(f"[VOICE_CLIENT_TRANSCRIPT] Received transcript: '{user_text}' lang={latest_client_lang} session={voice_session_id}")
+                            latest_transcript = user_text
+                            is_processing = True
+                            if processing_task is None or processing_task.done():
+                                processing_task = asyncio.create_task(_process_speech_task())
                 except json.JSONDecodeError:
                     pass
                     
             elif msg.get("type") == "websocket.disconnect":
+                logger.info(f"[VOICE_WS_CLOSE_REASON] client_disconnect")
                 break
                 
     except Exception as e:
+        logger.error(f"[VOICE_WS_CLOSE_REASON] server_exception err={e}")
         logger.error(f"[VOICE_WS_ERROR] session={voice_session_id} err={e}")
     finally:
         logger.info(f"[VOICE_WS_CLEANUP] session={voice_session_id}")
         if processing_task and not processing_task.done():
             processing_task.cancel()
-        if pipeline.stt:
+        if pipeline_started and pipeline.stt:
             await pipeline.stt.disconnect()
         logger.info(f"[VOICE_WS_CLOSE] session={voice_session_id}")

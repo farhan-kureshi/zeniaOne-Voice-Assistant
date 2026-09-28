@@ -1,0 +1,156 @@
+========================================
+ZENIAPEX — COMPANY & PRODUCT KNOWLEDGE BASE
+Official Documentation for AI Knowledge Base
+========================================
+
+---
+
+## SECTION 1: ABOUT ZENIAPEX (MAIN / PARENT COMPANY)
+
+Company Name: ZeniaPex
+Type: Technology Company (Parent / Holding Company)
+Industry: Artificial Intelligence, SaaS, Enterprise Software, HR Technology
+
+ZeniaPex is the main parent technology company that builds and manages a portfolio of software products and platforms. Each product under ZeniaPex is designed to solve a specific business problem using modern technology, AI, and cloud infrastructure. ZeniaPex is the umbrella brand under which all products and projects are developed and maintained.
+
+The company focuses on:
+- Artificial Intelligence (AI) powered solutions
+- Voice and telephony automation
+- Enterprise business management software
+- Multilingual Indian language technology
+- SaaS (Software as a Service) platforms
+
+ZeniaPex operates in the Indian market with strong support for Indian languages including Hindi, Hinglish, Gujarati, and English. The company is committed to building enterprise-grade, multi-tenant, secure, and scalable software.
+
+---
+
+## SECTION 2: ZENIAPEX PRODUCT PORTFOLIO
+
+ZeniaPex has the following products and projects under its umbrella:
+
+### PRODUCT 1: ZeniaOne (AI Voice Agent & Telephony Platform)
+
+Product Name: ZeniaOne
+Type: Primary AI Platform / SaaS Product
+Parent Company: ZeniaPex
+Category: Artificial Intelligence, Voice Technology, Telephony, Customer Support Automation
+
+What is ZeniaOne?
+ZeniaOne is ZeniaPex's flagship AI-powered Voice Agent and Telephony SaaS platform. It enables businesses to deploy autonomous AI agents that can hold natural, human-like voice conversations with customers. ZeniaOne is currently under active development and new features are being added regularly.
+
+Key Features of ZeniaOne:
+- Autonomous AI Voice Agents capable of natural human-like voice conversations
+- 24/7 customer support automation without human intervention
+- Instant appointment bookings and scheduling via voice
+- Payment follow-ups and reminders through automated calls
+- Real-time barge-in (natural interruption handling) with sub-second latency
+- End-to-end multi-tenant isolation (multiple companies can use the platform independently)
+- Native Indian multilingual support: English, Hindi, Hinglish, and Gujarati
+- WebSocket-based real-time voice streaming
+- Intelligent intent detection and RAG for accurate knowledge-based answers
+- Browser-based voice interface with push-to-talk and hands-free modes
+- Smart phonetic correction for Indian language voice input
+- AI agent creation and management via admin panel
+- Knowledge base document upload and RAG indexing
+
+ZeniaOne Target Customers:
+- Businesses (retail, service companies, clinics, hospitals)
+- Companies needing 24/7 customer support
+- Organizations wanting to automate phone calls and appointment systems
+- Companies requiring Indian multilingual voice support
+
+Current Status: ZeniaOne is under active development. Features are being added progressively.
+
+---
+
+### PRODUCT 2: ZeniaHR (Enterprise HRMS & Payroll Platform)
+
+Product Name: ZeniaHR
+Type: Enterprise Software / HRMS Product
+Parent Company: ZeniaPex
+Category: Human Resources Management System (HRMS), Payroll, Attendance, Staffing
+
+What is ZeniaHR?
+ZeniaHR is ZeniaPex's enterprise-grade Human Resource Management System (HRMS) and payroll platform. It is designed for staffing companies, enterprises, and organizations that manage multiple employees, branches, and clients. ZeniaHR handles the complete employee lifecycle from hiring to payroll processing.
+
+Key Features of ZeniaHR:
+- Multi-company (multi-tenant) architecture: keeps separate companies, branches, and staff data fully isolated
+- Complete employee lifecycle management: from hiring and onboarding to deployment at client sites
+- Attendance tracking and management (daily, monthly, shift-based)
+- Payroll management with PF (Provident Fund) and ESIC compliance for Indian laws
+- Client billing support for staffing companies (bill clients for deployed staff)
+- White-labelling capabilities: use your own brand name and domain
+- Built-in security features including CAPTCHA, account lockout, and encrypted passwords
+- Role-based access control for HR managers, admins, and staff
+- Salary slip generation and payroll reports
+- Leave management and holiday calendar
+
+ZeniaHR Target Customers:
+- Staffing and manpower supply companies
+- Enterprises with large workforces
+- Companies with multiple branches or locations
+- Organizations needing PF/ESIC compliance automation
+
+---
+
+## SECTION 3: RELATIONSHIP BETWEEN ZENIAPEX AND ITS PRODUCTS
+
+ZeniaPex is the parent company.
+ZeniaOne and ZeniaHR are products built and owned by ZeniaPex.
+
+Relationship Summary:
+- ZeniaPex is the main/parent company that owns all products and projects.
+- ZeniaOne is Product 1 under ZeniaPex: an AI Voice Agent and Telephony platform.
+- ZeniaHR is Product 2 under ZeniaPex: an enterprise HRMS and payroll platform.
+
+Each product has its own independent technology stack, user base, and feature roadmap.
+All products share ZeniaPex's values: multi-tenant architecture, Indian language support, enterprise-grade security, and cloud-based SaaS delivery.
+
+---
+
+## SECTION 4: COMMONLY ASKED QUESTIONS
+
+Q: What is ZeniaPex?
+A: ZeniaPex is the main parent technology company. It builds AI and enterprise software products including ZeniaOne (AI Voice Platform) and ZeniaHR (HRMS Platform).
+
+Q: What is ZeniaOne?
+A: ZeniaOne is ZeniaPex's AI-powered Voice Agent and Telephony platform that lets businesses automate customer calls, appointments, and support using AI voice agents.
+
+Q: What is ZeniaHR?
+A: ZeniaHR is ZeniaPex's enterprise HRMS platform for managing employees, attendance, payroll, and client billing. It supports PF/ESIC compliance and multi-company setups.
+
+Q: Is ZeniaOne and ZeniaHR the same product?
+A: No. ZeniaOne is an AI voice/telephony platform for customer support automation. ZeniaHR is an HR and payroll management system. Both are separate products under the same parent company ZeniaPex.
+
+Q: What languages does ZeniaOne support?
+A: ZeniaOne supports English, Hindi, Hinglish (Roman Hindi), and Gujarati for voice interactions.
+
+Q: Who is the parent company of ZeniaOne?
+A: ZeniaPex is the parent company of ZeniaOne.
+
+Q: Who is the parent company of ZeniaHR?
+A: ZeniaPex is the parent company of ZeniaHR.
+
+Q: What does ZeniaPex do?
+A: ZeniaPex is a technology company that builds AI and enterprise SaaS products. Its current products are ZeniaOne (AI Voice Platform) and ZeniaHR (HRMS Platform), with more products under development.
+
+Q: What is the difference between ZeniaPex and ZeniaOne?
+A: ZeniaPex is the parent/main company. ZeniaOne is one of the products made by ZeniaPex. Think of ZeniaPex as the company name and ZeniaOne as their AI voice product.
+
+Q: What is the difference between ZeniaPex and ZeniaHR?
+A: ZeniaPex is the parent/main company. ZeniaHR is one of the products made by ZeniaPex for HR and payroll management.
+
+---
+
+## SECTION 5: ADDITIONAL NOTES
+
+- ZeniaPex focuses on the Indian market with deep support for Indian languages and regulatory compliance (PF, ESIC).
+- All ZeniaPex products are built with a multi-tenant architecture to serve multiple businesses independently on the same platform.
+- ZeniaOne is the company's AI-first product and represents ZeniaPex's vision for the future of customer communication.
+- ZeniaHR serves the staffing and enterprise HR segment, solving payroll and workforce management challenges.
+
+---
+END OF DOCUMENT
+ZeniaPex Company & Product Knowledge Base — Version 1.0
+For internal AI knowledge base use.
+========================================

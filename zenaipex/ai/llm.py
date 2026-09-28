@@ -55,6 +55,9 @@ def get_last_successful_provider(company_id: Optional[str], agent_id: Optional[s
     return _config_success_history.get(get_config_key(company_id, agent_id, stage))
 
 def is_provider_healthy(provider_name: str, allow_degraded: bool = False) -> bool:
+    if allow_degraded:
+        return True
+        
     health = _provider_health.get(provider_name)
     if not health:
         return True
@@ -68,14 +71,11 @@ def is_provider_healthy(provider_name: str, allow_degraded: bool = False) -> boo
             return True
         return False
         
-    # Strictly enforce 429 rate limit cooldowns
+    # Strictly enforce 429 rate limit cooldowns unless degraded
     reason = health.get("last_failure_reason", "")
     if reason == "429_rate_limit" and time.time() < health.get("cooldown_until", 0):
         return False
         
-    # For DEGRADED (non-429), we do NOT enforce a hard skip.
-    # get_prioritized_providers pushes them to the back of the queue,
-    # meaning they will only be attempted if all HEALTHY providers fail.
     return True
 
 def record_provider_success(provider_name: str, company_id: Optional[str] = None, agent_id: Optional[str] = None, stage: str = "generation", latency: float = 0.0):
@@ -117,6 +117,13 @@ def record_provider_failure(provider_name: str, reason: str = "error"):
     health["last_failure"] = time.time()
     health["last_failure_reason"] = reason
     
+    # Fast circuit break for billing / credit exhaustion (HTTP 402)
+    if "402" in str(reason) or "credit" in str(reason).lower() or "payment" in str(reason).lower():
+        health["circuit_state"] = "OPEN"
+        health["cooldown_until"] = time.time() + 86400  # 24 hours cooldown for exhausted credits
+        logger.warning(f"CIRCUIT BREAKER OPEN for {provider_name} due to exhausted credits ({reason}). Skipping for 24h.")
+        return
+
     # Circuit Breaker Logic
     consecutive = health["consecutive_failures"]
     if consecutive >= 3:
@@ -208,8 +215,6 @@ def get_prioritized_providers(providers: List[Any], company_id: Optional[str], a
         
         # 3. Affinity
         affinity = 0 if p_name == last_success else 1
-        if stage == "generation" and "sarvam" in p_name:
-            affinity = -1
         
         # 4. Latency
         latency = health.get("avg_latency", 99.0)
@@ -256,6 +261,7 @@ class AgentLLMClient:
         company_id: Optional[str] = None,
         agent_id: Optional[str] = None,
         request_id: str = "REQ-UNKNOWN",
+        tts_voice: str = "ritu",
     ):
         self.system_prompt = system_prompt
         self.providers = providers
@@ -268,6 +274,7 @@ class AgentLLMClient:
         self.company_id = company_id
         self.agent_id = agent_id
         self.request_id = request_id
+        self.tts_voice = tts_voice
         self._session: Optional[aiohttp.ClientSession] = None
         self.current_budget_deadline: Optional[float] = None
 
@@ -324,21 +331,21 @@ class AgentLLMClient:
             elif "nvidia" in agent_model.lower() or "nemotron" in agent_model.lower():
                 preferred_provider = "nvidia_1"
 
-        # Global strict priority: Sarvam -> Gemini -> NVIDIA 1 -> NVIDIA 2 -> Groq
+        # Global strict priority: Groq (ultra-fast <0.5s) -> Gemini -> NVIDIA 1 -> NVIDIA 2 -> Sarvam
         priority_map = {
-            "sarvam": 1,
+            "groq": 1,
             "gemini": 2,
             "nvidia": 3,
             "nvidia_1": 3,
             "nvidia_2": 4,
-            "groq": 5
+            "sarvam": 5
         }
         
         # Sort all providers according to the strict priority map
         providers.sort(key=lambda p: priority_map.get(p.provider.lower(), 99))
         
-        # If agent explicitly requested a model, pull its provider to the absolute front
-        if preferred_provider:
+        # If agent explicitly requested a model, pull its provider to the front ONLY if healthy
+        if preferred_provider and is_provider_healthy(preferred_provider):
             for i, p in enumerate(providers):
                 if preferred_provider in p.provider.lower():
                     preferred_p = providers.pop(i)
@@ -373,6 +380,7 @@ class AgentLLMClient:
             company_id=company_id,
             agent_id=str(agent_doc.get("_id")) if agent_doc.get("_id") else None,
             request_id=request_id,
+            tts_voice=agent_doc.get("tts_voice", "ritu"),
         )
 
     async def _get_session(self) -> aiohttp.ClientSession:
@@ -409,10 +417,65 @@ class AgentLLMClient:
         # Detect the user's language + script before building the prompt
         lang_result = detect_language(user_message, conversation_history)
 
+        # Explicit language preference enforcement
+        if language in ["hinglish", "hi-IN", "hindi_latin"]:
+            lang_result.lang = "hindi"
+            lang_result.script = "latin"
+            lang_result.style_instruction = (
+                "LANGUAGE & STYLE RULE (CRITICAL - HIGHEST PRIORITY):\n"
+                "The user is speaking in Hinglish. You MUST respond in conversational Romanized Hinglish (using English/Latin letters ONLY, e.g., 'Main theek hoon! Aap bataiye aap kaise hain?').\n"
+                "Do NOT write in Devanagari Hindi script. Do NOT use pure English. Use natural, daily-spoken Hinglish words written in English letters."
+            )
+        elif language in ["gujarati", "gu-IN"]:
+            lang_result.lang = "gujarati"
+            lang_result.script = "gujarati_script"
+        elif language in ["english", "en-US"]:
+            lang_result.lang = "english"
+            lang_result.script = "latin"
+
         system_content = self.system_prompt
         
-        # Enforce VOICE response lengths safely
-        system_content += "\n\nCRITICAL DIRECTIVE: You are a Voice Assistant. Ensure your answers are highly concise and conversational. Do NOT exceed 1 to 3 short sentences unless absolutely necessary. After answering the user's specific question, you may append a single natural follow-up question if appropriate."
+        # Enforce response quality & formatting guidance
+        system_content += """
+
+CRITICAL ASSISTANT DIRECTIVES:
+1. Professional Formatting & Quality: Respond like a senior, knowledgeable AI assistant (such as ChatGPT or Gemini). Be highly articulate, helpful, and professional.
+2. Structure & Emojis: ALWAYS structure your answers cleanly. Use bullet points for multiple items, bold text for emphasis, and sprinkle relevant professional emojis (e.g., 🚀, 💡, 📊, ✅) to make the text engaging and easy to read.
+3. Comprehensive Information: When the user asks about features, capabilities, or documents, explain key points clearly and thoroughly based on available document context, using lists if applicable.
+4. Proactive Suggestions: Always conclude by proactively suggesting 2-3 specific follow-up questions the user can ask. You MUST format these strictly as a bulleted list of questions at the very end of your response. Example:
+   - What are the core features?
+   - How do I set up a custom domain?
+5. Phonetic & Brand Awareness: Note that the user may pronounce "ZeniaOne" as "Zinnia One", "Janya One", or "Zenia". Always treat these as referring to ZeniaOne."""
+
+        # Enforce GENDER & PERSONA consistency
+        voice_key = (getattr(self, "tts_voice", None) or "ritu").lower()
+        MALE_VOICES = {"rohan", "rahul", "aditya", "kabir", "amit", "dev", "varun", "sumit", "arjun", "ashutosh", "ratan", "manan", "aayan", "shubh", "advait", "anand", "tarun", "sunny", "mani", "gokul", "vijay", "mohit", "rehan", "soham"}
+        is_male = voice_key in MALE_VOICES
+
+        if is_male:
+            system_content += """
+
+GENDER & GRAMMAR DIRECTIVE (MALE PERSONA):
+- You are a MALE AI Assistant.
+- In Hindi / Hinglish, you MUST strictly use masculine verbs, adjectives, and self-references when speaking about yourself:
+  * Say 'Main aapki madad kar sakta hoon' (NEVER 'sakti hoon').
+  * Say 'Main sun raha hoon' (NEVER 'rahi hoon').
+  * Say 'Main aapko guide karunga' (NEVER 'karungi').
+  * Refer to yourself as 'Main aapka assistant hoon' (masculine)."""
+        else:
+            system_content += """
+
+GENDER & GRAMMAR DIRECTIVE (FEMALE PERSONA):
+- You are a FEMALE AI Assistant.
+- In Hindi / Hinglish, you MUST strictly use feminine verbs, adjectives, and self-references when speaking about yourself:
+  * Say 'Main aapki madad kar sakti hoon' (NEVER 'sakta hoon').
+  * Say 'Main sun rahi hoon' (NEVER 'raha hoon').
+  * Say 'Main aapko guide karungi' (NEVER 'karunga').
+  * Refer to yourself as 'Main aapki assistant hoon' (feminine)."""
+
+        # Ensure company name is correctly mapped before substitution
+        if company_name and company_name.upper() == "INTERNAL / PLATFORM":
+            company_name = "ZeniaOne"
 
         # Substitute template variables in system prompt
         if current_date:
@@ -525,13 +588,15 @@ Description: The human resources management product that handles policies, payro
                 "   c) If the user asks 'what do you work', 'what can you do', or 'konsi information de sakteho', DO NOT list generic AI capabilities. Naturally mention that you can provide information about the company/project (like the AVAILABLE KNOWLEDGE TOPICS if provided).\n"
                 "   d) Do NOT claim the company has products, services, pricing, etc., unless those are explicitly in the trusted context/topics.\n"
                 "   e) Do NOT ask 'which system' if the user explicitly named the company previously. Resolve it automatically.\n"
+                "   f) STRICT IDENTITY PROTECTION: NEVER mention ChatGPT, OpenAI, Gemini, Google, Llama, or Groq. If asked who created you or what model you are, you MUST say you are an AI representative for the company.\n"
                 "2. STRICT KNOWLEDGE PRIORITY & NO HALLUCINATION:\n"
                 "   a) FINAL ANSWER MUST BE STRICTLY SUPPORTED BY AVAILABLE TRUSTED CONTEXT.\n"
                 "   b) FIRST, use the DETAILED KNOWLEDGE BASE CONTEXT provided above. SECOND, use the COMPANY PROFILE.\n"
                 "   c) If the user asks what the company does, its business activity, or on what 'basis' it works, use the COMPANY PROFILE's About/Description to explain its core operations.\n"
                 "   d) THIRD, use Conversation History ONLY for resolving references (e.g. 'it'). NEVER use general world knowledge to fill missing company/project facts.\n"
-                "   e) Do not invent: features, technologies, frameworks, databases, APIs, users, developers, dates, revenue, pricing, statistics, capabilities, authentication methods, architecture, workflows, business information, project objectives, scope, or future features unless supported by trusted retrieved context.\n"
-                "   f) Do not 'complete' an answer using assumptions, even if plausible or common for similar systems. A statement can be plausible and still must be omitted if the source does not support it.\n"
+                "   e) Do not invent: phone numbers, physical addresses, office locations, email addresses, business hours, features, technologies, frameworks, databases, APIs, users, developers, dates, revenue, pricing, statistics, capabilities, authentication methods, architecture, workflows, business information, project objectives, scope, or future features unless supported by trusted retrieved context.\n"
+                "   f) CONTACT DETAILS & ADDRESS STRICT RULE: If the user asks for business hours, phone number, email, or physical address, and it is NOT explicitly present in the COMPANY PROFILE or retrieved context, you MUST explicitly state that this information is not configured or currently unavailable. NEVER invent fake street addresses (like '123 Main Street'), fake cities, or dummy phone numbers!\n"
+                "   g) Do not 'complete' an answer using assumptions, even if plausible or common for similar systems. A statement can be plausible and still must be omitted if the source does not support it.\n"
                 "3. ANSWER ONLY WHAT THE QUESTION REQUIRES:\n"
                 "   a) Answer the exact question asked. Do not automatically dump every fact available in the context.\n"
                 "   b) If asked about 'technologies', use ONLY the 'Technology Used' section. Do not add unrelated authentication or frontend details unless specifically asked.\n"
@@ -547,13 +612,21 @@ Description: The human resources management product that handles policies, payro
                 "   b) If multiple retrieved chunks contain different wording, prefer the more direct and specific source for the question. Do not invent a reconciliation. Say only what is clearly supported.\n"
                 "6. GROUNDING & UNKNOWN INFORMATION (STRICT ENFORCEMENT):\n"
                 "   a) BEFORE answering, you MUST verify that the context explicitly supports your answer.\n"
-                f"   b) If the requested fact is NOT present in trusted context, or if the context is insufficient, you MUST NOT guess or invent facts. You MUST answer EXACTLY with the fallback message: '{lang_result.fallback_message}'\n"
+                "   b) SPELLING/PHONETIC TYPO HANDLING: If the user asks about an entity (product, person, concept) that is NOT in the context, BUT it sounds phonetically similar or is a minor typo of a KNOWN entity in your context or AVAILABLE TOPICS (e.g., 'zenya HR' instead of 'ZeniaHR', or 'ZeniaOneHR' instead of 'ZeniaOne' or 'ZeniaHR'), do NOT just say you don't know. Instead, politely ask them to confirm if they meant the known entity (e.g., 'Mujhe zenya HR ke baare mein jankari nahi mili. Kya aap ZeniaHR ke baare mein puchna chahte hain?'). DO NOT APPEND SUGGESTED QUESTIONS to this response. Just ask the confirmation question and stop.\n"
+                f"   c) If the user asks a factual question about the company/project and the fact is NOT present in trusted context, you MUST NOT guess or invent facts. You MUST answer EXACTLY with the fallback message: '{lang_result.fallback_message}'\n"
+                "   d) CASUAL CONVERSATION & LANGUAGE SWITCHING: You are fluent in ALL Indian and global languages (including Marathi, Gujarati, Punjabi, Bengali, Tamil, etc.). If the user is engaging in casual greeting (e.g., 'how are you') or asking about your language capabilities (e.g., 'can you speak marathi', 'gujarati me bat karoge'), DO NOT use the fallback message and DO NOT deny the request. Respond naturally in the requested language, confirm that you can speak it, and ask how you can help them.\n"
+                "   e) REPEATED QUESTIONS: Even if the user repeats a question already answered in conversation history, answer it thoroughly and politely from the trusted context without refusing.\n"
                 "7. INTERNAL VERIFICATION (SILENT):\n"
                 "   a) Before finalizing, mentally verify: Is every factual claim supported? Am I adding plausible sounding but unsupported details? Am I merging chunks unjustifiably? Am I adding marketing fluff?\n"
                 "   b) Remove unsupported claims before answering.\n"
                 "8. CLEAN OUTPUT: Output ONLY the final customer-facing response. DO NOT output any internal reasoning, thoughts, or <think> tags. DO NOT prefix with 'FINAL_ANSWER:'. DO NOT mention 'retrieved chunks', 'Pinecone', 'RAG', 'namespaces', or filenames.\n"
                 "9. DIRECT & CONCISE ANSWER STYLE: Be direct, professional, natural, and concise. Avoid unnecessary repetition, long preambles, and boilerplate like 'Based on the provided context...'. Focus strictly on the asked topic.\n"
                 "10. PROFESSIONAL FOLLOW-UP: For informational, product, or company questions, conclude your answer with ONE short, natural professional follow-up question inviting the user to ask more (e.g., 'Would you like to know more about these features?', 'Can I explain any of this in more detail?'). Use the EXACT same language and script as your response. DO NOT add follow-ups to simple greetings, yes/no confirmations, error messages, very short acknowledgements, or when the user is clearly ending the conversation.\n"
+                "11. INTERACTIVE SUGGESTIONS: For every informational response, you MUST append a section at the very end with a bulleted list of 1-3 short follow-up questions framed strictly from the USER'S perspective (e.g., '- Tell me about pricing?', '- How do I set this up?'). Do NOT frame these bullets from your perspective.\n"
+                "12. PROFESSIONAL FORMATTING & COUNTING:\n"
+                "   a) Make your responses visually appealing and 'smart'. Always bold key terms, company names, and product names.\n"
+                "   b) Use bullet points and relevant emojis to structure lists and highlight important features (e.g., 🏢, 🚀, 💬, 📊).\n"
+                "   c) ACCURATE COUNTING: If you claim 'There are X products' or 'X features', you MUST mathematically verify that you are actually listing exactly X items. Do not miscount.\n"
             )
 
         # ── LANGUAGE & STYLE RULE (injected last = highest instruction priority) ──
@@ -641,19 +714,19 @@ Description: The human resources management product that handles policies, payro
         global_start_time = time.perf_counter()
         deadline = getattr(self, "current_budget_deadline", None)
         if not deadline:
-            deadline = global_start_time + 10.0
+            deadline = global_start_time + 20.0
 
         for i, provider in enumerate(gen_providers):
             # Fast fail if we exceeded global latency budget
             remaining_budget = deadline - time.perf_counter()
-            if remaining_budget <= 0:
-                logger.error(f"[{self.request_id}] GLOBAL GENERATION TIMEOUT EXCEEDED. Aborting failover.")
+            if remaining_budget <= 0.2:
+                logger.error(f"[{self.request_id}] GLOBAL GENERATION TIMEOUT EXCEEDED (remaining: {remaining_budget:.2f}s). Aborting failover.")
                 break
 
             p_name = provider.provider.lower()
             
             if not is_provider_healthy(p_name, allow_degraded=(i == len(gen_providers) - 1)):
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: SKIPPED (COOLDOWN)\nLatency: 0.00s\nFallback: {fallback_str}")
                 last_error_message = f"⚠️ Error: LLM provider {p_name} is temporarily skipping requests."
                 continue
@@ -679,8 +752,8 @@ Description: The human resources management product that handles policies, payro
             if "nvidia" in p_name.lower() or "nemotron" in model.lower():
                 p_max_tokens = max(self.max_tokens, 2500)
             
-            if p_name == "groq" and model in ["mixtral-8x7b-32768", "llama-3.1-70b-versatile", "llama-3.3-70b-versatile", "llama3-8b-8192"]:
-                model = "openai/gpt-oss-20b"
+            if p_name == "groq" and model in ["mixtral-8x7b-32768"]:
+                model = "llama-3.3-70b-versatile"
 
             payload = {
                 "model": model,
@@ -691,14 +764,12 @@ Description: The human resources management product that handles policies, payro
             }
 
             try:
-                provider_max = 30 if "nvidia" in p_name.lower() else 8
+                provider_max = 30 if "nvidia" in p_name.lower() else 12
                 
-                # Only carve out a reserve from the first provider's attempt.
-                # Once we fall back (i > 0), the fallback provider should be allowed 
-                # to use the entire remaining global budget.
-                fallback_reserve = 2.5 if i == 0 and len(gen_providers) > 1 else 0.0
+                remaining_providers = len(gen_providers) - i - 1
+                actual_timeout = max(3.0, min(provider_max, remaining_budget))
                 
-                actual_timeout = max(0.1, min(provider_max, remaining_budget - fallback_reserve))
+                logger.info(f"[BUDGET_TRACE]\nstage=generation\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nactual_timeout={actual_timeout:.2f}\nresult=ATTEMPTING")
                 
                 req_timeout = aiohttp.ClientTimeout(total=actual_timeout, connect=3, sock_read=actual_timeout)
                 
@@ -708,8 +779,9 @@ Description: The human resources management product that handles policies, payro
                     if resp.status != 200:
                         err = await resp.text()
                         status_str = f"429_QUOTA" if resp.status == 429 else f"HTTP_{resp.status}"
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: {status_str}\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                        logger.info(f"[BUDGET_TRACE]\nstage=generation\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nactual_timeout={actual_timeout:.2f}\nresult={status_str}")
                         
                         if resp.status == 429:
                             last_error_message = f"⚠️ Error: AI Quota Exceeded (429) on {p_name}. Please check your billing or rate limits."
@@ -740,7 +812,7 @@ Description: The human resources management product that handles policies, payro
                     result = await resp.json()
                     
                     if "choices" not in result or not result["choices"]:
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: EMPTY_RESPONSE\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                         last_error_message = f"⚠️ Error: LLM provider {p_name} returned no choices."
                         if self.company_id:
@@ -761,7 +833,7 @@ Description: The human resources management product that handles policies, payro
                     content = msg.get("content")
                         
                     if not content or not str(content).strip():
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: EMPTY_RESPONSE\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                         last_error_message = f"⚠️ Error: LLM provider {p_name} returned empty content."
                         record_provider_failure(p_name)
@@ -841,7 +913,7 @@ Description: The human resources management product that handles policies, payro
                     content_str = content_str.strip().strip('"').strip("'").strip()
                         
                     if not content_str:
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: INVALID_STRUCTURED_OUTPUT\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                         last_error_message = f"⚠️ Error: LLM provider {p_name} returned empty content after stripping reasoning."
                         record_provider_failure(p_name)
@@ -891,8 +963,9 @@ Description: The human resources management product that handles policies, payro
                     return content_str, usage
             except asyncio.TimeoutError:
                 elapsed = time.perf_counter() - start
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: TIMEOUT\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=generation\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nactual_timeout={actual_timeout:.2f}\nresult=TIMEOUT")
                 last_error_message = f"⚠️ Error: LLM provider {p_name} timed out."
                 record_provider_failure(p_name)
                 if self.company_id:
@@ -910,8 +983,9 @@ Description: The human resources management product that handles policies, payro
                 continue
             except Exception as exc:
                 elapsed = time.perf_counter() - start
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = gen_providers[i+1].provider.lower() if i+1 < len(gen_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: ERROR\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=generation\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nactual_timeout={actual_timeout:.2f}\nresult=ERROR")
                 last_error_message = f"⚠️ Error: LLM provider {p_name} exception: {str(exc)[:100]}"
                 record_provider_failure(p_name)
                 if self.company_id:
@@ -980,8 +1054,8 @@ Description: The human resources management product that handles policies, payro
         for i, provider in enumerate(stream_providers):
             # Fast fail if we exceeded global latency budget
             remaining_budget = deadline - time.perf_counter()
-            if remaining_budget <= 0:
-                logger.error(f"[{self.request_id}] GLOBAL STREAM TIMEOUT EXCEEDED. Aborting failover.")
+            if remaining_budget <= 0.2:
+                logger.error(f"[{self.request_id}] GLOBAL STREAM TIMEOUT EXCEEDED (remaining: {remaining_budget:.2f}s). Aborting failover.")
                 break
 
             p_name = provider.provider.lower()
@@ -991,7 +1065,7 @@ Description: The human resources management product that handles policies, payro
                 if i == len(stream_providers) - 1 and i == 0:
                     pass
                 else:
-                    fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                    fallback_str = stream_providers[i+1].provider.lower() if i+1 < len(stream_providers) else "NONE"
                     logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: SKIPPED (COOLDOWN)\nLatency: 0.00s\nFallback: {fallback_str}")
                     continue
                 
@@ -1029,7 +1103,24 @@ Description: The human resources management product that handles policies, payro
             start = time.perf_counter()
             try:
                 provider_max = 30 if "nvidia" in p_name.lower() else 8
-                actual_timeout = max(0.1, min(remaining_budget, provider_max))
+                
+                remaining_providers = len(stream_providers) - i - 1
+                reserve = remaining_providers * 1.0
+                allocated = remaining_budget - reserve
+                
+                if allocated < 1.0 and remaining_providers > 0:
+                    fallback_str = stream_providers[i+1].provider.lower()
+                    logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: SKIPPED (INSUFFICIENT BUDGET, RESERVING FOR FALLBACK)\nLatency: 0.00s\nFallback: {fallback_str}")
+                    logger.info(f"[BUDGET_TRACE]\nstage=stream\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nallocated={allocated:.2f}\nactual_timeout=0.00\nresult=SKIPPED")
+                    continue
+                
+                if remaining_providers == 0:
+                    actual_timeout = min(provider_max, remaining_budget)
+                else:
+                    actual_timeout = max(1.0, min(provider_max, allocated))
+                
+                logger.info(f"[BUDGET_TRACE]\nstage=stream\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nallocated={allocated:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=ATTEMPTING")
+                
                 # For stream, connect timeout is 3, read timeout is longer
                 req_timeout = aiohttp.ClientTimeout(total=actual_timeout, connect=3, sock_read=actual_timeout)
                 async with session.post(endpoint, json=payload, headers=headers, timeout=req_timeout) as resp:
@@ -1037,8 +1128,9 @@ Description: The human resources management product that handles policies, payro
                     if resp.status != 200:
                         err = await resp.text()
                         status_str = f"429_QUOTA" if resp.status == 429 else f"HTTP_{resp.status}"
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = stream_providers[i+1].provider.lower() if i+1 < len(stream_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: {status_str}\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                        logger.info(f"[BUDGET_TRACE]\nstage=stream\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nallocated={allocated:.2f}\nactual_timeout={actual_timeout:.2f}\nresult={status_str}")
                         if resp.status == 429:
                             last_error_message = f"⚠️ Error: AI Quota Exceeded (429) on {p_name}. Please check your billing or rate limits."
                         else:
@@ -1117,8 +1209,9 @@ Description: The human resources management product that handles policies, payro
                             )
             except asyncio.TimeoutError:
                 elapsed = time.perf_counter() - start if 'start' in locals() else 0
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = stream_providers[i+1].provider.lower() if i+1 < len(stream_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: TIMEOUT\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=stream\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nallocated={allocated:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=TIMEOUT")
                 last_error_message = f"⚠️ Error: LLM provider {p_name} timed out."
                 record_provider_failure(p_name)
                 if self.company_id:
@@ -1136,8 +1229,9 @@ Description: The human resources management product that handles policies, payro
                 continue
             except Exception as exc:
                 elapsed = time.perf_counter() - start if 'start' in locals() else 0
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = stream_providers[i+1].provider.lower() if i+1 < len(stream_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] GENERATION PROVIDER {p_name}\nStatus: ERROR\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=stream\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nallocated={allocated:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=ERROR")
                 last_error_message = f"⚠️ Error: LLM provider {p_name} exception: {str(exc)[:100]}"
                 record_provider_failure(p_name)
                 if self.company_id:
@@ -1331,11 +1425,16 @@ Description: The human resources management product that handles policies, payro
                 "scope", "objective", "lakshya", "uddeshya",
                 # admin panel
                 "admin", "panel",
-                # what is / general
-                "shu che", "kya hai", "kay aahe", "shu", "niti"
+                # general policy
+                "niti"
             ]
             all_doc_patterns = doc_patterns_en + doc_patterns_roman
-            if any(p in msg_clean for p in all_doc_patterns):
+            # Require at least one substantive topic word if matching generic phrases like 'kya hai' or 'shu che'
+            topic_words = [w for w in words_only if w not in ["kya", "hai", "ye", "yeh", "woh", "shu", "che", "aa", "kay", "aahe", "dhanyvad", "dhanyavad", "shukriya", "thanks", "aur"]]
+            has_doc_keyword = any(p in msg_clean for p in all_doc_patterns)
+            has_phrase_with_topic = any(phrase in msg_clean for phrase in ["kya hai", "shu che", "kay aahe"]) and len(topic_words) >= 1
+            
+            if has_doc_keyword or has_phrase_with_topic:
                 from ai.language_detector import normalize_query_for_retrieval
                 retrieval_query = normalize_query_for_retrieval(user_message)
                 logger.info(f"[{self.request_id}] INTENT FAST-PATH\nIntent: document_query\nLLM Call: NOT REQUIRED\nLatency: 0.001s")
@@ -1359,11 +1458,13 @@ Description: The human resources management product that handles policies, payro
             "Rules for Query Rewriting:\n"
             "0. LANGUAGE-INDEPENDENT RETRIEVAL (CRITICAL): The knowledge base is in English. You MUST always write `search_queries` in plain English, regardless of what language the user wrote in. Translate the user's intent to English search terms automatically. Example: 'RitHan ma kai technology use thai che?' → search_queries: ['RitHan technologies used']. Example: 'RitHan kya hai?' → search_queries: ['what is RitHan']. This translation is for RETRIEVAL ONLY — the final answer will be delivered in the user's language by a separate system.\n"
             "1. CONVERSATIONAL FOLLOW-UP: If the user asks a short follow-up (e.g. 'what about this?', 'and timings?', 'aur pricing?', 'why?', 'tell me more'), you MUST use the immediate conversation history to determine the active topic and entity. Rewrite it into a full, context-resolved search query (e.g. 'NovaCare Dental Clinic business hours', 'NovaCare pricing'). Do NOT return 'ambiguous' if the previous turn makes the context reasonably clear.\n"
+            "1.5 CONFIRMATIONS: If the user says 'yes', 'ha', 'haan', 'correct', OR if the user ignores the AI's confirmation and just asks a related question (e.g., AI asked 'Did you mean ZeniaHR?', and User says 'how do I sign into'), you MUST resolve the intent to query about X. Example: User says 'how do I sign into', AI previously said 'Did you mean ZeniaHR?' -> search_queries: ['ZeniaHR sign in']. Set intent to 'company_info_query' or 'document_query'.\n"
             "2. DO NOT INVENT ENTITIES: If it is a new chat (no history) or no entity was established, DO NOT invent a company name (e.g. do NOT guess RitHan). If a short query like 'Which database does it use?' lacks an antecedent, return 'ambiguous' intent so the user can clarify.\n"
             "3. MULTI-PART QUESTIONS: If asking multiple separate things, split them into multiple separate queries in `search_queries`.\n"
             "4. EXACT LOOKUPS: Preserve exact names, IDs, dates, and codes.\n"
             "5. NO-CONTEXT FOLLOW-UP: If ambiguous, return 'ambiguous' intent with a clarification question in the user's language (e.g., 'Aap kis system ya project ke baare mein pooch rahe hain?'). Only ask clarification if there are multiple equally plausible referents or no active subject.\n"
             "6. COMPANY INFO: If the user asks about the company's identity, basic features, what the company is, OR asks about business hours, timings, schedule, open/close status, holidays, or specific days of the week (e.g., 'Monday ka time', 'weekend open hai?', 'kitni din close'), set intent to `company_info_query`.\n"
+            "6.1 CAPABILITIES & AVAILABLE KNOWLEDGE: If the user asks what information you have, what topics you know, what you can do, or what services/products the company provides (e.g., 'aapke paas kis kis ki jankari hai', 'kis bare mein bata sakte ho', 'what do you know', 'what can you do', 'what information do you have'), set intent to `company_info_query` with search_queries: ['company overview products services capabilities']. NEVER return 'ambiguous' for these queries!\n"
             "7. GREETINGS & CHITCHAT: If the user says 'hello', 'hi', or engages in basic conversational greetings, set intent to `general_query`.\n"
             "8. DEFAULT: If the user asks about ANY company policy, modules, features, or generic company information (e.g., 'leave policy', 'company details'), set the intent to `document_query` or `company_info_query`, NEVER `ambiguous`.\n"
             "9. DEFAULT OTHERWISE: use `document_query`.\n\n"
@@ -1380,7 +1481,9 @@ Description: The human resources management product that handles policies, payro
         messages = [{"role": "system", "content": system_prompt}]
         recent = conversation_history[-6:]
         for msg in recent:
-            messages.append({"role": msg.get("role", "user"), "content": msg.get("content", "")})
+            c = (msg.get("content") or "").strip()
+            if c and c != "...":
+                messages.append({"role": msg.get("role", "user"), "content": c})
         messages.append({"role": "user", "content": user_message})
         
         session = await self._get_session()
@@ -1392,7 +1495,7 @@ Description: The human resources management product that handles policies, payro
         intent_start_time = time.perf_counter()
         # Cap intent phase to 5.0 seconds OR the remaining global budget, whichever is smaller
         global_deadline = getattr(self, "current_budget_deadline", None)
-        max_intent_deadline = intent_start_time + 5.0
+        max_intent_deadline = intent_start_time + 12.0
         deadline = min(global_deadline, max_intent_deadline) if global_deadline else max_intent_deadline
         
         # Sort providers dynamically for intent
@@ -1411,8 +1514,8 @@ Description: The human resources management product that handles policies, payro
         for i, provider in enumerate(intent_providers):
             # Fast fail if we exceeded budget
             remaining_budget = deadline - time.perf_counter()
-            if remaining_budget <= 0:
-                logger.error(f"[{self.request_id}] GLOBAL INTENT TIMEOUT EXCEEDED. Aborting failover.")
+            if remaining_budget <= 0.2:
+                logger.error(f"[{self.request_id}] GLOBAL INTENT TIMEOUT EXCEEDED (remaining: {remaining_budget:.2f}s). Aborting failover.")
                 break
 
             p_name = provider.provider.lower()
@@ -1421,7 +1524,7 @@ Description: The human resources management product that handles policies, payro
                 if i == len(intent_providers) - 1 and i == 0:
                     pass
                 else:
-                    fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                    fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                     logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: SKIPPED (COOLDOWN)\nLatency: 0.00s\nFallback: {fallback_str}")
                     continue
                 
@@ -1433,7 +1536,7 @@ Description: The human resources management product that handles policies, payro
                 headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
             elif p_name == "groq":
                 api_url = "https://api.groq.com/openai/v1"
-                headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
+                headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}", "User-Agent": "ZenaipexAI/1.0"}
             elif "nvidia" in p_name:
                 api_url = "https://integrate.api.nvidia.com/v1"
                 headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
@@ -1443,8 +1546,8 @@ Description: The human resources management product that handles policies, payro
                 
             endpoint = f"{api_url}/chat/completions"
             
-            if p_name == "groq" and model in ["mixtral-8x7b-32768", "llama-3.1-70b-versatile", "llama-3.3-70b-versatile", "llama3-8b-8192"]:
-                model = "openai/gpt-oss-20b"
+            if p_name == "groq" and model in ["mixtral-8x7b-32768"]:
+                model = "llama-3.3-70b-versatile"
                 
             payload = {
                 "model": model,
@@ -1452,18 +1555,27 @@ Description: The human resources management product that handles policies, payro
                 "max_tokens": 600,
                 "temperature": 0.1,
             }
+            if p_name in ["groq", "gemini"]:
+                payload["response_format"] = {"type": "json_object"}
 
             try:
-                provider_max = 30 if "nvidia" in p_name.lower() else 8
-                actual_timeout = max(0.1, min(remaining_budget, provider_max))
+                provider_max = 30 if "nvidia" in p_name.lower() else 10
+                
+                remaining_providers = len(intent_providers) - i - 1
+                reserve = remaining_providers * 1.5
+                actual_timeout = max(3.0, min(provider_max, remaining_budget - reserve if remaining_providers > 0 else remaining_budget))
+                
+                logger.info(f"[BUDGET_TRACE]\nstage=intent\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=ATTEMPTING")
+                
                 req_timeout = aiohttp.ClientTimeout(total=actual_timeout, connect=3, sock_read=actual_timeout)
                 start_p = time.perf_counter()
                 async with session.post(endpoint, json=payload, headers=headers, timeout=req_timeout) as resp:
                     elapsed = time.perf_counter() - start_p
                     if resp.status != 200:
                         status_str = f"429_QUOTA" if resp.status == 429 else f"HTTP_{resp.status}"
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: {status_str}\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                        logger.info(f"[BUDGET_TRACE]\nstage=intent\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nactual_timeout={actual_timeout:.2f}\nresult={status_str}")
                         if resp.status == 429:
                             retry_after = int(resp.headers.get("Retry-After", 45))
                             record_provider_429(p_name, retry_after)
@@ -1475,7 +1587,7 @@ Description: The human resources management product that handles policies, payro
                     result = await resp.json()
                     
                     if "choices" not in result or not result["choices"]:
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: EMPTY_RESPONSE\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                         record_provider_failure(p_name)
                         continue
@@ -1489,11 +1601,16 @@ Description: The human resources management product that handles policies, payro
                             import re
                             content_str = re.sub(r"<think>.*?</think>", "", content_str, flags=re.DOTALL).strip()
                             if "<think>" in content_str:
-                                content_str = content_str.split("<think>")[0].strip()
+                                after_think = content_str.split("<think>", 1)[-1]
+                                brace_idx = after_think.find("{")
+                                if brace_idx != -1:
+                                    content_str = after_think[brace_idx:]
+                                else:
+                                    content_str = content_str.split("<think>")[0].strip()
                         content = content_str
                     
                     if not content or not str(content).strip():
-                        fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                        fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                         logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: EMPTY_RESPONSE\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                         record_provider_failure(p_name)
                         continue
@@ -1565,21 +1682,22 @@ Description: The human resources management product that handles policies, payro
                                         return parsed
                                 except Exception:
                                     pass
-                    
-                    fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                    fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                     logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: INVALID_STRUCTURED_OUTPUT\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
                     record_provider_failure(p_name, "INVALID_STRUCTURED_OUTPUT")
                     continue
             except asyncio.TimeoutError:
                 elapsed = time.perf_counter() - start_p
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: TIMEOUT\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=intent\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=TIMEOUT")
                 record_provider_failure(p_name, "TIMEOUT")
                 continue
             except Exception as exc:
                 elapsed = time.perf_counter() - start_p
-                fallback_str = self.providers[i+1].provider.lower() if i+1 < len(self.providers) else "NONE"
+                fallback_str = intent_providers[i+1].provider.lower() if i+1 < len(intent_providers) else "NONE"
                 logger.warning(f"[{self.request_id}] INTENT PROVIDER {p_name}\nStatus: ERROR\nLatency: {elapsed:.2f}s\nFallback: {fallback_str}")
+                logger.info(f"[BUDGET_TRACE]\nstage=intent\nprovider={p_name}\nglobal_remaining={remaining_budget:.2f}\nstage_remaining={remaining_budget:.2f}\nremaining_providers={remaining_providers}\nreserve={reserve:.2f}\nactual_timeout={actual_timeout:.2f}\nresult=ERROR")
                 record_provider_failure(p_name, f"ERROR_{type(exc).__name__}")
                 continue
                 

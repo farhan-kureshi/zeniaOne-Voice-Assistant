@@ -33,7 +33,7 @@ from core.config import settings
 from core.database import connect_db, disconnect_db, create_all_indexes
 
 # API Routers
-from api.v1 import auth, companies, agents, knowledge, conversations, channels_twilio, channels, widget, sales
+from api.v1 import auth, companies, agents, knowledge, conversations, channels_twilio, channels, widget, sales, voice_advanced
 from api.v1.admin import router as admin_router
 
 logging.basicConfig(
@@ -86,9 +86,22 @@ async def lifespan(app: FastAPI):
         except Exception as exc:
             logger.warning(f"Failed to preload RAG models (will lazy-load): {exc}")
 
+        # Start background tasks scheduler (e.g., daily KB sync)
+        try:
+            from tasks.daily_sync import start_scheduler
+            start_scheduler()
+        except Exception as exc:
+            logger.error(f"Failed to start background scheduler: {exc}")
+
     yield
 
     # Shutdown
+    try:
+        from tasks.daily_sync import stop_scheduler
+        stop_scheduler()
+    except Exception as exc:
+        pass
+        
     try:
         await disconnect_db()
     except Exception as exc:
@@ -256,6 +269,7 @@ app.include_router(agents.router, prefix=API_PREFIX)
 app.include_router(knowledge.router, prefix=API_PREFIX)
 app.include_router(conversations.router, prefix=API_PREFIX)
 app.include_router(channels_twilio.router, prefix=API_PREFIX)
+app.include_router(voice_advanced.router, prefix=API_PREFIX)
 app.include_router(channels.router, prefix=API_PREFIX)
 app.include_router(widget.router, prefix=API_PREFIX)
 app.include_router(sales.router, prefix=API_PREFIX)

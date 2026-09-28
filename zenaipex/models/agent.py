@@ -57,7 +57,7 @@ class AgentCreate(BaseModel):
         default_factory=lambda: ["en-IN"],
         description="Languages this agent can respond in"
     )
-    tts_voice: str = Field(default="anushka",
+    tts_voice: str = Field(default="ritu",
                            description="Sarvam TTS speaker name")
     tts_model: str = Field(default="bulbul:v3")
 

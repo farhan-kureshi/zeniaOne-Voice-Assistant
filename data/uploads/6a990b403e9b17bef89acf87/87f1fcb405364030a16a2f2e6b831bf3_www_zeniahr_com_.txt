@@ -1,0 +1,3207 @@
+--- SOURCE URL: https://www.zeniahr.com/ ---
+Payroll & HR Software for Manpower & Staffing | ZeniaHR
+
+Built only for manpower & staffing
+
+Hire,
+
+Deploy,
+
+Pay,
+
+Comply.
+
+One Platform.
+
+ZeniaHR is payroll and HR software built only for manpower and staffing
+companies. From winning the tender to the last payslip: onboarding, biometric attendance,
+statutory filings and invoicing for thousands of workers, across every site you run, in one system.
+
+Book a demo
+→
+
+See how it works
+
+Scroll
+
+The human side
+
+6,000 workers is not a number.
+It is 6,000 people who showed up.
+
+Every dot below is a shift worked, a family fed, a payslip that landed on time. ZeniaHR keeps the machinery invisible so your team can look after people, not paperwork.
+
+Ravi Kumar
+Security · Site 07 · Night shift
+Payslip sent
+
+Meena Sharma
+Housekeeping · City Hospital
+PF credited
+
+Arjun Nair
+Facility · IT Park, Pune
+Attendance 26 / 26
+
+Every worker you run
+
+One platform for
+every worker you manage.
+
+Security guards, housekeeping, nurses, drivers, technicians, contract labour. Different work, one system, from the day they join to the payslip they are paid.
+
+Security
+
+Housekeeping
+
+Healthcare
+
+Drivers
+
+Technicians
+
+Industrial
+
+Contract
+
+Office
+
+Shift
+›
+Attendance
+›
+Deployment
+›
+Payroll
+›
+Compliance
+
+Different workers.
+One workforce system.
+
+The old way
+
+47 sites. 47 spreadsheets.
+One heart attack a month.
+
+Muster rolls in photocopies. Attendance on WhatsApp. Salary sheets named final_v7. It works, until the month it does not.
+
+EXCELS
+REGISTERS
+WHATSAPP
+PHOTOCOPIES
+EXCELS
+REGISTERS
+WHATSAPP
+PHOTOCOPIES
+
+FOLLOW-UPS
+PENALTIES
+GHOST WORKERS
+FOLLOW-UPS
+PENALTIES
+GHOST WORKERS
+
+salary_final_FINAL_v7.xlsx
+Modified 11:58 PM
+
+"bhaiya attendance bhej do"
+WhatsApp · Site 12
+
+=SUM(D2:D998) → #REF!
+OT sheet
+
+Muster roll, page 47
+Photocopy, torn
+
+PF challan?
+Due yesterday
+
+One system. Zero scraps.
+Everything above becomes a record in ZeniaHR.
+
+Architecture
+
+One brain.
+Many companies.
+
+A control plane for the group. A private workspace for every entity. Staffing groups rarely run one company, so ZeniaHR never assumed you would.
+
+Isolated data for every tenant
+
+Group level billing and oversight
+
+Audited support access, never silent entry
+
+Group view
+Super admin · Control plane
+ZeniaHR HQ
+Tenants
+Billing
+Licenses
+Audit
+
+2,140 workers
+Tenant workspace
+Facilities entity
+Payroll
+Attendance
+Compliance
+
+3,480 workers
+Tenant workspace
+Healthcare staffing entity
+Payroll
+Tenders
+ID cards
+
+594 workers
+Tenant workspace
+Security services entity
+Payroll
+Sites
+Invoicing
+
+See it run
+
+Payroll for 6,214 people.
+Two minutes, forty seven seconds.
+
+Attendance in, payslips out. Watch the engine make the pass.
+
+Payroll run · June 2026
+LIVE
+
+Pull attendance from 47 sites
+
+Apply pay rules and wage states
+
+Compute PF, ESI, PT, LWF
+
+Generate payslips and bank sheet
+
+Run time
+0:00
+
+Workers processed
+0
+
+Disbursed
+₹0.0 Cr
+
+Run complete · Bank sheet ready · PF and ESI challans queued
+
+Compliance
+
+The 15th arrives.
+You feel nothing.
+
+PF on the 15th. ESI on the 15th. PT and LWF by month end. Calculated, filed and archived without a single reminder set by you.
+
+₹0
+Penalties this year
+
+PF ECR · June
+✓
+
+ESI return · June
+✓
+
+PT paid · June
+✓
+
+July 2026
+Filing calendar
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+✓
+16
+17
+18
+19
+20
+21
+✓
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+✓
+
+Ground reality
+
+Built for the way
+India actually works.
+
+Punches from the factory gate, wages by state rules, challans by the 15th. ZeniaHR speaks the language of sites, shifts and statutory law.
+
+Delhi NCR
+
+Jaipur
+
+Lucknow
+
+Ahmedabad
+
+Kolkata
+
+Mumbai
+
+Hyderabad
+
+Bengaluru
+
+Chennai
+
+eSSL
+ZKTeco
+Matrix
+
+0
+Workers per tenant
+
+0
+Biometric brands synced
+
+0
+Statutory filings automated
+
+0
+Platform, end to end
+
+Pricing
+
+Pricing that
+respects your math.
+
+No per-module pricing. No surprise slabs. One volume rate that rewards scale.
+
+Quarterly
+
+Yearly
+20% off
+
+Free
+For your first fifty
+
+₹0
+up to 50 workers
+
+50 workers, 2 admins
+Attendance without geotagging
+8 core reports
+Email support, reply in 24h
+
+Start free
+
+Paid
+Every feature unlocked, whole headcount at one rate
+
+250 workers
+₹20 per worker
+
+10
+1,000
+
+₹5,000
+/month
+
+Billed quarterly as ₹15,000 · switch to yearly for 20% off
+
+Book a demo
+
+501 and above
+Published rate, custom terms on request
+
+₹15
+per worker / month
+
+₹12 billed yearly
+Every feature unlocked
+Onboarding done by our team
+Phone support, 10am to 10pm
+
+Talk to us
+
+Rates are per worker per month, in rupees. Yearly billing saves 20% at every tier.
+
+Compare plans in full →
+
+Hire, deploy, pay, comply.
+One platform.
+
+Free for your first 50 workers. A demo takes thirty minutes.
+
+Prefer to pick a time now? Book a 30-minute demo →
+
+Full name
+*
+
+Please tell us your name.
+
+Work email
+*
+
+Please enter a valid email address.
+
+Phone
+*
+
++91
+
+Enter a 10 digit mobile number starting with 6, 7, 8 or 9.
+
+Company name
+*
+
+Please tell us your company.
+
+City
+*
+
+Please tell us your city.
+
+State
+
+Select a state
+
+Andhra Pradesh
+Arunachal Pradesh
+Assam
+
+Bihar
+Chhattisgarh
+Goa
+Gujarat
+
+Haryana
+Himachal Pradesh
+Jharkhand
+
+Karnataka
+Kerala
+Madhya Pradesh
+
+Maharashtra
+Manipur
+Meghalaya
+
+Mizoram
+Nagaland
+Odisha
+Punjab
+
+Rajasthan
+Sikkim
+Tamil Nadu
+Telangana
+
+Tripura
+Uttar Pradesh
+Uttarakhand
+West Bengal
+
+Andaman and Nicobar Islands
+Chandigarh
+
+Dadra and Nagar Haveli and Daman and Diu
+Delhi
+
+Jammu and Kashmir
+Ladakh
+Lakshadweep
+Puducherry
+
+Leave blank if you are outside India.
+
+My company is located outside India
+
+Tick this and tell us where. We work with teams in other countries too.
+
+Your location details
+
+How many people do you employ?
+*
+
+Select a range
+
+1 to 100
+
+51 to 500
+
+501 to 2000
+
+2001 to 8000
+
+More than 8000
+
+Please pick a range.
+
+Industry
+
+Select an industry
+
+Manpower & Staffing
+
+Facility Management
+
+Manufacturing
+
+Logistics & Warehousing
+
+Construction
+
+Healthcare
+
+Hospitality
+
+Retail
+
+Other
+
+Company website
+
+Optional.
+
+What is your biggest HR headache right now?
+
+Book my demo →
+
+Thirty minutes, no slide deck.
+Free for your first 50 workers.
+
+ZeniaHR Demo Request
+
+Leads Name
+
+Last Name
+
+Email
+
+Phone
+
+Mailing City
+
+Description
+
+Company Name
+
+City
+
+State
+
+Company Size
+
+Industry
+
+HR Requirement
+
+Website
+
+ZeniaHr Leads Standard
+
+Inquiries
+
+Talk to ZeniaHR
+Hello How can we Help you ?
+
+--- SOURCE URL: https://www.zeniahr.com/tools/ ---
+Free HR & Payroll Tools and Calculators for India | ZeniaHR
+
+Home
+› Tools
+
+🧮
+
+Gratuity calculator
+
+Calculate gratuity under the Payment of Gratuity Act, with the 15/26 formula, the ₹20 lakh cap and eligibility applied.
+
+Open calculator →
+
+💰
+
+PF (EPF) calculator
+
+Work out your monthly EPF contribution and the corpus you will have at retirement, with the EPS split and 8.25% interest.
+
+Open calculator →
+
+🏥
+
+ESI calculator
+
+Calculate the monthly ESI contribution on any gross wage, employee 0.75% and employer 3.25%, up to the ₹21,000 ceiling.
+
+Open calculator →
+
+📄
+
+Bio-data & resume maker
+
+Make a worker biodata in the correct format for a job, or generate hundreds in bulk from a CSV. No AI, downloads as a PDF.
+
+Open tool →
+
+🗂️
+
+Bio-data formats by job role
+
+Correct bio-data format and a ready sample for each trade: security guard, driver, electrician, housekeeping and more.
+
+Browse formats →
+
+🧾
+
+Salary / take-home calculator
+
+Turn a CTC into monthly in-hand salary, with PF, professional tax and income tax (new regime) broken down.
+
+Open calculator →
+
+📊
+
+In-hand salary by CTC
+
+Ready breakdowns from 3 LPA to 30 LPA: see the exact monthly take-home for a given CTC after PF, PT and income tax.
+
+See breakdowns →
+
+🏦
+
+PF deduction by salary
+
+See the exact EPF and EPS split on a monthly salary from ₹10,000 to ₹50,000, employee and employer shares.
+
+See breakdowns →
+
+🏠
+
+HRA exemption calculator
+
+Work out your tax-exempt house rent allowance under Section 10(13A), with the metro and non-metro rules applied.
+
+Open calculator →
+
+🎁
+
+Statutory bonus calculator
+
+Calculate annual bonus under the Payment of Bonus Act, with the ₹21,000 eligibility limit and ₹7,000 ceiling applied.
+
+Open calculator →
+
+📈
+
+Gratuity by years of service
+
+The gratuity amount for every length of service from 5 to 35 years, worked out across a range of salaries, with the formula.
+
+See tables →
+
+🏘️
+
+HRA exemption by basic salary
+
+Tax-free HRA for basic salaries from ₹15,000 to ₹1,00,000, across a range of rents, with the metro and non-metro rules.
+
+See tables →
+
+🌴
+
+Leave encashment by salary
+
+Payout for unused earned leave from ₹15,000 to ₹1,00,000 basic, across 10 to 60 days, on the standard 26-day wage.
+
+See tables →
+
+⏱️
+
+Overtime pay by wage
+
+Overtime at the statutory double rate for monthly wages ₹10,000 to ₹50,000, across 5 to 50 overtime hours.
+
+See tables →
+
+📄
+
+Notice pay by salary
+
+Salary in lieu of notice for monthly salaries ₹15,000 to ₹1,00,000, across 15 to 90 days of shortfall.
+
+See tables →
+
+📖
+
+HR & payroll glossary
+
+Plain-English definitions of PF, ESI, CTC, gratuity, HRA and more, each with how it is calculated and a worked example.
+
+Open glossary →
+
+Doing all this for a whole workforce?
+
+ZeniaHR runs gratuity, PF, ESI, attendance and payroll for thousands of workers across sites, automatically. Built only for manpower and staffing companies.
+
+Book a demo
+
+See pricing
+
+Manpower & staffing software
+Manpower software
+Staffing software
+Payroll software
+Attendance software
+Compliance software
+
+--- SOURCE URL: https://www.zeniahr.com/industries/ ---
+Industries We Serve | Payroll & HR Software for Manpower | ZeniaHR
+
+Home
+› Industries
+
+🛡️
+
+Security agencies
+
+Guard deployment, biometric and geo-tagged attendance at every post, PF and ESI, and PSARA-ready audit trails.
+
+Explore →
+
+🧹
+
+Facility management
+
+Housekeeping and technical staff across client sites, attendance to payslip, and accurate per-client invoicing.
+
+Explore →
+
+👷
+
+Manpower & staffing
+
+Contractors and staffing agencies deploying workers across sites and clients, from tender to payslip.
+
+Explore →
+
+🧽
+
+Housekeeping Services
+
+Housekeeping contracts run on volume: hundreds of cleaners across offices, hospitals, malls and airports, each on the applicable state unskilled wa....
+
+Explore →
+
+🍽️
+
+Industrial Catering Services
+
+Industrial caterers run canteens inside factories, IT parks, hospitals and hostels, deploying cooks, helpers and servers across many client kitchens.
+
+Explore →
+
+🏗️
+
+Construction Labour Supply
+
+Construction labour contractors move masons, helpers, bar-benders and operators between project sites, often across states, on daily muster.
+
+Explore →
+
+📦
+
+Warehouse Staffing
+
+Warehouse staffing scales up and down fast: pickers, packers, loaders and forklift operators across e-commerce hubs and distribution centres, with ....
+
+Explore →
+
+🏭
+
+Manufacturing Staffing
+
+Manufacturing staffing supplies machine operators, fitters, welders and helpers to factory lines, usually as contract labour under a principal empl....
+
+Explore →
+
+🏨
+
+Hotel & Hospitality Staffing
+
+Hospitality staffing places stewards, housekeeping, cooks and front-desk staff across hotels, resorts and banquets, with heavy weekend and event pe....
+
+Explore →
+
+🏥
+
+Healthcare Support Staffing
+
+Healthcare support staffing supplies ward boys, hospital housekeeping, security and lift operators to hospitals and nursing homes, on 24x7 rosters.
+
+Explore →
+
+🛍️
+
+Retail Staffing
+
+Retail staffing deploys promoters, cashiers, store housekeeping and security across malls and outlets, with festival peaks and high churn.
+
+Explore →
+
+🚚
+
+Logistics & Transport Staffing
+
+Logistics staffing supplies drivers, delivery executives, loaders and warehouse hands to transport and last-mile networks, spread across cities and....
+
+Explore →
+
+🐜
+
+Pest Control Services
+
+Pest control firms deploy field technicians and helpers to homes, offices and food plants on scheduled routes.
+
+Explore →
+
+🌿
+
+Landscaping & Horticulture Services
+
+Landscaping firms deploy gardeners, helpers and supervisors across townships, hotels, offices and parks, with partly seasonal work.
+
+Explore →
+
+🔧
+
+MEP Maintenance Services
+
+MEP maintenance firms deploy electricians, plumbers, AC technicians and fitters to buildings and plants, mostly as skilled trades.
+
+Explore →
+
+🚗
+
+Driver & Fleet Supply
+
+Driver supply firms place chauffeurs and commercial drivers with corporates, cab fleets and schools, across shifts and cities.
+
+Explore →
+
+🎪
+
+Event & Exhibition Staffing
+
+Event staffing mobilises promoters, hostesses, helpers and security for short bursts, exhibitions, launches and conferences, then stands them down.
+
+Explore →
+
+🧵
+
+Textile & Garment Staffing
+
+Textile and garment staffing supplies tailors, machine operators, helpers and packers to mills and export units, mostly under the Factories Act.
+
+Explore →
+
+🌾
+
+Agriculture & Plantation Labour
+
+Agriculture and plantation contractors supply field workers, harvesters and helpers to farms, estates and food-processing units, with strong season....
+
+Explore →
+
+Not sure which fits you?
+
+If your business deploys workers across sites and clients, ZeniaHR is built for you. Book a demo and we will map it to your operation.
+
+Book a demo
+
+See pricing
+
+--- SOURCE URL: https://www.zeniahr.com/pricing/ ---
+ZeniaHR Pricing | Payroll & HR Software Plans, Free & Paid
+
+What you get
+
+Free
+Not a trial
+
+₹0
+up to 50 users, forever
+
+Start free
+
+Paid
+
+₹15 to ₹25
+per user / month · rate depends on team size
+20% off on yearly billing
+
+Book a demo
+
+Users
+Up to 50
+Unlimited
+
+Admins
+2
+(counted in your 50)
+Unlimited
+
+People
+
+Employee onboarding
+✓
+✓
+
+Employee management
+✓
+✓
+
+Employee cards
+✓
+✓
+
+Leave management
+✓
+✓
+
+Documents
+All
+All
+
+Company profiles
+✓
+✓
+
+Attendance
+
+Attendance tracking
+✓
+✓
+
+Geotagged attendance
+-
+✓
+
+Reports
+
+Core reports
+(salary register, salary slip, payroll summary, PF, ESI, bonus, wage, leave)
+✓
+✓
+
+All other reports
+-
+✓
+
+Support
+
+Channel
+Email, reply within 24 hours
+Phone, 10am to 10pm, 6 days a week
+
+Onboarding
+Self-serve
+Self-serve ·
+full onboarding by our team for 501+ teams
+
+The paid rate, by team size
+
+One rate for your whole headcount. Cross a band and everyone moves to the cheaper rate.
+
+Team size
+Quarterly billing
+Yearly billing
+
+Up to 50
+₹25 / user / month
+₹20 / user / month
+Save 20%
+
+51 to 500
+₹20 / user / month
+₹16 / user / month
+Save 20%
+
+501 and above
+₹15 / user / month
+₹12 / user / month
+Save 20%
+
+Running well past 500, or need something specific?
+Talk to us about custom terms
+.
+
+What will it cost us?
+
+Drag to your headcount. The whole team is charged at one rate.
+
+Quarterly
+
+Yearly
+save 20%
+
+250 users
+₹20 per user
+
+10
+1,000
+
+₹5,000
+/month
+
+Billed quarterly as
+₹15,000
+· switch to yearly for 20% off
+
+Band:
+51 to 500
+· every user charged at ₹20
+
+Self-hosted deployment
+
+Want to run the whole thing on your own infrastructure?
+
+ZeniaHR can be deployed inside your own environment, on your servers or your private cloud, so employee and payroll data never leaves your walls. Single-tenant, on-premise, set up and maintained with our team. Priced separately.
+
+Contact sales
+
+The money questions
+
+How does volume pricing actually work?
+
+Your whole headcount sits at one rate, decided by your team size. At 101 users everyone is ₹20, so you pay 101 × ₹20 = ₹2,020 a month, not 100 at ₹25 plus 1 at ₹20. There are no stacked slabs.
+
+What counts as a user?
+
+Every person on the system, including admins. On the free plan the 2 admins are part of your 50.
+
+Is the free plan a trial?
+
+No. It runs indefinitely for up to 50 users and 2 admins. You only move to a paid plan when you outgrow it or need geotagged attendance, the full report set, more admins, or phone support.
+
+What does "per user per month, billed quarterly" mean?
+
+The rate is quoted per user per month. On quarterly billing you are invoiced every three months for three months at that rate. On yearly billing you are invoiced once for twelve months, at a per-user rate that is 20% lower.
+
+What happens when we grow past 100 or 500?
+
+Your whole team moves to the new band's rate. Growing never increases your per-user price, it lowers it.
+
+We are well past 500. Is ₹15 the final rate?
+
+₹15 quarterly / ₹12 yearly is published so you can budget without booking a call. If your scale or setup needs custom terms, we will work them out with you.
+
+See it on your own payroll.
+
+Thirty minutes, on video, built around the problem you described rather than a slide deck.
+
+Book a demo
+
+Start free
+
+--- SOURCE URL: https://www.zeniahr.com/hrms/ ---
+HR & Payroll Software in India for Every Business | ZeniaHR
+
+The people platform for every industry
+
+Every company is a
+people
+company.
+
+ZeniaHR is HR and payroll software in India for every business. Hiring to exit, attendance to appraisals, documents to payday, everything about your people in one place. Free up to 50.
+
+Start free →
+
+See it run
+
+P
+Priya Sharma
+One of your 214 people
+
+Profile &
+documents
+
+Attendance
+22 / 24
+
+Leave balance
+12 days
+
+Payslip
+sent
+
+PF & ESI
+filed
+
+Assets
+laptop · ID card
+
+Review
+due March
+
+Letters
+one click
+
+ANSWERS
+
+Who is on leave tomorrow?
+
+Where is Ravi's offer letter?
+
+Did June PF get filed?
+
+One system
+knows.
+
+Not nine tabs, three registers and a WhatsApp group. One place that has the answer.
+
+Industries
+
+Whatever you build,
+we run the people part.
+
+The same engine underneath. The vocabulary of your floor on top.
+
+All industries
+Healthcare
+Manufacturing
+Hospitality
+Education
+
+Workspace /
+
+Overview
+
+Every team
+
+People
+214
+Across 3 branches
+Joining this week
+6
+Docs collected before day one
+On leave today
+9
+Approved by policy, cover set
+
+The employee journey
+
+From offer letter
+to farewell letter.
+
+Hire, onboard, manage, pay and grow your people on one moving line. Nothing retyped, nothing lost.
+
+● Priya
+
+Hire
+Offer in one click
+
+Onboard
+Docs, ID, assets
+
+Work
+Attendance, leave, shifts
+
+Pay
+Salary + statutory
+
+Grow
+Reviews, letters, exits
+
+A normal Tuesday
+
+47 requests came in.
+Three needed you.
+
+Leave, letters, proofs, payslips. ZeniaHR answers them itself and keeps your day yours.
+
+HR inbox · Tuesday, 11:04 AM
+LIVE
+
+Leave request · Site 2 → approved by policy
+
+Address proof letter → generated and sent
+
+Missed punch · gate 3 → regularized
+
+Payslip copy · May → self-served in app
+
+New joiner docs → collected and verified
+
+Payroll run · June → done in 19 seconds
+
+Requests today
+0
+
+Handled without you
+0
+
+Needed a human
+0
+
+Inbox clear · about 3h 40m of busywork handled itself
+
+Compliance
+
+Deadlines
+meet themselves.
+
+PF on the 15th. ESI on the 15th. PT and LWF by month end. Calculated, filed and archived without a single reminder set by you.
+
+₹0
+Penalties this year
+
+PF ECR · June
+✓
+
+ESI return · June
+✓
+
+PT paid · June
+✓
+
+July 2026
+Filing calendar
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+✓
+16
+17
+18
+19
+20
+21
+✓
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+✓
+
+Room to grow
+
+Serene at 10.
+Proven at 8,000.
+
+10
+
+people
+
+10
+
+100
+
+1,000
+
+8,000
+
+ZeniaHR was not born in a demo environment. It was built running thousands of contract workers across hospitals, plants and sites for the staffing industry, where one missed challan means a lost contract. That engine now runs your company too.
+Read the staffing story →
+
+Pricing
+
+Pricing that
+respects your math.
+
+No per-module pricing. No surprise slabs. One volume rate that rewards scale.
+
+Quarterly
+
+Yearly
+20% off
+
+Free
+For your first fifty
+
+₹0
+up to 50 people
+
+50 people, 2 admins
+Attendance without geotagging
+8 core reports
+Email support, reply in 24h
+
+Start free
+
+Paid
+Every feature unlocked, whole headcount at one rate
+
+250 people
+₹20 per person
+
+10
+1,000
+
+₹5,000
+/month
+
+Billed quarterly as ₹15,000 · switch to yearly for 20% off
+
+Book a demo
+
+501 and above
+Published rate, custom terms on request
+
+₹15
+per person / month
+
+₹12 billed yearly
+Every feature unlocked
+Onboarding done by our team
+Phone support, 10am to 10pm
+
+Talk to us
+
+Rates are per person per month, in rupees. Yearly billing saves 20% at every tier.
+
+Compare plans in full →
+
+Why we count people, not licenses
+
+Software churns.
+People stay.
+
+Every seat in ZeniaHR is a person with a payday, a leave balance and a family plan. We price and build around them.
+
+Give your people a system
+as steady as they are.
+
+Free up to 50 people. A demo takes thirty minutes.
+
+Start free →
+
+Book a demo
+
+--- SOURCE URL: https://www.zeniahr.com/payroll/ ---
+Payroll Software in India for Manpower & Staffing | ZeniaHR
+
+Minutes
+to close a monthly payroll run
+
+PF · ESI · PT · LWF
+computed automatically
+
+Multi-site
+one muster, every client
+
+₹0
+up to 50 workers
+
+Why teams switch
+
+The best payroll management software knows
+manpower is different
+
+Generic payroll tools assume one office and one salary structure. Contractors and staffing agencies run hundreds of workers across dozens of sites, each on a different wage rate, shift and client. ZeniaHR is built for exactly that. Payroll is one of ten modules inside ZeniaHR and shares the same worker record as attendance, leave, compliance and invoicing, so nothing is ever entered twice.
+
+🧾
+Muster to payslip
+Site attendance flows straight into the salary run. Overtime, shift rates, leave and advances apply on their own, no re-keying.
+
+⚖️
+Statutory on autopilot
+Employee and employer PF, ESI, professional tax by state and LWF are computed every run, with ECR and challan-ready outputs.
+
+🏗️
+Multi-site, multi-client
+One payroll engine covers every site and client, each with its own wage rate and cost centre, reconciled in a single view.
+
+📑
+Compliance-ready registers
+Wage register, muster roll, PF/ESI returns and Form registers generated on demand, in the format inspectors expect.
+
+🏦
+Bulk pay & payslips
+Generate the bank advice file and every payslip in one click. Workers get their slip on mobile, in their language.
+
+☁️
+Cloud based, mobile first
+Supervisors mark attendance from any site on a phone; payroll is processed centrally. On-premise deployment available on request.
+
+How it works
+
+From attendance to bank transfer in
+four steps
+
+Capture attendance at each site: mobile muster, biometric or geo-tagged punch.
+
+ZeniaHR applies wage rates, overtime, shifts, leave and advances automatically.
+
+Review and approve the run; every statutory deduction is already computed.
+
+Release the bank advice file and file PF/ESI with challan-ready outputs.
+
+Gross wages (all sites)
+auto
+
+PF (12% + 12%)
+auto
+
+ESI (0.75% + 3.25%)
+auto
+
+Professional tax (by state)
+auto
+
+LWF
+auto
+
+Net payable + bank advice
+1 click
+
+Free tools
+
+Try the free calculators your team already searches for
+
+Every ZeniaHR tool is free and needs no signup.
+
+PF calculator →
+
+Gratuity calculator →
+
+Salary calculator →
+
+See ZeniaHR run your payroll
+
+Thirty minutes, no slide deck. We will run a real payroll cycle on your own numbers and show you the month closing in minutes.
+
+Book my demo →
+
+FAQ
+Payroll software questions, answered
+
+Which is the best payroll software for a manpower or staffing company in India?
+ZeniaHR is built specifically for manpower and staffing firms: it runs payroll across multiple sites and clients from one muster, auto-computes PF, ESI, PT and LWF, and generates the statutory registers labour inspectors ask for. It is free for your first 50 workers.
+
+Does ZeniaHR calculate PF, ESI, PT and LWF automatically?
+Yes. Every salary run auto-computes employee and employer PF, ESI, professional tax by state, and labour welfare fund, and produces the ECR and challan-ready outputs so filing is a copy-paste, not a recalculation.
+
+Is ZeniaHR cloud based?
+Yes, ZeniaHR is cloud based, so supervisors mark attendance from any site on mobile and payroll is processed centrally. An on-premise, self-hosted deployment is available on request for firms that must keep data on their own infrastructure.
+
+How does attendance become payroll?
+Attendance captured at each site (mobile muster, biometric or geo-tagged punch) flows straight into the salary run. Overtime, shift rates, leave and advances are applied automatically, so a month that used to take days closes in minutes.
+
+How much does ZeniaHR payroll cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/attendance/ ---
+Attendance Management Software for Manpower & Staffing | ZeniaHR
+
+Biometric
++ mobile face & geo-punch
+
+Every site
+one live dashboard
+
+Into payroll
+overtime & shifts auto-applied
+
+₹0
+up to 50 workers
+
+Why teams switch
+
+Attendance management software that knows
+the work is on-site
+
+Office attendance tools assume everyone walks past one reader. Manpower and staffing firms have workers at guarded gates, client premises and remote projects, on rotating shifts. ZeniaHR captures each of them where they actually are, and turns it into a payroll-ready number automatically.
+
+👆
+Biometric & mobile face
+Use fingerprint devices at fixed gates and mobile face capture on phones at remote sites. Every worker punches the way their site works.
+
+📍
+Geo-tagged punch
+Every mobile punch is GPS-stamped to the site, so you can trust who was where. Proxy and buddy punching stop.
+
+🗂️
+Every site, one dashboard
+Supervisors mark their own location; the head office sees live attendance across all sites and clients in a single view.
+
+🕑
+Shifts, overtime & breaks
+Rotating shifts, night duty, overtime and break rules are applied automatically, so the hours are correct before payroll ever runs.
+
+🧾
+Straight into payroll
+Attendance feeds the salary run with no re-keying. The muster you approve is the muster that gets paid.
+
+📶
+Works on low network
+Punches are captured even on a weak connection at a remote site and sync automatically once the phone is back online.
+
+How it works
+
+From punch to payroll in
+four steps
+
+Set up each site with its shifts and the capture method it uses.
+
+Workers punch in by biometric device, mobile face or geo-tagged app.
+
+Supervisors review the day; ZeniaHR flags absences, late-ins and overtime.
+
+Approved attendance flows into the payroll run, with no re-keying.
+
+Present / absent (all sites)
+live
+
+Late-in & early-out
+flagged
+
+Overtime hours
+auto-totalled
+
+Shift & night allowance
+applied
+
+Geo / device verified
+yes
+
+Into payroll
+1 click
+
+Free tools
+
+Free calculators and tools your team already searches for
+
+Every ZeniaHR tool is free and needs no signup.
+
+Gratuity calculator →
+
+Bio-data / resume maker →
+
+See ZeniaHR track your sites
+
+Thirty minutes, no slide deck. We will set up a couple of your sites and show live attendance flowing straight into a payroll run.
+
+Book my demo →
+
+FAQ
+Payroll software questions, answered
+
+Which is the best attendance management software for a manpower or staffing company?
+ZeniaHR is built for distributed workforces: supervisors mark attendance at every site by biometric, mobile face or geo-tagged punch, and it flows straight into payroll with overtime and shifts applied automatically. It is free for your first 50 workers.
+
+Does ZeniaHR support biometric attendance?
+Yes. ZeniaHR supports biometric devices as well as mobile face and geo-tagged punch, so you can capture attendance the way each site works, from a guarded gate to a remote project location.
+
+Can I track attendance across multiple sites?
+Yes. Every site reports into one dashboard. Supervisors mark their own site on a phone and the head office sees live attendance across all locations and clients in a single view.
+
+How does attendance become payroll?
+Attendance captured at each site flows straight into the salary run. Overtime, shift rates, leave and advances are applied automatically, so a month that used to take days closes in minutes.
+
+How much does ZeniaHR attendance software cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/employee-onboarding-software/ ---
+Employee Onboarding Software for Manpower & Staffing | ZeniaHR
+
+1 or 100
+onboard in bulk or daily
+
+KYC + documents
+collected at joining
+
+ID cards
+generated on join
+
+₹0
+up to 50 workers
+
+Why manpower firms switch
+
+Daily joining is
+the
+manpower bottleneck
+
+Unlike an office that hires occasionally, a manpower firm inducts workers daily and in batches, each needing KYC, documents, PF/ESI and a deployment. Doing that on paper delays deployment and loses documents. ZeniaHR makes onboarding fast and complete, then hands the worker to
+deployment
+and
+payroll
+on one record.
+
+📥
+Bulk onboarding
+Import a batch of workers from a spreadsheet or onboard from mobile at the site, so a hundred joiners are ready in one pass.
+
+📅
+Daily joining flow
+A fast repeatable flow for the workers who join every day, capturing everything needed to deploy them the same day.
+
+🪪
+KYC & document collection
+Collect Aadhaar, PAN, bank, PF/ESI and skill proofs at joining, with nothing left to chase later.
+See document management
+.
+
+🏦
+PF / ESI & bank capture
+Statutory and bank details are captured once and flow straight into payroll, no re-entry.
+
+🆔
+ID cards & offer letters
+Generate worker ID cards and offer letters from the same record the moment onboarding completes.
+
+🚀
+Deploy-ready handoff
+A completed worker record is immediately available to deploy to a site or client, with no gap between joining and deployment.
+
+How it works
+
+From joining to
+deploy-ready
+the same day
+
+Onboard a worker on mobile at the site, or import a batch from a spreadsheet.
+
+Collect KYC, documents, PF/ESI, bank and skill details in one flow.
+
+Generate the ID card and offer letter automatically.
+
+The completed record is ready to deploy to a site or client.
+
+Onboarding data flows into attendance and payroll with no re-keying.
+
+Bulk import
+spreadsheet / mobile
+
+Daily joining
+fast flow
+
+KYC + documents
+at joining
+
+PF / ESI / bank
+captured once
+
+ID card
+auto
+
+Deploy-ready
+same day
+
+Part of the platform
+
+Onboarding is the
+front door
+of the loop
+
+A worker onboarded here flows into documents, deployment, attendance and payroll on one record.
+
+Wage management →
+
+Document management →
+
+Shift management →
+
+Manpower software →
+
+See a batch of workers onboarded in one pass
+
+Thirty minutes, no slide deck. Bring a list of joiners and we will onboard them to deploy-ready on your own data.
+
+Book my demo →
+
+FAQ
+Employee onboarding questions, answered
+
+What is employee onboarding software for manpower firms?
+It is software that takes a worker from joining to deploy-ready: bulk or daily joining, KYC and document collection, PF/ESI and bank capture, ID cards, and a handoff to deployment and payroll on one record. ZeniaHR does this and is free for your first 50 workers.
+
+Can it onboard workers in bulk?
+Yes. Import a batch from a spreadsheet or onboard from mobile at the site, so many workers who join on the same day are ready in one pass rather than one form at a time.
+
+Does it collect worker documents at joining?
+Yes. Aadhaar, PAN, bank, PF/ESI and skill proofs are collected during onboarding and stored on the worker record, so nothing is chased later and documents are not lost.
+
+Does onboarding data flow into payroll?
+Yes. Statutory and bank details captured at onboarding flow straight into attendance and payroll with no re-entry, so a worker can be paid correctly from the first cycle.
+
+Can it generate ID cards?
+Yes. Worker ID cards and offer letters are generated from the same record the moment onboarding completes.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at Rs 25 per worker per month and fall to Rs 12 at scale on yearly billing. See the pricing page for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/employee-document-management-software/ ---
+Employee Document Management Software for Manpower | ZeniaHR
+
+One vault
+every worker's documents
+
+Expiry alerts
+before anything lapses
+
+Audit-ready
+retrieve in seconds
+
+₹0
+up to 50 workers
+
+Why manpower firms switch
+
+An expired police verification can
+lose a contract
+
+Security, facility and healthcare deployments require valid police verifications, licences and medicals, and principal employers audit them. When documents live in folders and inboxes, something always lapses unnoticed. ZeniaHR keeps them on the worker record with expiry alerts, alongside
+onboarding
+and
+compliance
+.
+
+🗄️
+Worker document vault
+Every worker's KYC, bank, PF/ESI, police verification, licences, medicals and certificates on one record, not scattered across folders.
+
+⏰
+Expiry alerts
+ZeniaHR tracks the expiry of each document and alerts you before it lapses, so nothing deployed is ever out of date.
+
+📎
+Collection at joining & renewal
+Documents are collected during
+onboarding
+and re-collected on renewal, with a clear view of what is missing.
+
+🔍
+Audit & client-ready retrieval
+Pull a worker's or a site's documents in seconds for a principal-employer audit or a client request.
+
+⚖️
+Compliance mapping
+Map documents to what CLRA, PSARA and client contracts require, so gaps are visible per site.
+
+🔒
+Secure access
+Role-based access controls who can view or download sensitive worker documents.
+
+How it works
+
+From collection to
+audit in seconds
+
+Collect worker documents at onboarding, stored on the worker record.
+
+ZeniaHR tracks each document's expiry date automatically.
+
+Get alerted before a police verification, licence or medical lapses.
+
+Re-collect on renewal, with missing documents flagged per worker.
+
+Retrieve a worker's or a site's documents instantly for an audit.
+
+Document vault
+per worker
+
+Expiry tracking
+auto alerts
+
+Collection
+join + renewal
+
+Missing-doc view
+per site
+
+Retrieval
+seconds
+
+Access control
+role-based
+
+Part of the platform
+
+Documents sit on the
+same worker record
+
+The vault connects to onboarding, compliance and deployment, so documents follow the worker.
+
+Wage management →
+
+Employee onboarding →
+
+Shift management →
+
+Manpower software →
+
+See your workforce documents with live expiry alerts
+
+Thirty minutes, no slide deck. Bring a few worker files and we will load them and show the expiry alerts on your own data.
+
+Book my demo →
+
+FAQ
+Document management questions, answered
+
+What is employee document management software?
+It is a central vault for a workforce's documents: KYC, police verification, licences, medicals and certificates on each worker record, with expiry alerts and fast retrieval for audits. ZeniaHR provides it and is free for your first 50 workers.
+
+Does it alert before documents expire?
+Yes. ZeniaHR tracks the expiry of police verifications, licences, medicals and certificates and alerts you before any of them lapse, which matters for security, facility and healthcare deployments.
+
+Can I retrieve documents for a client audit?
+Yes. Pull a worker's or an entire site's documents in seconds for a principal-employer audit or a client request, rather than searching folders and inboxes.
+
+How is this different from onboarding?
+Onboarding collects documents when a worker joins; document management is the ongoing vault that stores them, tracks expiry and re-collects on renewal for the worker's whole lifecycle.
+
+Is access to documents controlled?
+Yes. Role-based access controls who can view or download sensitive worker documents.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at Rs 25 per worker per month and fall to Rs 12 at scale on yearly billing. See the pricing page for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/workforce-deployment-software/ ---
+Workforce Deployment Software for Manpower Firms | ZeniaHR
+
+Right worker
+right site
+
+Skill + location
+matched
+
+Live headcount
+vs required
+
+₹0
+up to 50 workers
+
+Why operations teams switch
+
+Deployment is a
+matching problem
+under a clock
+
+Every day a manpower operation has to cover open posts with the right skill, at the right site, before the shift starts, and reshuffle when someone does not show. Spreadsheets cannot do this live. ZeniaHR is the deployment engine inside the platform, sharing a record with
+attendance
+and
+manpower management
+.
+
+🧭
+Skill & location matching
+Fill a requirement with the nearest available worker who has the right skill, instead of scanning a spreadsheet.
+
+🗓️
+Roster & coverage planning
+Plan shifts and rotations per site and client, and see coverage gaps before they become no-shows.
+
+📊
+Real-time headcount
+See deployed versus required at every site the same morning, so short sites are visible immediately.
+
+🔁
+Reliever & gap fill
+Cover an absence from the available pool the same shift, without breaking coverage elsewhere.
+
+🔃
+Transfers with history
+Move a worker between sites or clients and keep the full deployment history on one record.
+
+🏢
+Deployment cost by client
+Roll deployment cost up by site, client and entity so margins are visible per contract.
+
+How deployment works
+
+From an open post to the
+right worker on site
+
+See open requirements by site, skill and shift in one board.
+
+Match each to the nearest available worker with the right skill.
+
+Plan the roster and spot coverage gaps before the shift.
+
+Fill absences with a reliever from the available pool, same shift.
+
+Transfer workers between clients with the full history intact.
+
+Roll deployment cost up by client to protect contract margin.
+
+Open requirements
+by site / skill
+
+Skill + location match
+nearest available
+
+Coverage planning
+before shift
+
+Reliever gap-fill
+same shift
+
+Transfers
+with history
+
+Cost by client
+rolled up
+
+Where it fits
+
+The deployment engine of the
+manpower platform
+
+Deployment feeds attendance, payroll and billing on the same worker record. Explore the rest of the platform.
+
+Manpower management software →
+
+Manpower software →
+
+Industries we serve →
+
+See a day of deployment on your own sites
+
+Thirty minutes, no slide deck. Bring two sites and a pool of workers and we will match, roster and cover a shift live on your own numbers.
+
+Book my demo →
+
+FAQ
+Workforce deployment questions, answered
+
+What is workforce deployment software?
+Workforce deployment software puts the right worker at the right site: it matches open requirements to available workers by skill and location, plans rosters and coverage, fills absences with relievers and moves workers between clients, all against a live headcount. ZeniaHR does this as part of the manpower platform and is free for your first 50 workers.
+
+How is deployment different from manpower management software?
+Deployment is the matching and coverage engine: who goes where, by skill, before the shift.
+Manpower management
+is the broader control layer around it, including lifecycle, documents and cost. They share one worker record in ZeniaHR.
+
+Can it match workers by skill and location?
+Yes. When a requirement opens, ZeniaHR surfaces the nearest available workers with the right skill, so you fill the post from people you already have rather than scanning a spreadsheet.
+
+Can I transfer a worker between clients and keep history?
+Yes. Transfer a worker between sites or clients and the full deployment, attendance and payment history stays attached to the same record, with cost re-pointed to the new client from the transfer date.
+
+Does it show deployment cost per client?
+Yes. Deployment cost rolls up by site, client and entity, so you can see margin per contract rather than only per company.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/shift-management-software/ ---
+Shift Management Software for Manpower & Staffing | ZeniaHR
+
+Day / night / rotational
+rosters per site
+
+Coverage gaps
+seen before the shift
+
+Relievers
+assigned fast
+
+₹0
+up to 50 workers
+
+Why manpower firms switch
+
+A shift left uncovered is a
+breach of contract
+
+A site that must be staffed 24/7 cannot afford a gap, but rotating shifts, weekly-offs and no-shows make coverage hard to hold on a spreadsheet. ZeniaHR plans the roster, flags gaps before they happen, and connects to
+attendance
+and
+payroll
+so night and overtime rates are applied correctly.
+
+🗓️
+Roster planning
+Plan day, night and rotational shifts per site and client, weeks ahead, with weekly-offs built in.
+
+🚨
+Coverage-gap alerts
+See which shifts are short before they start, so a gap is filled in advance, not discovered at handover.
+
+🔁
+Reliever & swap management
+Assign relievers and manage swaps from the available pool without breaking coverage elsewhere.
+See deployment
+.
+
+🌙
+Weekly-off & overtime rules
+Weekly-offs, double duty, night-shift allowance and overtime are applied by rule, feeding the right pay.
+
+📲
+Shift to attendance to payroll
+The planned shift meets the marked
+attendance
+at the post, and the difference flows into payroll automatically.
+
+🏢
+Per-site shift patterns
+Each client site can carry its own shift pattern and staffing requirement, managed from one view.
+
+How it works
+
+From a roster to
+every shift covered
+
+Plan day, night and rotational rosters per site, weeks ahead.
+
+See coverage gaps before the shift starts and fill them in advance.
+
+Assign relievers and manage swaps from the available pool.
+
+Weekly-off, night and overtime rules apply automatically.
+
+Planned shifts meet marked attendance and flow into payroll.
+
+Roster
+day / night / rotational
+
+Coverage gaps
+flagged early
+
+Reliever / swap
+from pool
+
+Weekly-off / OT
+by rule
+
+Shift vs attendance
+reconciled
+
+Per-site pattern
+one view
+
+Part of the platform
+
+Shifts connect deployment, attendance and
+pay
+
+The roster planned here meets attendance at the post and flows into payroll on one record.
+
+Wage management →
+
+Employee onboarding →
+
+Document management →
+
+Manpower software →
+
+See a week of shifts planned and covered
+
+Thirty minutes, no slide deck. Bring two sites and their shift patterns and we will roster and gap-check them on your own operation.
+
+Book my demo →
+
+FAQ
+Shift management questions, answered
+
+What is shift management software?
+It is software to plan and run work shifts: day, night and rotational rosters per site, coverage-gap alerts, reliever and swap management, weekly-off and overtime rules, and a flow into attendance and payroll. ZeniaHR provides it and is free for your first 50 workers.
+
+How is shift management different from attendance?
+Shift management plans who should work when; attendance captures who actually did. ZeniaHR reconciles the two on one record, so the difference between planned and actual flows correctly into payroll.
+
+Does it show coverage gaps before a shift?
+Yes. ZeniaHR shows which shifts are short before they start, so a gap can be filled with a reliever in advance rather than discovered at handover.
+
+Does it handle night shifts and overtime?
+Yes. Weekly-offs, double duty, night-shift allowance and overtime are applied by rule, so a worker's shifts translate into the right pay.
+
+Can each site have its own shift pattern?
+Yes. Each client site can carry its own shift pattern and staffing requirement, all managed from one view.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at Rs 25 per worker per month and fall to Rs 12 at scale on yearly billing. See the pricing page for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/compliance/ ---
+Labour Law & Statutory Compliance Software for Manpower | ZeniaHR
+
+PF · ESI · PT · LWF
+returns auto-generated
+
+CLRA
+contract-labour registers
+
+Audit-ready
+every register on demand
+
+₹0
+up to 50 workers
+
+Why teams switch
+
+Compliance is where manpower firms
+get caught out
+
+A staffing business answers to PF and ESI authorities, state labour departments and every client's audit team at once, across dozens of sites. Miss a register or a return and you risk penalties, blocked payments and lost contracts. ZeniaHR generates all of it from the same payroll data, automatically.
+
+⚖️
+PF, ESI, PT & LWF returns
+Every run produces ECR and challan-ready PF and ESI, plus professional tax and labour welfare fund by state. Filing is a copy-paste.
+
+📋
+Contract labour (CLRA)
+Register of workers, wage register and muster roll under the Contract Labour Act, maintained per principal employer and site.
+
+💵
+Minimum wages, by state
+Wage rates tracked against the applicable state and skill category, so no worker is ever paid below the notified minimum.
+
+📑
+Registers on demand
+Every statutory register and Form is generated on demand, in the exact format an inspector or client auditor expects.
+
+🔒
+Dated audit trail
+Who was paid what, when, and which return was filed, all timestamped, so an audit is a download rather than a reconstruction.
+
+🔔
+Deadline reminders
+PF, ESI and return due dates are tracked for you, so nothing lapses while your team is busy running sites.
+
+How it works
+
+Compliance that files
+itself
+
+Payroll computes PF, ESI, PT and LWF for every worker automatically.
+
+ZeniaHR builds the ECR, challans and contract-labour registers from that data.
+
+You review, then download returns in the format each authority expects.
+
+Every filing is timestamped into an audit trail for inspections and client audits.
+
+PF ECR + challan
+ready
+
+ESI return
+ready
+
+Professional tax (by state)
+ready
+
+LWF
+ready
+
+CLRA registers
+maintained
+
+Audit trail
+dated
+
+Free tools
+
+Free calculators your compliance team already searches for
+
+Every ZeniaHR tool is free and needs no signup.
+
+PF calculator →
+
+Gratuity calculator →
+
+Salary calculator →
+
+Guides
+
+Step-by-step compliance guides
+
+Plain-English how-tos for the statutory tasks every employer faces: PF and ESI registration, filing returns, Form 16, gratuity claims and the CLRA licence.
+
+All compliance guides →
+
+Register for PF →
+
+Compliance calendar →
+
+See ZeniaHR handle your compliance
+
+Thirty minutes, no slide deck. We will generate real PF, ESI and contract-labour returns from a sample month of your data.
+
+Book my demo →
+
+FAQ
+Payroll software questions, answered
+
+What statutory compliance does a manpower or staffing company need?
+Manpower and staffing firms must comply with PF, ESI, professional tax, labour welfare fund, the Contract Labour (Regulation and Abolition) Act, minimum wages, and the maintenance of statutory registers and returns. ZeniaHR automates these end to end.
+
+Does ZeniaHR handle contract labour (CLRA) registers?
+Yes. ZeniaHR maintains the registers and returns required under the Contract Labour (Regulation and Abolition) Act, including the register of workers, wage register and muster roll, per principal employer and site.
+
+Are PF and ESI returns generated automatically?
+Yes. Every payroll run produces the ECR and challan-ready PF and ESI outputs, along with professional tax and LWF, so filing is a copy-paste rather than a recalculation.
+
+Does it keep an audit trail for inspections?
+Yes. Every register and return is generated on demand in the format inspectors expect, with a dated audit trail, so a labour inspection or client audit is a download rather than a scramble.
+
+How much does ZeniaHR compliance software cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/client-billing-software-for-manpower/ ---
+Client Billing Software for Manpower Agencies | ZeniaHR
+
+Attendance → invoice
+man-day billing
+
+Service charge
+GST + TDS
+
+Per client
+own rate card
+
+₹0
+up to 50 workers
+
+Why agencies switch
+
+You already have the data to
+bill accurately
+
+The man-days you deployed and paid are the man-days you should bill, but most agencies rebuild the invoice by hand in a spreadsheet and lose margin to errors. ZeniaHR turns attendance straight into a client invoice, sharing the same worker record as
+payroll
+, so billing and pay never drift apart.
+
+🧾
+Attendance to man-day invoice
+Approved attendance becomes a man-day invoice per client, so you bill exactly what you deployed.
+
+📈
+Service charge & markup
+Apply your service charge or markup per client and contract, so margin is built into the invoice, not added later.
+
+⚖️
+GST & TDS handled
+GST is applied and client TDS accounted for, so the invoice matches what the client will actually deduct and pay.
+
+📋
+Per-client rate cards
+Each client and post can carry its own bill rate, so multi-client billing runs from one system.
+
+🔁
+Bill vs pay reconciliation
+Every invoice is reconciled against payroll for the same period, so you see margin per client and per contract.
+
+💸
+Outstanding & collection
+Track raised, due and received against each client, so collection is a list, not a memory.
+
+How billing works
+
+From attendance to a
+reconciled invoice
+
+Approve the attendance already captured at each client site.
+
+Convert it to a man-day invoice on the client's rate card.
+
+Apply service charge, GST and client TDS automatically.
+
+Reconcile the invoice against payroll for the same period.
+
+Read margin per client and per contract at a glance.
+
+Track outstanding and collection against every client.
+
+Attendance approved
+per client
+
+Man-day invoice
+rate card
+
+Service charge
+applied
+
+GST + TDS
+handled
+
+Bill vs pay
+reconciled
+
+Outstanding
+tracked
+
+Where it fits
+
+Billing closes the
+manpower loop
+
+Client billing is the last step of the same loop that runs deployment, attendance and payroll. Explore the platform.
+
+Manpower software →
+
+Staffing agency software →
+
+Payroll →
+
+See an invoice built from your own attendance
+
+Thirty minutes, no slide deck. Bring one client's month of attendance and we will build the man-day invoice, service charge, GST and TDS included, and reconcile it to payroll.
+
+Book my demo →
+
+FAQ
+Client billing questions, answered
+
+What is client billing software for manpower agencies?
+Client billing software converts the attendance a manpower agency captures into man-day invoices for its clients, applying service charge, GST and TDS per client and reconciling each invoice against payroll. ZeniaHR does this from the same worker record as payroll and is free for your first 50 workers.
+
+Does it bill on a man-day basis?
+Yes. Approved attendance per client becomes a man-day invoice on that client's rate card, so you bill exactly the days you deployed, not an estimate rebuilt in a spreadsheet.
+
+Does it handle service charge, GST and TDS?
+Yes. Your service charge or markup is applied per client, GST is added and client TDS is accounted for, so the invoice matches what the client will actually deduct and pay.
+
+Can I see margin per client and contract?
+Yes. Because billing and payroll share one record, every invoice is reconciled against what you paid the workers for the same period, so margin is visible per client and per contract.
+
+Does it track outstanding and collections?
+Yes. Raised, due and received amounts are tracked against each client, so following up on collection is a list you can work, not something you have to remember.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/security-guard-management-software/ ---
+Security Guard Management Software | ZeniaHR
+
+Every post
+live guard coverage
+
+Beat + patrol
+geo-tagged proof
+
+Reliever cover
+same shift
+
+₹0
+up to 50 workers
+
+Why guard agencies switch
+
+A missed post is a
+lost contract
+
+Guarding runs on coverage: every post staffed, every shift relieved, every patrol logged and every licence current. Miss one and the client notices before you do. ZeniaHR keeps guard operations under live control, then hands the same record to
+guard payroll
+. For the industry view, see
+security agencies
+.
+
+🗓️
+Guard roster & shifts
+Plan day, night and weekly-off rotations per post and client, and see coverage gaps before the shift starts.
+
+📍
+Geo-tagged post attendance
+Guards punch in at the post with geo-tagged or biometric attendance, so presence is proven, not assumed.
+See attendance
+.
+
+🚶
+Beat & patrol checks
+Log patrols and checkpoint scans through the shift, giving the client an auditable record of rounds.
+
+🔁
+Reliever & absence cover
+See a no-show the moment it happens and assign a reliever from the available pool the same shift.
+
+📄
+Licence & PV expiry
+Track police verification, guard licences and training certificates with alerts before any of them lapse.
+
+🏢
+Client-wise deployment
+See headcount deployed versus contracted per client, so every post billed is a post staffed.
+
+How control works
+
+From a live post board to
+every shift covered
+
+Roster guards to posts and shifts, with coverage gaps flagged early.
+
+Guards mark geo-tagged attendance at the post, not the office.
+
+Patrols and checkpoint scans are logged through the shift.
+
+No-shows surface live and are covered by a reliever the same shift.
+
+Licence and police-verification expiry is flagged before it lapses.
+
+Headcount deployed versus contracted is visible per client.
+
+Post & shift roster
+planned
+
+Geo-tagged attendance
+at post
+
+Beat & patrol log
+through shift
+
+Reliever cover
+same shift
+
+Licence / PV expiry
+alerted
+
+Deployed vs contracted
+per client
+
+Where it fits
+
+Manage the guards, then
+pay and bill
+them
+
+Guard management shares one record with payroll, compliance and the security agency operation.
+
+Security guard payroll software →
+
+Security agencies →
+
+Manpower management software →
+
+See your posts under one live board
+
+Thirty minutes, no slide deck. We will roster two client sites and a reliever pool and show you coverage, patrols and licence alerts moving live on your own operation.
+
+Book my demo →
+
+FAQ
+Security guard management questions, answered
+
+What is security guard management software?
+Security guard management software runs the operations of a guarding agency: rostering guards to posts and shifts, proving attendance and patrols at each post, covering absences with relievers, tracking licence and police-verification expiry, and showing deployment against each client contract. ZeniaHR does this in real time and is free for your first 50 workers.
+
+How is this different from the security agencies page?
+The
+security agencies page
+is the industry overview of how ZeniaHR serves guarding firms. This page is the product itself: the guard rostering, attendance, patrol and coverage features. Both run on the same platform.
+
+Can guards mark attendance at the post rather than the office?
+Yes. Guards punch in at the post with geo-tagged or biometric attendance, so the office sees proven presence per post in real time and can act on a no-show the same shift.
+
+Does it track beats, patrols and checkpoints?
+Yes. Patrols and checkpoint scans are logged through the shift, giving both the agency and the client an auditable record of rounds walked.
+
+Does it alert on guard licence and police-verification expiry?
+Yes. Every guard record holds police verification, guard licences and training certificates with expiry dates, and ZeniaHR alerts you before any of them lapse.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/security-guard-payroll-software/ ---
+Security Guard Payroll Software for Agencies | ZeniaHR
+
+Post → payslip
+duty roster to salary
+
+PF · ESI · PT · LWF
+auto per guard
+
+OT + night
+allowances built in
+
+₹0
+up to 50 workers
+
+Why guard agencies switch
+
+Guard payroll is
+shift work
+, not a monthly salary
+
+Security guards run 12-hour shifts, night duty, weekly-offs and reliever cover across many client sites, each with its own pay rate and bill rate. Generic payroll assumes a fixed monthly salary and breaks on the first double-duty. ZeniaHR is built for guard payroll and shares the same record as
+attendance
+and
+compliance
+.
+
+🗓️
+Duty roster to payslip
+Guard muster at each post flows straight into the salary run, with shift, weekly-off and double-duty applied automatically.
+
+⚖️
+Statutory per guard
+Employee and employer PF, ESI, PT by state and LWF computed every run, with ECR and challan-ready outputs.
+See payroll
+.
+
+🌙
+Overtime & night allowance
+Overtime, night-shift allowance and reliever pay applied by rule, so a guard doing 26 duties is paid for 26 duties.
+
+🔁
+Reliever & double duty
+Relievers and double-duty shifts are tracked against the right post and client, never lost between muster and payroll.
+
+💰
+Bill rate vs pay rate
+Each client can carry a different bill rate and pay rate, so what you pay the guard and what you bill the client stay separate and reconciled.
+
+📑
+CLRA-ready registers
+Wage register, muster roll and PF/ESI returns generated in the format principal employers and inspectors expect.
+See compliance
+.
+
+How it works
+
+From guard muster to
+bank transfer
+
+Capture guard muster at each post on mobile or biometric punch.
+
+Apply shift, weekly-off, overtime, night allowance and reliever pay.
+
+Compute PF, ESI, PT and LWF for every guard automatically.
+
+Generate the wage register and challan-ready statutory outputs.
+
+Release the bank advice file and every guard's payslip in one click.
+
+Duty roster
+per post
+
+Overtime + night
+auto
+
+PF / ESI / PT / LWF
+auto
+
+Bill rate vs pay rate
+separate
+
+Wage register + ECR
+on demand
+
+Bank advice + payslips
+1 click
+
+For security agencies
+
+Payroll is half the job. Run the
+whole post
+
+Guard payroll shares a record with rostering, attendance and compliance. Explore the rest of the security stack.
+
+Security guard management software →
+
+Security agencies →
+
+Statutory compliance →
+
+See your guard payroll close in minutes
+
+Thirty minutes, no slide deck. Bring one client's guard roster and we will take it from muster to payslip, PF and ESI included, on your own numbers.
+
+Book my demo →
+
+FAQ
+Security guard payroll questions, answered
+
+What is security guard payroll software?
+Security guard payroll software runs payroll for a guarding agency: it turns duty rosters at each post into payslips, applies shift, overtime, night allowance and reliever pay, computes PF, ESI, PT and LWF per guard and generates CLRA-ready wage registers. ZeniaHR does all of this and is free for your first 50 workers.
+
+How does it handle 12-hour shifts, night duty and overtime?
+Shift patterns, weekly-offs, double duty, night-shift allowance and overtime are applied by rule from the guard's muster, so a guard who worked extra duties is paid for them without any manual recomputation.
+
+Does it compute PF and ESI for guards automatically?
+Yes. Every run auto-computes employee and employer PF, ESI, professional tax by state and LWF, and produces the ECR and challan-ready outputs so filing is a copy-paste, not a recalculation.
+
+Can I keep a different bill rate and pay rate per client?
+Yes. Each client site can carry its own bill rate and pay rate, so what you pay the guard and what you invoice the principal employer are tracked separately and reconciled against the same duty roster.
+
+Does it produce CLRA and wage registers?
+Yes. ZeniaHR generates the wage register, muster roll and PF/ESI returns in the format principal employers and inspectors ask for under the Contract Labour Act and the shops and establishment rules.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/contract-labour-management-software/ ---
+Contract Labour Management Software (CLRA) | ZeniaHR
+
+CLRA built in
+registers & returns
+
+Contractor-wise
+deploy, attend, bill
+
+Principal employer
+liability in view
+
+₹0
+up to 50 workers
+
+Why contractors and PEs switch
+
+Contract labour is a
+three-way
+relationship generic HR ignores
+
+Under the Contract Labour (Regulation & Abolition) Act, a contractor deploys workers to a principal employer, and both carry statutory duties: licences, muster and wage registers, returns and liability if the contractor defaults. Office HR software models one employer and its own staff. ZeniaHR is built for the contractor to principal-employer to worker chain, and shares one record with
+compliance
+and
+payroll
+.
+
+🧾
+Contractor & worker master
+Hold every contractor, principal-employer site and worker on one record, with the deployment that links them.
+
+🚪
+Gate-pass & deployment
+Deploy workers to a PE site with gate-pass and headcount, and move them between sites keeping the full history.
+
+🕒
+Muster & wages
+Site muster flows into wages with the correct rate, feeding the statutory registers automatically.
+See attendance
+.
+
+📑
+CLRA statutory registers
+Muster roll, wage register and the CLRA returns generated on demand, in the prescribed format.
+
+⚖️
+Principal-employer liability
+See each contractor's compliance status so a principal employer is never exposed by a contractor's default.
+See compliance
+.
+
+💸
+Contractor billing
+Turn deployed man-days into contractor invoices with service charge, GST and TDS, reconciled against wages paid.
+
+How it works
+
+From deployment to a
+compliant, billed
+man-day
+
+Register contractors, principal-employer sites and workers on one system.
+
+Deploy workers to a site with gate-pass and the right wage rate.
+
+Capture muster at the site; wages and registers update automatically.
+
+Generate CLRA registers and returns in the prescribed format.
+
+Bill the principal employer and reconcile against wages paid.
+
+Contractor / PE / worker
+one record
+
+Gate-pass & deploy
+per site
+
+Muster & wages
+auto
+
+CLRA registers
+on demand
+
+PE liability
+visible
+
+Contractor billing
+reconciled
+
+The CLRA suite
+
+Management, compliance and attendance,
+one record
+
+Contract labour management is the operating layer. Compliance and attendance run on the same record.
+
+Contract labour compliance →
+
+Contract labour attendance →
+
+Manpower software →
+
+Compliance →
+
+See ZeniaHR run your contract labour, compliantly
+
+Thirty minutes, no slide deck. Bring one contractor and a PE site and we will deploy, muster, register and bill it on your own numbers.
+
+Book my demo →
+
+FAQ
+Contract labour management questions, answered
+
+What is contract labour management software?
+It runs the full contract-labour lifecycle under the CLRA: contractor and worker records, deployment to principal-employer sites, gate-pass, muster and wages, statutory registers and returns, principal-employer liability tracking and contractor billing. ZeniaHR does this on one record and is free for your first 50 workers.
+
+How is it different from generic HR or manpower management software?
+Generic HR models one employer and its own staff. Contract labour management models the contractor to principal-employer to worker chain the CLRA governs, with the licences, registers, returns and liability that come with it. ZeniaHR keeps this alongside deployment, payroll and billing on one record.
+
+Does it generate CLRA statutory registers?
+Yes. Muster roll, wage register and the CLRA returns are generated on demand in the prescribed format, from the same muster and wage data that drives payroll.
+
+Can a principal employer see contractor compliance?
+Yes. A principal employer can see each contractor's compliance status, so a contractor's lapse does not become the principal employer's liability unnoticed.
+
+Does it handle contractor billing?
+Yes. Deployed man-days become contractor invoices with service charge, GST and TDS, reconciled against the wages actually paid.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at Rs 25 per worker per month and fall to Rs 12 at scale on yearly billing. See the pricing page for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/psara-compliance-software/ ---
+PSARA Compliance Software for Security Agencies | ZeniaHR
+
+PSARA licences
+per state, renewals
+
+Guard PV
+antecedent tracked
+
+Registers
+prescribed forms
+
+₹0
+up to 50 workers
+
+Why security agencies switch
+
+A lapsed PSARA licence can
+shut the agency
+
+The Private Security Agencies Regulation Act requires a state licence to operate, guard police verification and training, and prescribed records, enforced by state controlling authorities. Generic compliance software has no concept of any of it. ZeniaHR runs PSARA as a system, alongside the way it handles
+guard management
+and
+guard payroll
+.
+
+📜
+Licence register & renewals
+Every state PSARA licence with validity and renewal alerts, so you are never caught operating on a lapsed licence.
+
+🕵️
+Guard antecedent & PV
+Police verification and antecedent records tracked per guard, with alerts when re-verification is due.
+
+🎓
+Training & DGR records
+Guard training and DGR-mandated records held on the guard file, ready for inspection.
+
+🧥
+Uniform & ID compliance
+Uniform issue and photo ID records maintained to PSARA requirements.
+
+📑
+Prescribed registers
+The registers PSARA and the controlling authority require, generated on demand.
+
+🗺️
+Multi-state licences
+Agencies operating across states manage every state licence and its renewals from one view.
+
+How it works
+
+From a licence register to an
+inspection-ready
+agency
+
+Load every state PSARA licence with its validity date.
+
+Get renewal alerts before any licence lapses.
+
+Track guard police verification and re-verification per guard.
+
+Hold training, DGR, uniform and ID records on the guard file.
+
+Generate the prescribed registers for a controlling-authority inspection.
+
+State licences
+renewals alerted
+
+Guard PV
+per guard
+
+Training / DGR
+on file
+
+Uniform & ID
+maintained
+
+Registers
+prescribed
+
+Multi-state
+one view
+
+The security stack
+
+PSARA compliance completes the
+guard stack
+
+Compliance runs the PSARA programme; management and payroll run the guards on the same record.
+
+Guard management software →
+
+Guard payroll software →
+
+Security agencies →
+
+Compliance →
+
+See PSARA compliance for your agency
+
+Thirty minutes, no slide deck. Bring your licences and a few guards and we will set up the register, PV tracking and renewal alerts on your own data.
+
+Book my demo →
+
+FAQ
+PSARA compliance questions, answered
+
+What is PSARA compliance software?
+It runs the PSARA programme for a security agency: tracking state licences and renewals, guard antecedent and police verification, training and DGR records, uniform and ID compliance, and the prescribed registers. ZeniaHR provides it and is free for your first 50 workers.
+
+What does PSARA require a security agency to do?
+Broadly, the Private Security Agencies Regulation Act requires a state licence to operate, police verification and training of guards, and prescribed records, enforced by a state controlling authority. ZeniaHR tracks each of these so nothing lapses unnoticed. Always confirm the current requirement with your state controlling authority.
+
+Does it track licences across multiple states?
+Yes. An agency operating in several states manages every state PSARA licence and its renewals from one view, with alerts before each lapses.
+
+Does it track guard police verification?
+Yes. Antecedent and police-verification records are held per guard, with alerts when re-verification is due.
+
+How is this different from guard management software?
+Guard management runs the operation (rostering, posts, attendance). PSARA compliance runs the statutory programme (licences, PV, training, registers). In ZeniaHR they share one guard record.
+
+How much does it cost?
+It is free for up to 50 workers. Paid plans start at Rs 25 per worker per month and fall to Rs 12 at scale on yearly billing. See the pricing page for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/staffing-software/ ---
+Staffing Software for Agencies in India | ZeniaHR
+
+Requisition → fill
+client request to deployment
+
+Timesheet → invoice
+billed per placement
+
+Multi-client
+every contract and SLA
+
+₹0
+up to 50 workers
+
+Why staffing agencies switch
+
+Staffing agencies live on
+fill rate and margin
+
+An agency is judged on how fast it fills a client requisition and what margin the placement earns, numbers generic HR software never sees. ZeniaHR models the client side: requisitions, SLAs, client-approved timesheets, per-placement billing and the gap between worker cost and client price. Payroll,
+contract-labour compliance
+and invoicing all run on the same worker record.
+
+📥
+Requisitions & fill rate
+Log client requisitions, fill them from your worker pool or bench, and track fill rate and time-to-deploy per client.
+
+👥
+Worker pool & bench
+Keep a searchable pool by skill, location and availability so the next requisition is filled from people you already have.
+
+🗓️
+Timesheets & client approval
+Capture timesheets at the client site and route them for client sign-off before they become an invoice.
+
+💸
+Payroll with statutory
+Contract-worker payroll with PF, ESI, PT and LWF computed automatically.
+See payroll
+.
+
+📈
+Invoice & margin
+Approved timesheets become client invoices with service charge, GST and TDS, and margin shown per placement and per contract.
+
+⚖️
+Contract-labour compliance
+PF, ESI, PT, LWF and CLRA-related registers and returns in the format principal employers and inspectors expect.
+See compliance
+.
+
+Requisition to invoice
+
+From a client request to a
+paid invoice
+
+Receive a client requisition with role, count, rate and SLA.
+
+Fill it from your worker pool or bench and deploy on contract.
+
+Capture timesheets at the site and get the client to approve them.
+
+Run payroll with PF, ESI, PT and LWF computed automatically.
+
+Invoice the client per placement with service charge, GST and TDS.
+
+Read the margin between worker cost and client price per contract.
+
+Client requisition
+logged
+
+Fill from pool / bench
+fill rate
+
+Client-approved timesheet
+signed off
+
+Payroll + PF/ESI/PT/LWF
+auto
+
+Client invoice
+per placement
+
+Margin per contract
+visible
+
+Where it fits
+
+The staffing edition of the
+manpower platform
+
+Staffing software is the client-facing view of the same system that runs deployment, payroll and compliance. Explore the rest of the platform.
+
+Manpower software →
+
+Manpower management software →
+
+Industries we serve →
+
+See a placement go from requisition to invoice
+
+Thirty minutes, no slide deck. Bring one client requisition and we will fill it, timesheet it and invoice it on your own numbers, margin included.
+
+Book my demo →
+
+FAQ
+Staffing software questions, answered
+
+What is staffing software?
+Staffing software runs the operations of a staffing or manpower agency: taking client requisitions, filling them from a worker pool, deploying contract workers, capturing timesheets with client approval, running payroll with statutory deductions and invoicing the client per placement. ZeniaHR does all of this in one system and is free for your first 50 workers.
+
+How does staffing software help a staffing agency specifically?
+A staffing agency is measured on fill rate and margin per placement, not just headcount. ZeniaHR models the client side that generic HR ignores: requisitions, SLAs, client-approved timesheets, per-placement billing and the margin between what you pay the worker and what you bill the client.
+
+Does ZeniaHR handle contract labour compliance for staffing agencies?
+Yes. ZeniaHR produces the registers and returns contract labour deployment requires, including PF, ESI, PT, LWF and CLRA-related records, in the format inspectors and principal employers ask for. See
+statutory compliance
+.
+
+Can it invoice clients and show margin per placement?
+Yes. Approved timesheets become client invoices with service charge, GST and TDS handled, and ZeniaHR shows the margin between worker cost and client billing per placement, per client and per contract.
+
+Can clients approve timesheets before billing?
+Yes. Timesheets captured at the client site can be routed for client approval before they turn into an invoice, so billing disputes are settled before the invoice is raised, not after.
+
+How much does staffing software from ZeniaHR cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/manpower-management-software/ ---
+Manpower Management Software for Multi-Site Teams | ZeniaHR
+
+Real time
+headcount at every site
+
+Muster + roster
+shift and replacement control
+
+Join to exit
+full worker lifecycle
+
+₹0
+up to 50 workers
+
+Why operations leads pick it
+
+Managing manpower is a
+control problem
+, not a spreadsheet
+
+A deployed workforce moves every day: absences, replacements, transfers between clients, new joins, expiring police verifications and licences. Spreadsheets and office HR tools only tell you what happened once it is too late to act. ZeniaHR is the manpower management software that keeps the operation under live control, then hands the same worker record to
+payroll
+and
+compliance
+so nothing is reconciled twice.
+
+📊
+Live headcount
+See deployed versus required at every site and client in real time, so short sites are visible the same morning, not at month end.
+
+📱
+Supervisor app & muster
+Site supervisors mark muster on mobile with biometric or geo-tagged punch.
+See attendance
+.
+
+🔁
+Roster & replacement
+Plan shifts, cover absences and assign replacements from the available pool without breaking client coverage.
+
+🧭
+Worker lifecycle
+Join, deploy, transfer between clients and exit, all on one record with the full history attached.
+
+📄
+Document & ID expiry
+KYC, PF/ESI, police verification, licences and ID cards tracked with expiry alerts before anything lapses.
+
+🏢
+Cost-centre control
+Roll up worker cost by client, site and entity, so margins are visible per contract, not just per company.
+
+How control works
+
+From a live site view to
+the right worker, deployed
+
+Open a live view of headcount deployed versus required, per client.
+
+Fill vacancies and cover absences from the available worker pool.
+
+Approve muster the supervisor marked from the field, same day.
+
+Transfer a worker between clients with the full history intact.
+
+Get alerted before any document, licence or ID card expires.
+
+Roll cost up by client and entity to protect contract margins.
+
+Live headcount vs required
+real time
+
+Vacancy & replacement
+same day
+
+Muster approval
+from field
+
+Transfer with history
+one record
+
+Document expiry alerts
+auto
+
+Cost by client / entity
+rolled up
+
+Where it fits
+
+Part of the full
+manpower platform
+
+Management is the control layer. Payroll, compliance and client billing run on the same worker record, so the operation and the money never drift apart.
+
+Manpower software →
+
+Staffing agency software →
+
+Payroll →
+
+Compliance →
+
+See your sites under one live view
+
+Thirty minutes, no slide deck. We will set up two sites and a supervisor and show you headcount, muster and cost moving in real time on your own operation.
+
+Book my demo →
+
+FAQ
+Manpower management software questions, answered
+
+What is manpower management software?
+Manpower management software is the operational control layer for a deployed workforce. It lets you deploy workers to sites and clients, control muster and shifts, see live headcount against requirement, track document and ID expiry, and manage the full worker lifecycle from joining to exit. ZeniaHR does this in real time and is free for your first 50 workers.
+
+How is manpower management software different from payroll software?
+Payroll software
+closes the month. Manpower management software runs the operation during the month: who is deployed where, which sites are short, who needs replacing, whose documents are expiring and how cost rolls up by client. In ZeniaHR the two share one worker record, so control and payroll never fall out of sync.
+
+Can supervisors mark muster from the field?
+Yes. Site supervisors mark muster on a mobile app with biometric or geo-tagged punch, and the office sees attendance and headcount live. Absences and replacements can be actioned the same day rather than discovered at month end.
+
+Does it track worker documents and ID expiry?
+Yes. Every worker record holds KYC, PF/ESI, police verification, licences and ID cards with expiry dates, and ZeniaHR alerts you before anything lapses, which matters for security and regulated deployments.
+
+Can I move a worker between clients and keep the history?
+Yes. Transfer a worker from one site or client to another and the full deployment, attendance and payment history stays attached to the same record, with cost re-pointed to the new client from the transfer date.
+
+How much does manpower management software from ZeniaHR cost?
+It is free for up to 50 workers. Paid plans start at ₹25 per worker per month and fall to ₹12 at scale on yearly billing. See the
+pricing page
+for the full rate card.
+
+--- SOURCE URL: https://www.zeniahr.com/tools/salary-calculator/ ---
+Salary Calculator 2026: In-Hand & Take-Home from CTC | ZeniaHR
+
+Home
+›
+Tools
+› Salary Calculator
+
+Your package
+
+Annual CTC
+fixed pay, in ₹
+
+Basic
+% of CTC
+
+Professional tax
+₹/year
+
+Monthly in-hand
+
+₹85,395
+per month · ₹10,24,740 a year
+
+Gross salary (annual)
+₹10,99,140
+
+− Your PF (12%)
+₹72,000
+
+− Professional tax
+₹2,400
+
+− Income tax (new regime)
+₹0
+
+Annual take-home
+₹10,24,740
+
+No income tax: taxable income is within the ₹12,00,000 rebate. New regime FY 2025-26.
+
+How in-hand salary is calculated from CTC
+
+Your CTC is the total cost to the company, so it includes money you never see in cash, like the employer's PF and gratuity. Take-home salary is what is left after those and your own deductions.
+
+In-hand = CTC − employer PF − gratuity − your PF − professional tax − income tax
+
+Gross salary
+CTC minus the employer's PF and gratuity contributions.
+
+Your PF (12%)
+Your own provident fund, deducted from gross.
+
+Professional tax
+A state levy, up to about ₹2,500 a year.
+
+Income tax
+New regime, after the ₹75,000 standard deduction, with full rebate up to ₹12 lakh taxable.
+
+This is a
+CTC calculator
+and a
+take-home salary calculator
+in one: change the basic percentage to match your offer letter and the numbers update instantly.
+
+Frequently asked questions
+
+How is in-hand salary calculated from CTC?
+In-hand salary is CTC minus employer PF and gratuity (which gives gross salary), minus your own PF contribution, professional tax and income tax. The result divided by 12 is your monthly take-home.
+
+What is the difference between CTC and take-home salary?
+CTC is the total cost to the company, including the employer's PF and gratuity. Take-home is what actually reaches your bank after those employer costs, your PF, professional tax and income tax are removed.
+
+Which tax regime does this use?
+The new tax regime for FY 2025-26, with a ₹75,000 standard deduction and full rebate on taxable income up to ₹12,00,000. It is an estimate; your actual tax depends on your regime choice and other income.
+
+Is professional tax the same in every state?
+No. Professional tax is a state levy and varies. Many states charge up to ₹2,500 a year and some do not levy it at all. Change the amount in the calculator to match your state.
+
+Do you compute salary for a whole workforce?
+Yes. ZeniaHR runs gross-to-net for thousands of workers each month, applying PF, ESI, PT and income tax automatically, and generates payslips and the bank advice file. Built only for manpower and staffing companies.
+
+Processing salaries for hundreds of workers?
+
+ZeniaHR turns attendance into gross-to-net pay for your whole workforce, with PF, ESI, PT and payslips handled automatically. Built only for manpower and staffing companies.
+
+Book a demo
+
+See pricing
+
+Manpower & staffing software
+Manpower software
+Staffing software
+Payroll software
+Attendance software
+Compliance software
+
+More free tools:
+PF calculator
+·
+ESI calculator
+·
+Gratuity calculator
+·
+Bio-data / resume maker
+
+© 2026 ZeniaHR ·
+Payroll & HR software for manpower & staffing
+
+This calculator is a simplified estimate using the new tax regime (FY 2025-26), a ₹75,000 standard deduction and a standard PF and gratuity structure. It does not account for HRA and other old-regime exemptions, variable pay, or other income, and is not tax or financial advice. Confirm your figures with your employer or a tax professional.

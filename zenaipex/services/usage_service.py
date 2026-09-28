@@ -95,6 +95,36 @@ async def increment_usage(
     except Exception as exc:
         raise Exception(f"Failed to increment usage: {exc}")
 
+
+async def record_interaction_tokens(
+    company_id: str,
+    input_tokens: int = 0,
+    output_tokens: int = 0,
+    total_tokens: int = 0,
+    direction: str = "test-chat",
+    llm_calls: int = 1,
+    rag_queries: int = 0,
+    **kwargs
+) -> bool:
+    """
+    Record token usage and increment LLM call counter for chat / text interactions.
+    """
+    try:
+        return await increment_usage(
+            company_id=company_id,
+            call_duration_seconds=0.0,
+            llm_calls=llm_calls,
+            rag_queries=rag_queries,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
+            total_tokens=total_tokens,
+            direction=direction,
+        )
+    except Exception as exc:
+        logger.error(f"Failed to record interaction tokens: {exc}")
+        return False
+
+
 async def log_llm_request(
     company_id: str,
     agent_id: Optional[str],
@@ -303,6 +333,25 @@ async def get_canonical_analytics(company_id: str, days: int = 30) -> Dict[str, 
     new_total_tokens = 0
     
     prov_map = {}
+    
+    # Pre-populate with all active providers so they show up even with 0 usage
+    from core.database import col_ai_providers
+    active_providers = await col_ai_providers().find({"enabled": True}).to_list(None)
+    for ap in active_providers:
+        p_name = ap.get("provider", "Unknown")
+        c_name = str(p_name).strip().lower()
+        if c_name and c_name not in prov_map:
+            prov_map[c_name] = {
+                "provider": p_name,
+                "api_calls": 0,
+                "input_tokens": 0,
+                "output_tokens": 0,
+                "total_tokens": 0,
+                "success": 0,
+                "failed": 0,
+                "cost": 0.0,
+                "models": []
+            }
     
     for row in llm_data:
         raw_prov = row["_id"].get("provider", "Unknown")

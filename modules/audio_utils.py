@@ -27,6 +27,18 @@ SARVAM_SAMPLE_RATE = 16000
 SARVAM_SAMPLE_WIDTH = 2  # 16-bit PCM
 
 
+def mp3_to_pcm(mp3_data: bytes) -> bytes:
+    try:
+        audio = AudioSegment.from_mp3(io.BytesIO(mp3_data))
+        audio = audio.set_channels(1)
+        audio = audio.set_frame_rate(8000)
+        audio = audio.set_sample_width(2)
+        audio = audio + 8
+        return audio.raw_data
+    except Exception as e:
+        print(f"Error converting MP3 to PCM: {e}")
+        return b""
+
 def mp3_to_mulaw(mp3_data: bytes) -> bytes:
     """
     Convert MP3 audio to mu-law 8kHz for Twilio.
@@ -45,6 +57,10 @@ def mp3_to_mulaw(mp3_data: bytes) -> bytes:
         audio = audio.set_channels(1)
         audio = audio.set_frame_rate(8000)
         audio = audio.set_sample_width(2)  # 16-bit
+        
+        # Boost volume by 8 dB (loud but prevents distortion/clipping)
+        audio = audio + 8
+
         
         # Get raw PCM data
         pcm_data = audio.raw_data

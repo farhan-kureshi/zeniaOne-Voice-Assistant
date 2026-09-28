@@ -61,7 +61,8 @@ def check_deterministic_fast_path(
     company: Dict[str, Any],
     agent: Dict[str, Any],
     detected_lang: str,
-    detected_script: str
+    detected_script: str,
+    preferred_lang: Optional[str] = None
 ) -> Optional[str]:
     """
     Checks if a user message can be answered deterministically from the company profile
@@ -70,12 +71,56 @@ def check_deterministic_fast_path(
     import string
     msg_clean = message.lower().strip()
     msg_clean_no_punct = msg_clean.translate(str.maketrans('', '', string.punctuation)).strip()
+
+    # Apply preferred language override if specified
+    if preferred_lang == "hinglish":
+        detected_lang = "hinglish"
+        detected_script = "latin"
+    elif preferred_lang == "gujarati":
+        detected_lang = "gujarati"
+        detected_script = "gujarati_script"
+    elif preferred_lang == "english":
+        detected_lang = "english"
+        detected_script = "latin"
+
+    # ── Gender Determination (Male vs Female Agent Persona) ──
+    voice_name = (agent.get("tts_voice") or "").lower()
+    MALE_VOICES = {"rohan", "rahul", "aditya", "kabir", "amit", "dev", "varun", "sumit", "arjun", "ashutosh", "ratan", "manan", "aayan", "shubh", "advait", "anand", "tarun", "sunny", "mani", "gokul", "vijay", "mohit", "rehan", "soham"}
+    is_male = voice_name in MALE_VOICES
+    help_verb = "sakta" if is_male else "sakti"
+    hear_verb = "raha" if is_male else "rahi"
+    dev_help = "सकता" if is_male else "सकती"
+    dev_hear = "रहा" if is_male else "रही"
+
+    # ── Language Switch Commands ──
+    if re.search(r"\b(hinglish|roman\s+hindi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "me", "mein"]):
+        return f"Bilkul! Ab se hum Hinglish mein baat karenge. Bataiye, main aapki kya madad kar {help_verb} hoon?"
+    if re.search(r"\b(gujarati|gujrati)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "vaat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "ma", "me"]):
+        return "ચોક્કસ! હવેથી આપણે ગુજરાતીમાં વાત કરીશું. કહો, હું તમારી શું મદદ કરી શકું?"
+    if re.search(r"\b(english|angrezi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use", "in"]):
+        return "Sure! I will speak with you in English from now on. How can I help you today?"
+    if re.search(r"\b(hindi|shuddh\s+hindi)\b", msg_clean_no_punct) and any(w in msg_clean_no_punct for w in ["baat", "bolo", "bol", "talk", "speak", "karo", "switch", "change", "use"]):
+        return f"बिल्कुल! अब से हम हिंदी में बात करेंगे। बताइए, मैं आपकी क्या मदद कर {dev_help} हूँ?"
     
     # Use regex to handle repeated characters like hiiii, heyyy, hellooo without false positives
     # Expanded with Indian greetings per user request
-    is_greeting = bool(re.match(r"^(h[iy]+|he+l+o+|he+y+|h[iy]+\s+there|good\s+(morning|afternoon|evening)|namaste|kem\s*cho|नमस्कार|નમસ્તે)$", msg_clean_no_punct))
-    is_how_are_you = msg_clean_no_punct in ["how are you", "how r u", "how are u", "kaise ho", "kese ho", "kaise ho aap", "kese ho aap", "kese ho app", "kaise ho app", "kem cho", "kem chho", "kem cho tame", "kem cho tamne", "kema cho tame", "kem chho tame", "tame kem cho", "tame kem chho"]
-    is_thanks = msg_clean_no_punct in ["thanks", "thank you", "dhanyawad", "shukriya", "aabhar", "આભાર", "धन्यवाद"]
+    is_greeting = bool(re.match(r"^(h[iy]+|he+l+o+|he+y+|h[iy]+\s+there|good\s+(morning|afternoon|evening)|namaste|kem\s*cho|नमस्कार|નમસ્તે|हेलो|હેલો)$", msg_clean_no_punct))
+    is_how_are_you = msg_clean_no_punct in [
+        "how are you", "how r u", "how are u", "how are you doing", "kaise ho", "kese ho", "kaise ho aap", 
+        "kese ho aap", "kese ho app", "kaise ho app", "aap kaise ho", "app kaise ho", "sab theek", 
+        "sab kaisa hai", "kem cho", "kem chho", "kem cho tame", "kem cho tamne", "kema cho tame", 
+        "kem chho tame", "tame kem cho", "tame kem chho", "हाउ आर यू", "कैसे हो", "કેમ છો"
+    ]
+    is_thanks = msg_clean_no_punct in [
+        "thanks", "thank you", "dhanyawad", "dhanyvad", "dhanyavad", "shukriya", 
+        "bahut shukriya", "bohot shukriya", "bahut dhanyavad", "bohot dhanyavad", 
+        "aabhar", "આભાર", "धन्यवाद", "thx", "thank u", "many thanks", "kya hai dhanyvad", "dhanyvad kya hai"
+    ]
+    is_hear_me = msg_clean_no_punct in [
+        "can you hear me", "are you there", "sun rahe ho", "kya aap sun rahe ho", 
+        "kya app sun rahe ho", "suno", "meri awaz aa rahi hai", "awaz aa rahi hai", 
+        "awaz sun rahe ho", "sun pa rahe ho"
+    ]
     
     c_name = company.get("name", "our company") if company else "our company"
     if c_name.upper() == "INTERNAL / PLATFORM" or c_name == "ZeniaAI Internal Workspace":
@@ -87,9 +132,9 @@ def check_deterministic_fast_path(
     profile_response = None
     
     # ── Product Overview Fast Paths ───────────────────────────────────────────
-    _z_names = r"(?:zeniaone|zinnia one|zenia one|zenya one|zeniaai|zenia ai|zeniya one|zeniya ai|zene one|zene ai|you|the\s+platform)"
+    _z_names = r"(?:zeniaone|zinnia one|zenia one|zenya one|zeniaai|zenia ai|zeniya one|zeniya ai|zene one|zene ai|sania one|सानिया वन|ज़ेनिया वन|ज़ेनियावन|zenia|ज़ेनिया|जानेमन|you|the\s+platform)"
     z_one_pattern = re.compile(
-        rf"^(what(?:\s+is|'?s)?|tell\s+me\s+(?:more\s+)?about|explain|who\s+are\s+you|who\s+r\s+u|kon\s+cho)\s+{_z_names}$|"
+        rf"^(what(?:\s+is|'?s)?|tell\s+me\s+(?:more\s+)?about|explain|who\s+are\s+you|who\s+r\s+u|kon\s+cho|व्हाट\s+इस)\s+{_z_names}$|"
         rf"^{_z_names}\s+(kya hai|kya he|kya che|su che|su chhe|ke bare mein batao|ke bare me batao|na vara ma|vishe|vishe janavo|kya karta hai|features kya hain|features batao|modules kya hain)$|"
         rf"^(kya hai|kya he|kya che|su che|su chhe)\s+{_z_names}$|"
         rf"^tame\s+{_z_names}\s+(?:chho|cho)\s+ke\s+{_z_names}$|"
@@ -104,18 +149,162 @@ def check_deterministic_fast_path(
         re.IGNORECASE
     )
 
+    # ── Proactive Features, Scope & Capabilities Suggestion Fast Path ──
+    capabilities_pattern = re.compile(
+        r"^(?:"
+        r"what\s+can\s+you\s+(?:do|help(?:\s+me)?(?:\s+with)?)|"
+        r"how\s+can\s+you\s+help(?:\s+me)?|"
+        r"what\s+are\s+your\s+capabilities|"
+        r"aap\s+(?:kya\s+kya\s+)?(?:kar\s+sakte\s+ho|madad\s+kar\s+sakte\s+ho)|"
+        r"mujhe\s+kya\s+help\s+kar\s+sakte\s+ho|"
+        r"tame\s+(?:mane\s+)?(?:shu|su)\s+madad\s+kari\s+shako|"
+        r"tame\s+(?:shu|su)\s+kari\s+shako\s+cho|"
+        r"what\s+do\s+you\s+know"
+        r")$",
+        re.IGNORECASE
+    )
+    if capabilities_pattern.search(msg_clean_no_punct):
+        logger.info("[PRODUCT_FAST_PATH] topic=capabilities_suggestions matched=true")
+        agent_display_name = agent.get("name", "ZeniaOne Assistant")
+        if detected_lang == "gujarati" or detected_script == "gujarati_script":
+            return (
+                f"હું {c_name} ના ઓફિશિયલ AI વોઇસ આસિસ્ટન્ટ ({agent_display_name}) છું. મારી પાસે તમારા માટે આ તમામ માહિતી અને સુવિધાઓ ઉપલબ્ધ છે:\n\n"
+                f"1. 📞 AI વોઇસ એજન્ટ & કોલિંગ: કુદરતી માનવ અવાજમાં ઓટોમેટેડ વોઇસ કોલિંગ અને રીઅલ-ટાઇમ અવાજ સહાયતા.\n"
+                f"2. 🏢 કંપની પ્રોફાઇલ & વિગતો: {c_name} ના બિઝનેસ ટાઇમિંગ્સ, ઓફિસ સરનામું, સંપર્ક વિગતો અને સેવાઓ.\n"
+                f"3. 📚 નોલેજ બેઝ & પ્રોડક્ટ્સ: અપલોડ કરેલા ડોક્યુમેન્ટ્સ, પ્રોડક્ટ કેટલોગ અને FAQs માંથી સચોટ જવાબો.\n"
+                f"4. 🌐 મલ્ટિલિંગ્વલ સપોર્ટ: ગુજરાતી, હિંગ્લિશ, હિન્દી અને અંગ્રેજીમાં રીઅલ-ટાઇમ વાતચીત.\n\n"
+                f"💡 તમે મને આ સવાલો પૂછી શકો છો:\n"
+                f"• '{c_name} ના મુખ્ય ફીચર્સ શું છે?'\n"
+                f"• 'ઓફિસનો સમય અને કોન્ટેક્ટ નંબર આપો.'\n"
+                f"• 'વોઇસ એજન્ટ કેવી રીતે કામ કરે છે?'\n\n"
+                f"તમે કઈ માહિતી વિશે જાણવા માંગો છો?"
+            )
+        elif detected_lang in ["hindi", "hinglish"]:
+            return (
+                f"Main {c_name} ki official AI Voice Assistant ({agent_display_name}) hoon. Mere paas aapke liye yeh sabhi jaankari aur services available hain:\n\n"
+                f"1. 📞 AI Voice Agent & Calling: Natural human voice mein automated customer calling, inbound/outbound calls aur voice assistance.\n"
+                f"2. 🏢 Company & Business Details: {c_name} ke business timings, office address, contact number aur company policies.\n"
+                f"3. 📚 Knowledge Base & Products: Hamare system mein uploaded product catalogs, services, pricing, manuals aur FAQs ke exact answers.\n"
+                f"4. 🌐 Multilingual Support: Hinglish, Hindi, Gujarati aur English mein live dynamic baat-cheet (barge-in interruption ke sath).\n\n"
+                f"💡 Aap mujhse yeh sawaal pooch sakte hain:\n"
+                f"• '{c_name} ke main features aur demo batao.'\n"
+                f"• 'Aapke business timings aur contact details kya hain?'\n"
+                f"• 'Voice agent setup aur pricing kya hai?'\n\n"
+                f"Aap inme se kiske baare mein jaanna chahte hain?"
+            )
+        else:
+            return (
+                f"I am the official AI Voice Assistant ({agent_display_name}) for {c_name}. Here is all the information and capabilities available:\n\n"
+                f"1. 📞 AI Voice Agent & Calling: Natural human-sounding automated voice calling and interactive assistance.\n"
+                f"2. 🏢 Company & Business Details: {c_name}'s business hours, office location, contact details, and policies.\n"
+                f"3. 📚 Knowledge Base & Products: Instant, grounded answers from uploaded product catalogs, services, and FAQs.\n"
+                f"4. 🌐 Multilingual Capabilities: Seamless real-time conversations across Hinglish, Hindi, Gujarati, and English.\n\n"
+                f"💡 Suggested questions you can ask:\n"
+                f"• 'What are the main features and capabilities of {c_name}?'\n"
+                f"• 'What are your business hours and contact info?'\n"
+                f"• 'How do voice agents work?'\n\n"
+                f"Which of these would you like to explore?"
+            )
+
+    # ── Agent Setup & Document Upload Workflow Fast Path ──
+    setup_pattern = re.compile(
+        r"(?:"
+        r"(?:kaise|how\s+to|process|tarika|steps?)\s+(?:setup|create|banaye|configure|start|upload)|"
+        r"(?:setup|create|banane|upload\s+karke|document\s+upload).*(?:process|tarika|kaise|steps?)|"
+        r"how\s+(?:can\s+i|to)\s+(?:setup|create|integrate|configure)\s+(?:voice\s+)?agent"
+        r")",
+        re.IGNORECASE
+    )
+    if setup_pattern.search(msg_clean_no_punct):
+        logger.info("[PRODUCT_FAST_PATH] topic=agent_setup_workflow matched=true")
+        if detected_lang == "gujarati" or detected_script == "gujarati_script":
+            return (
+                f"{c_name} માં કસ્ટમ AI વોઇસ એજન્ટ સેટઅપ કરવાની સ્ટેપ-બાય-સ્ટેપ પ્રક્રિયા:\n\n"
+                f"1. 📄 ડોક્યુમેન્ટ અપલોડ: 'Knowledge Base' માં તમારી કંપનીના PDF, Word અથવા ટેક્સ્ટ ડોક્યુમેન્ટ્સ અપલોડ કરો.\n"
+                f"2. 🤖 એજન્ટ ક્રિએશન: 'AI Agents' સેક્શનમાં નવો એજન્ટ બનાવો અને તેને નોલેજ બેઝ સાથે જોડો.\n"
+                f"3. 🎙️ વોઇસ પસંદગી: રિતુ, રોહન, કાવ્યા અથવા નેહા જેવા નેચરલ ઇન્ડિયન વોઇસ પર્સના પસંદ કરો.\n"
+                f"4. 🚀 લાઈવ ટેસ્ટિંગ: વેબ વોઇસ ચેટ અથવા ટેલિફોની ઇન્ટિગ્રેશન સાથે તરત જ કસ્ટમર કોલિંગ શરૂ કરો.\n\n"
+                f"શું તમે નોલેજ બેઝ અપલોડ કરવા વિશે વધુ માહિતી મેળવવા માંગો છો?\n\n"
+                f"Suggested questions:\n"
+                f"- નોલેજ બેઝ અપલોડ કેવી રીતે કરવું?\n"
+                f"- વોઇસ પર્સના કેવી રીતે પસંદ કરવી?"
+            )
+        elif detected_lang in ["hindi", "hinglish"]:
+            return (
+                f"{c_name} mein custom AI Voice Agent setup karne ka aasan step-by-step process yeh hai:\n\n"
+                f"1. 📄 Documents Upload: 'Knowledge Base' section mein apni company ke PDFs, FAQs ya documentation upload karein. Hamara system inka automatic semantic indexing karta hai.\n"
+                f"2. 🤖 Agent Creation: 'AI Agents' tab mein naya agent create karein aur use Knowledge Base se link karein.\n"
+                f"3. 🎙️ Voice Persona Selection: 11 distinct natural Indian voices (Ritu, Rohan, Neha, Kavya, Amit) me se suitable voice persona select karein.\n"
+                f"4. 🚀 Live Deployment: Web Voice Chat ya Twilio Calling telephony ke zariye agent ko customer calling aur support ke liye live karein.\n\n"
+                f"Kya aap kisi specific step ke baare mein vistaar se jaanna chahte hain?\n\n"
+                f"Suggested questions:\n"
+                f"- Knowledge base mein documents kaise upload karein?\n"
+                f"- Voice persona kaise select karein?"
+            )
+        else:
+            return (
+                f"Here is the step-by-step process to set up a custom AI Voice Agent on {c_name}:\n\n"
+                f"1. 📄 Upload Documents: Go to 'Knowledge Base' and upload your company PDFs, manuals, or FAQs. The system automatically indexes them for semantic retrieval.\n"
+                f"2. 🤖 Create Agent: Navigate to 'AI Agents', create your agent, and link it to your Knowledge Base.\n"
+                f"3. 🎙️ Choose Voice Persona: Pick from 11 natural Indian voices (Ritu, Rohan, Neha, Kavya, etc.) tailored for your business tone.\n"
+                f"4. 🚀 Deploy & Call: Go live with interactive Web Voice Chat or integrate with Twilio for inbound/outbound telephony.\n\n"
+                f"Would you like detailed guidance on any of these steps?\n\n"
+                f"Suggested questions:\n"
+                f"- How do I upload documents to the Knowledge Base?\n"
+                f"- How do I create a new AI agent?"
+            )
+
     if z_one_pattern.match(msg_clean_no_punct) or msg_clean_no_punct in ["who are you", "who r u", "what is your name", "tum kaun ho", "tame kon cho", "kon cho"]:
         logger.info("[PRODUCT_FAST_PATH] product=ZeniaOne matched=true llm_called=false rag_called=false source=authoritative_product_profile")
-        if detected_script == "devanagari":
-            return "ZeniaOne हमारा प्राइमरी AI-driven वॉयस एजेंट प्लेटफॉर्म है। यह कस्टमर इंटरैक्शन को कन्वर्सेशनल AI के ज़रिए हैंडल करने, सपोर्ट स्केल करने और टेलीफोनी वर्कफ़्लो को ऑटोमेट करने के लिए बनाया गया है। क्या आप ZeniaOne के फीचर्स के बारे में और जानना चाहेंगे?"
-        elif detected_script == "gujarati_script":
-            return "ZeniaOne અમારું પ્રાઇમરી AI-driven વોઇસ એજન્ટ પ્લેટફોર્મ છે. આ કસ્ટમર ઇન્ટરેક્શન્સ ને કન્વર્સેશનલ AI થી હેન્ડલ કરવા, સપોર્ટ સ્કેલ કરવા અને ટેલિફોની વર્કફ્લોઝ ઓટોમેટ કરવા માટે બનાવેલું છે. શું તમે ZeniaOne ના ફીચર્સ વિશે વધુ જાણવા માંગો છો?"
-        elif detected_lang == "gujarati":
-            return "ZeniaOne amaru primary AI-driven voice agent platform che. Aa customer interactions ne conversational AI thi handle karva, support scale karva ane telephony workflows automate karva mate banavelu che. Shu tame ZeniaOne na features vishe vadhu janva mango cho?"
+        
+        # Override language if explicit markers are present
+        if any(w in msg_clean_no_punct for w in ["kya hai", "kya he", "kya karta", "batao", "kaun ho"]):
+            detected_lang = "hinglish"
+        elif any(w in msg_clean_no_punct for w in ["su che", "su chhe", "kya che", "vishe", "janavo", "tame kon cho", "kon cho"]):
+            detected_lang = "gujarati"
+            
+        if detected_lang == "gujarati" or detected_script == "gujarati_script":
+            return (
+                "ZeniaOne અમારું અદ્યતન AI-driven વોઇસ એજન્ટ પ્લેટફોર્મ છે જે કુદરતી માનવ અવાજમાં વાતચીત કરે છે.\n\n"
+                "અમારી પાસે આ મુખ્ય માહિતી ઉપલબ્ધ છે:\n"
+                "1. AI વોઇસ એજન્ટ અને કોલિંગ\n"
+                "2. મલ્ટિલિંગ્વલ સપોર્ટ (હિંગ્લિશ, ગુજરાતી, હિન્દી, અંગ્રેજી)\n"
+                "3. નોલેજ બેઝ અને ડોક્યુમેન્ટ સર્ચ\n"
+                "4. લાઇવ ઇન્ટરપ્શન (બાર્જ-ઇન)\n"
+                "5. ટેલિફોની અને સપોર્ટ વર્કફ્લો\n\n"
+                "તમે આમાંથી કયા ફીચર વિશે વધુ જાણવા માંગો છો?\n\n"
+                "Suggested questions:\n"
+                "- લાઇવ બાર્જ-ઇન શું છે?\n"
+                "- ટેલિફોની કેવી રીતે કામ કરે છે?"
+            )
         elif detected_lang in ["hindi", "hinglish"]:
-            return "ZeniaOne hamara primary AI-driven voice agent platform hai. Yeh customer interactions ko conversational AI ke zariye handle karne, support scale karne aur telephony workflows ko automate karne ke liye banaya gaya hai. Kya aap ZeniaOne ke features ke baare mein aur jaanna chahenge?"
+            return (
+                "ZeniaOne hamara primary AI-driven voice agent platform hai jo natural human sound mein customer calls aur support handle karta hai.\n\n"
+                "Mere paas yeh sab details available hain:\n"
+                "1. AI Voice Agent & Calling\n"
+                "2. Multilingual Support (Hinglish, Gujarati, Hindi, English)\n"
+                "3. Knowledge Base & Document Search\n"
+                "4. Live Interruption & Barge-in\n"
+                "5. Telephony & Support Workflows\n\n"
+                "Aap inme se kiske baare mein vistaar se jaanna chahte hain?\n\n"
+                "Suggested questions:\n"
+                "- Live barge-in kya hai?\n"
+                "- Telephony workflow samjhao"
+            )
         else:
-            return "ZeniaOne is our primary AI-driven voice agent platform. It provides conversational AI capabilities to handle customer interactions, scale support, and automate telephony workflows effortlessly. Would you like to know more about ZeniaOne's features?"
+            return (
+                "ZeniaOne is our primary AI-driven voice agent platform that handles customer interactions in a natural human voice.\n\n"
+                "I have the following topics available:\n"
+                "1. AI Voice Agent & Calling\n"
+                "2. Multilingual Support (Hinglish, Gujarati, Hindi, English)\n"
+                "3. Knowledge Base & Document Search\n"
+                "4. Live Barge-in & Interruption\n"
+                "5. Telephony & Support Workflows\n\n"
+                "Which of these would you like to know more about?\n\n"
+                "Suggested questions:\n"
+                "- What is live barge-in?\n"
+                "- Explain telephony workflows"
+            )
             
     if z_hr_pattern.match(msg_clean_no_punct):
         logger.info("[PRODUCT_FAST_PATH] product=ZeniaHR matched=true llm_called=false rag_called=false source=authoritative_product_profile")
@@ -124,22 +313,22 @@ def check_deterministic_fast_path(
         else:
             return "ZeniaHR is a comprehensive human resources management product. It streamlines attendance tracking, payroll processing, and policy management."
             
-    # ── GUARD: Do not use simple topic fast-paths for relationship/comparison questions ──
-    is_relationship = False
-    for pat in ["relationship", "relation", "difference", "differences", "connect", "connected", "aur", "se kya", "between"]:
-        if pat in msg_clean_no_punct:
-            is_relationship = True
-            break
+    # ── GUARD: Do not use simple topic fast-paths for relationship/comparison/detailed questions ──
+    has_detail_intent = any(pat in msg_clean_no_punct for pat in [
+        "relationship", "relation", "difference", "differences", "connect", "connected", "aur", "se kya", "between",
+        "step", "steps", "detail", "details", "process", "workflow", "feature", "features", "options", "rule", "rules",
+        "kaise", "samjhao", "batao", "list", "push to", "pf", "esic", "pt", "tds", "gst"
+    ])
             
     # Deterministic Cache for high-frequency queries
-    if not is_relationship and "attendance" in msg_clean_no_punct and ("what is" in msg_clean_no_punct or "kya hai" in msg_clean_no_punct):
+    if not has_detail_intent and "attendance" in msg_clean_no_punct and ("what is" in msg_clean_no_punct or "kya hai" in msg_clean_no_punct):
         logger.info("[PRODUCT_FAST_PATH] topic=attendance matched=true")
         if detected_lang in ["hindi", "hinglish"]:
             return "Attendance module aapko employees ki in aur out timings track karne, leaves manage karne, aur working hours monitor karne ki suvidha deta hai."
         else:
             return "The attendance module allows you to track employee clock-in and clock-out times, manage leaves, and monitor total working hours."
             
-    if not is_relationship and "payroll" in msg_clean_no_punct and ("what is" in msg_clean_no_punct or "kya hai" in msg_clean_no_punct or "kaise work karta hai" in msg_clean_no_punct):
+    if not has_detail_intent and "payroll" in msg_clean_no_punct and ("what is" in msg_clean_no_punct or "kya hai" in msg_clean_no_punct or "kaise work karta hai" in msg_clean_no_punct):
         logger.info("[PRODUCT_FAST_PATH] topic=payroll matched=true")
         if detected_lang in ["hindi", "hinglish"]:
             return "Payroll module employees ki salary, taxes, deductions, aur bonuses ko calculate aur process karne ka kaam karta hai, taaki salary payment automated ho sake."
@@ -562,16 +751,28 @@ def check_deterministic_fast_path(
         
     elif is_capability_query:
         if detected_script == "devanagari":
-            return f"मैं {c_name} की ओर से आपकी मदद के लिए यहाँ हूँ। मैं आपको हमारे बारे में जानकारी देने, आपके सवालों के जवाब देने और सपोर्ट में मदद कर सकता हूँ।"
+            return f"मैं {c_name} की ओर से आपकी मदद के लिए यहाँ हूँ। मैं आपको हमारे बारे में जानकारी देने, आपके सवालों के जवाब देने और सपोर्ट में मदद कर {dev_help} हूँ।"
         elif detected_script == "gujarati_script":
             return f"હું {c_name} તરફથી તમારી મદદ માટે અહી છું. હું તમને અમારા વિશે માહિતી આપવામાં, તમારા પ્રશ્નોના જવાબ આપવામાં અને સપોર્ટમાં મદદ કરી શકું છું."
         elif detected_lang in ["hindi", "hinglish"]:
-            return f"Main {c_name} ki taraf se aapki madad ke liye yahan hoon. Main aapko hamare baare mein jaankari dene, aapke sawalon ke jawab dene aur support mein madad kar sakta hoon."
+            return f"Main {c_name} ki taraf se aapki madad ke liye yahan hoon. Main aapko hamare baare mein jaankari dene, aapke sawalon ke jawab dene aur support mein madad kar {help_verb} hoon."
         elif detected_lang == "gujarati":
             return f"Hu {c_name} taraf thi tamari madad mate ahi chu. Hu tamne amara vishe mahiti aavpa ma, tamara prashno na javab aavpa ma ane support ma madad kari shaku chu."
         else:
             return f"I'm here to help you with {c_name}. I can provide information about our business, answer your questions, and assist with support."
             
+    elif is_hear_me:
+        if detected_script == "devanagari":
+            return f"हाँ बिल्कुल! मैं आपको अच्छी तरह सुन पा {dev_hear} हूँ। कहिए, मैं आपकी क्या मदद कर {dev_help} हूँ?"
+        elif detected_script == "gujarati_script":
+            return "હા ચોક્કસ! હું તમને બરાબર સાંભળી શકું છું. કહો, હું તમારી શી મદદ કરી શકું?"
+        elif detected_lang in ["hindi", "hinglish"]:
+            return f"Haan bilkul! Main aapko ache se sun {hear_verb} hoon. Kahiye, main aapki kya help kar {help_verb} hoon?"
+        elif detected_lang == "gujarati":
+            return "Ha bilkul! Hu tamne barabar sambhli shaku chu. Kaho, hu tamari shu madad kari shaku?"
+        else:
+            return "Yes, I can hear you clearly! How can I help you today?"
+
     elif is_greeting or is_how_are_you or is_thanks:
         # Override name if this is the internal admin workspace but a custom customer agent
         if c_name == "ZeniaOne" and agent.get("agent_type") != "platform_admin":
@@ -579,38 +780,38 @@ def check_deterministic_fast_path(
         
         if is_how_are_you:
             if detected_script == "devanagari":
-                return f"मैं ठीक हूँ, धन्यवाद! आप {c_name} के बारे में क्या जानना चाहेंगे?"
+                return f"मैं बिल्कुल ठीक और बढ़िया हूँ, धन्यवाद! आप बताइए, आप कैसे हैं? आज मैं आपकी क्या मदद कर {dev_help} हूँ?"
             elif detected_script == "gujarati_script":
-                return f"હું મજામાં છું, આભાર! તમે {c_name} વિશે શું જાણવા માંગો છો?"
+                return "હું એકદમ મજામાં છું, આભાર! તમે કેમ છો? આજે હું તમારી શું મદદ કરી શકું?"
             elif detected_lang in ["hindi", "hinglish"]:
-                return f"Main theek hoon, shukriya! Aap {c_name} ke baare mein kya jaanna chahenge?"
+                return f"Main bilkul badhiya hoon, shukriya! Aap bataiye aap kaise hain? Main aapki kya madad kar {help_verb} hoon?"
             elif detected_lang == "gujarati":
-                return f"Hu majama chu, aabhar! Tame {c_name} vishe shu janva mango cho?"
+                return "Hu ekdam majama chu, aabhar! Tame kem cho? Hu tamari shu madad kari shaku?"
             else:
-                return f"I'm doing well, thank you! What would you like to know about {c_name}?"
+                return "I'm doing great, thank you! How are you doing today? How can I help you?"
                 
         elif is_thanks:
             if detected_script == "devanagari":
-                return "आपका स्वागत है! कोई और सवाल हो तो ज़रूर पूछें।"
+                return "आपका बहुत-बहुत स्वागत है! कोई और बात हो या सवाल हो तो बेझिझक पूछिए, मुझे आपकी मदद करके खुशी होगी।"
             elif detected_script == "gujarati_script":
-                return "તમારો આભાર! બીજું કંઈ જાણવું હોય તો કહો."
+                return "તમારું ખૂબ ખૂબ સ્વાગત છે! બીજું કંઈ પૂછવું હોય તો ચોક્કસ જણાવો, તમારી મદદ કરીને મને આનંદ થશે."
             elif detected_lang in ["hindi", "hinglish"]:
-                return "Aapka swagat hai! Koi aur sawal ho toh zaroor poochein."
+                return "Aapka bohot-bohot swagat hai! Aur kuch poochna ho ya koi bhi madad chahiye ho toh zaroor batayein."
             elif detected_lang == "gujarati":
-                return "Tamaro aabhar! Biju kai janvu hoy to kaho."
+                return "Tamaru khub swagat chhe! Biju kai puchvu hoy to zaroor batavo."
             else:
-                return "You're welcome! Let me know if you have any other questions."
+                return "You're most welcome! Feel free to ask if you need any other help."
                 
         else: # is_greeting
             if detected_script == "devanagari":
-                return f"नमस्ते! आप {c_name} के बारे में क्या जानना चाहेंगे?"
+                return f"नमस्ते! कहिए, आज मैं आपकी किस तरह मदद कर {dev_help} हूँ?"
             elif detected_script == "gujarati_script":
-                return f"નમસ્તે! તમે {c_name} વિશે શું જાણવા માંગો છો?"
+                return "નમસ્તે! કહો, આજે હું તમારી શું મદદ કરી શકું?"
             elif detected_lang in ["hindi", "hinglish"]:
-                return f"Hello! Aap {c_name} ke baare mein kya jaanna chahenge?"
+                return f"Namaste! Kahiye, main aapki kya help kar {help_verb} hoon?"
             elif detected_lang == "gujarati":
-                return f"Namaste! Tame {c_name} vishe shu janva mango cho?"
+                return "Namaste! Kaho, hu tamari shu madad kari shaku?"
             else:
-                return f"Hello! What would you like to know about {c_name}?"
+                return "Hello! How can I help you today?"
                 
     return None

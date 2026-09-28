@@ -1,0 +1,196 @@
+Farhan Kureshi | Portfolio
+
+Initializing Farhan's Workspace
+_
+
+Available for Freelance
+
+Hi, I'm Farhan Kureshi,
+
+Python Full-Stack Developer
+
+I build fast, scalable applications using Python, Django, React.js, and PyTorch.
+
+View My Work
+
+Contact Me
+
+Download Resume
+
+Farhan Kureshi
+
+Python Full-Stack Developer
+
+VIP ACCESS GRANTED
+
+Beyond The Code
+
+> Executing script: mindset.py...
+
+"Great software isn't just written; it's engineered with precision, fueled by coffee, and designed for infinite scale."
+
+I don't just write scripts; I architect digital experiences. My approach blends cutting-edge Artificial Intelligence with rock-solid Python backends to build future-proof applications.
+
+PYTHON
+
+DJANGO
+
+REACT
+
+PYTORCH
+
+Download Complete CV
+
+My Journey
+
+2023 - 2026
+
+Bachelor of Computer Applications (BCA)
+
+HNGU, Gujarat
+
+Graduated with a CGPA of 7.1. Built foundational knowledge in algorithms, database management, and programming languages.
+
+Mar 2026 - May 2026
+
+Python Full-Stack Developer Intern
+
+Pulse Circle
+Remote
+
+Developed robust RESTful APIs using Django REST Framework.
+
+Designed scalable React.js user interfaces connected to MySQL.
+
+Integrated WebSockets and Razorpay payment gateways.
+
+Django
+React
+WebSockets
+
+2026 - Present
+
+Master of Computer Applications (MCA)
+
+Gujarat Technological University (GTU)
+
+Pursuing advanced studies in software engineering, modern web architectures, and artificial intelligence.
+
+Technical Arsenal
+
+AI & Python Ecosystem
+
+Python (95%)
+
+PyTorch (85%)
+
+OpenAI API (85%)
+
+Pandas / Scikit (80%)
+
+Backend Architecture
+
+Django & DRF (85%)
+
+Flask (90%)
+
+MySQL (80%)
+
+WebSockets (80%)
+
+Frontend Interfaces
+
+React.js (90%)
+
+JavaScript ES6 (85%)
+
+Tailwind / CSS3 (95%)
+
+Featured Works
+
+PulseDate Platform
+
+A highly scalable matchmaking engine featuring real-time WebSockets, Django REST backend, and secure Razorpay integrations.
+
+Django
+React
+WebSockets
+
+Live Demo
+
+Code
+
+RitHan AI Image Gen
+
+A sleek, AI-powered web application that generates high-quality images from text prompts using advanced REST APIs and Flask.
+
+Flask
+Python
+Tailwind CSS
+
+Live Demo
+
+Code
+
+Flappy Bird Clone
+
+A classic physics-based 2D game recreated entirely in Python and Pygame featuring collision detection and score tracking.
+
+Python
+Pygame
+
+Game.exe
+
+Code
+
+HNGU Student Portal
+
+A lightweight and user-friendly web application designed for HNGU students to easily access college info, results, and resources.
+
+HTML
+CSS
+JavaScript
+
+Preview
+
+Code
+
+Achievements & Certifications
+
+Diploma
+
+DISM in Software Management
+
+IANT Educom Private Limited - Software & Web Designing Essentials
+
+Award
+
+3rd Position - Webpage Designing
+
+Smt. B.K. Mehta IT Centre (MCA College), Palanpur
+
+Contact Me
+
+Email
+
+kureshif624@gmail.com
+
+Phone
+
++91 8799046710
+
+Location
+
+Palanpur, Gujarat, India
+
+Name
+
+Email
+
+Message
+
+Send Message
+
+Message Sent Successfully! Thanks for reaching out.
+
+×

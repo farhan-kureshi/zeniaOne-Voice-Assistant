@@ -70,14 +70,14 @@ _ROMANIZED_SIGNATURES = [
         "budhvar", "guruvaar", "shukravar", "shanivar", "sukravar", "sanje", "vage", "avoto", "chalse"
     ]), 1),
     ("hindi", frozenset([
-        "kya", "hai", "kaise", "mujhe", "nahi", "aur", "hain",
+        "kya", "hai", "he", "kaise", "mujhe", "nahi", "aur", "hain",
         "karein", "karo", "batao", "mein",
         "kon", "konsi", "konse", "kaunsi", "kaunse",
         "kyu", "kyun", "kyunki", "kab", "kahan", "kuch", "bahut",
         "accha", "theek", "sahi", "galat", "unhe", "unka",
         "hui", "hua", "hue", "bata", "bataiye", "samjhao",
         "kitna", "kitne", "chahiye", "milega", "karna", "aap", "tum",
-        "kya hai", "kya time", "office time", "office kab"
+        "kya hai", "kya he", "kya time", "office time", "office kab"
     ]), 1),
     ("marathi", frozenset([
         "aahe", "ahe", "mhanaje", "aplya", "tyacha",
@@ -168,11 +168,11 @@ _NATIVE_SCRIPTS = {
 }
 
 _FALLBACKS = {
-    "english":         "I couldn't find the exact details for this information.",
-    "hindi_latin":     "Mujhe is information ka exact detail nahi mila.",
-    "hindi_native":    "\u092e\u0941\u091d\u0947 \u0907\u0938 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0915\u093e \u0938\u091f\u0940\u0915 \u0935\u093f\u0935\u0930\u0923 \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u093e\u0964",
-    "gujarati_latin":  "Mane aa information ni exact detail mali nathi.",
-    "gujarati_native": "\u0aae\u0aa8\u0ac7 \u0a86 \u0aae\u0abe\u0ab9\u0abf\u0aa4\u0ac0\u0aa8\u0ac0 \u0a9a\u0acb\u0a95\u0acd\u0a95\u0ab8 \u0ab5\u0abf\u0a97\u0aa4 \u0aae\u0ab3\u0ac0 \u0aa8\u0aa5\u0ac0.",
+    "english":         "I couldn't find the exact details for this information.\n\nSuggested questions:\n- What are the main features?\n- How do I set this up?",
+    "hindi_latin":     "Mujhe is information ka exact detail nahi mila.\n\nSuggested questions:\n- Iske main features kya hain?\n- Agent kaise setup karein?",
+    "hindi_native":    "\u092e\u0941\u091d\u0947 \u0907\u0938 \u091c\u093e\u0928\u0915\u093e\u0930\u0940 \u0915\u093e \u0938\u091f\u0940\u0915 \u0935\u093f\u0935\u0930\u0923 \u0928\u0939\u0940\u0902 \u092e\u093f\u0932\u093e\u0964\n\nSuggested questions:\n- Iske main features kya hain?\n- Agent kaise setup karein?",
+    "gujarati_latin":  "Mane aa information ni exact detail mali nathi.\n\nSuggested questions:\n- Aa na main features shu che?\n- Aa sharu kevi rite karvu?",
+    "gujarati_native": "\u0aae\u0aa8\u0ac7 \u0a86 \u0aae\u0abe\u0ab9\u0abf\u0aa4\u0ac0\u0aa8\u0ac0 \u0a9a\u0acb\u0a95\u0acd\u0a95\u0ab8 \u0ab5\u0abf\u0a97\u0aa4 \u0aae\u0ab3\u0ac0 \u0aa8\u0aa5\u0ac0.\n\nSuggested questions:\n- Aa na main features shu che?\n- Aa sharu kevi rite karvu?",
     "marathi_latin":   "Mala ya mahitichi nakki maahiti milali nahi.",
     "marathi_native":  "\u092e\u0932\u093e \u092f\u093e \u092e\u093e\u0939\u093f\u0924\u0940\u091a\u093e \u0928\u0915\u094d\u0915\u0940 \u0924\u092a\u0936\u0940\u0932 \u092e\u093f\u0933\u093e\u0932\u093e \u0928\u093e\u0939\u0940.",
     "bengali_latin":   "Ami ei tathyer sothik biboron khuje pailam na.",

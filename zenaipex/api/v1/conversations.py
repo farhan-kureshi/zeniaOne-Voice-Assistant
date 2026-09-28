@@ -6,7 +6,7 @@ GET /api/v1/companies/{id}/conversations/{cid}        Get conversation
 GET /api/v1/companies/{id}/conversations/{cid}/messages  Get transcript
 GET /api/v1/companies/{id}/usage                      Get usage summary
 """
-from fastapi import APIRouter, Depends, Path, Query
+from fastapi import APIRouter, Depends, Path, Query, HTTPException
 from typing import Optional
 
 from core.dependencies import get_auth_context, AuthContext
@@ -43,6 +43,12 @@ def _fmt_conv(doc: dict) -> dict:
         "booking_confirmed": doc.get("booking_confirmed", False),
         "is_pinned": doc.get("is_pinned", False),
         "appointment_data": doc.get("appointment_data"),
+        "call_sid": doc.get("call_sid"),
+        "recording_url": doc.get("recording_url"),
+        "recording_sid": doc.get("recording_sid"),
+        "caller_to": doc.get("caller_to"),
+        "title": doc.get("title"),
+        "last_message": doc.get("last_message"),
     }
 
 
@@ -51,7 +57,7 @@ def _fmt_msg(doc: dict) -> dict:
         "id": str(doc["_id"]),
         "conversation_id": doc["conversation_id"],
         "role": doc.get("role", "user"),
-        "text": doc.get("text", ""),
+        "text": doc.get("text") or doc.get("content", ""),
         "language": doc.get("language"),
         "timestamp": doc.get("timestamp"),
     }
@@ -108,8 +114,10 @@ async def list_conversations(
             
         if fmt["direction"] == "test-chat" or fmt["direction"] == "inbound":
             # Use existing title if available, otherwise fallback to first user message text
-            fmt["title"] = c.get("title") or (first_msg.get("text", "New Chat") if first_msg else "New Chat")
-            fmt["last_message"] = last_msg.get("text", "") if last_msg else ""
+            first_text = first_msg.get("text") or first_msg.get("content") or "New Chat" if first_msg else "New Chat"
+            fmt["title"] = c.get("title") or first_text
+            last_text = last_msg.get("text") or last_msg.get("content", "") if last_msg else ""
+            fmt["last_message"] = last_text
             
         formatted_convs.append(fmt)
 

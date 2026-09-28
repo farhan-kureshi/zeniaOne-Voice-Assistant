@@ -20,6 +20,7 @@ async def create_conversation(
     channel_id: Optional[str] = None,
     call_sid: Optional[str] = None,
     caller_phone: Optional[str] = None,
+    caller_to: Optional[str] = None,
     direction: str = "inbound",
     language: str = "en-IN",
     scheduled_call_id: Optional[str] = None,
@@ -32,6 +33,7 @@ async def create_conversation(
         "channel_id": channel_id,
         "call_sid": call_sid,
         "caller_phone": caller_phone,
+        "caller_to": caller_to,
         "direction": direction,
         "language": language,
         "status": "active",
@@ -44,6 +46,13 @@ async def create_conversation(
         "scheduled_call_id": scheduled_call_id,
         "is_pinned": False,
     }
+    if call_sid:
+        existing = await col_conversations().find_one({"call_sid": call_sid})
+        if existing:
+            # Update only if not already set, or just return it
+            # Actually, let's just return the existing if it's already there
+            return existing
+
     result = await col_conversations().insert_one(doc)
     doc["_id"] = result.inserted_id
     return doc

@@ -82,7 +82,7 @@ class Settings(BaseSettings):
 
     # ── JWT ───────────────────────────────────────────────────────────────────
     jwt_algorithm: str = Field(default="HS256")
-    jwt_access_token_expire_minutes: int = Field(default=60)
+    jwt_access_token_expire_minutes: int = Field(default=60 * 24 * 30)  # 30 days persistent login
     jwt_refresh_token_expire_days: int = Field(default=30)
 
     # ── Encryption ────────────────────────────────────────────────────────────

@@ -360,9 +360,32 @@ async def realtime_stt(audio_data: bytes, language: str = "hi-IN", max_retries: 
         _stt_pool.pop(language, None)
         return ""
 
+# Circuit breaker to eliminate multiple-second retry delays when Sarvam credits are exhausted
+_SARVAM_CIRCUIT_BROKEN = False
+_SARVAM_LAST_FAILURE_TIME = 0.0
+
+def mark_sarvam_failed(reason: str = "Credits exhausted"):
+    global _SARVAM_CIRCUIT_BROKEN, _SARVAM_LAST_FAILURE_TIME
+    _SARVAM_CIRCUIT_BROKEN = True
+    _SARVAM_LAST_FAILURE_TIME = time.time()
+    import logging
+    logging.getLogger(__name__).warning(f"[SARVAM_CIRCUIT_BREAKER] Activated ({reason}). Bypassing Sarvam to achieve instant ~200ms neural speech.")
+
+def is_sarvam_available() -> bool:
+    global _SARVAM_CIRCUIT_BROKEN, _SARVAM_LAST_FAILURE_TIME
+    if not _SARVAM_CIRCUIT_BROKEN:
+        return True
+    # Auto-retry after 5 minutes in case credits were added
+    if time.time() - _SARVAM_LAST_FAILURE_TIME > 300:
+        _SARVAM_CIRCUIT_BROKEN = False
+        return True
+    return False
+
 async def _acquire_tts(language: str, speaker: str) -> 'SarvamRealtimeTTS':
     import logging
     logger = logging.getLogger(__name__)
+    if not is_sarvam_available():
+        return None
     pool_key = f"{language}_{speaker}"
     
     tts = _tts_pool.pop(pool_key, None)
@@ -386,31 +409,78 @@ def _release_tts(language: str, speaker: str, tts: 'SarvamRealtimeTTS'):
     if tts and tts.is_connected():
         _tts_pool[f"{language}_{speaker}"] = tts
 
+PERSONA_TO_EDGE_VOICE = {
+    # Female voices (distinct neural models & acoustic tuning)
+    "ritu": {"voice": "hi-IN-SwaraNeural", "rate": "+0%", "pitch": "+0Hz"},
+    "priya": {"voice": "en-IN-NeerjaExpressiveNeural", "rate": "+0%", "pitch": "+0Hz"},
+    "neha": {"voice": "en-IN-NeerjaNeural", "rate": "-8%", "pitch": "-4Hz"},
+    "pooja": {"voice": "en-US-JennyNeural", "rate": "+10%", "pitch": "+12Hz"},
+    "shreya": {"voice": "en-US-AriaNeural", "rate": "+2%", "pitch": "+4Hz"},
+    "kavya": {"voice": "en-GB-SoniaNeural", "rate": "-5%", "pitch": "-4Hz"},
+
+    # Male voices (distinct neural models & acoustic tuning)
+    "rahul": {"voice": "en-IN-PrabhatNeural", "rate": "+0%", "pitch": "+0Hz"},
+    "amit": {"voice": "hi-IN-MadhurNeural", "rate": "-4%", "pitch": "-6Hz"},
+    "rohan": {"voice": "en-US-GuyNeural", "rate": "+12%", "pitch": "+4Hz"},
+    "kabir": {"voice": "en-US-BrianNeural", "rate": "-10%", "pitch": "-14Hz"},
+    "aditya": {"voice": "en-US-ChristopherNeural", "rate": "+0%", "pitch": "-6Hz"},
+}
+
+async def fallback_neural_tts(text: str, speaker: str = "ritu") -> bytes:
+    """Fallback neural synthesis for each persona using high-fidelity edge_tts."""
+    import logging
+    logger = logging.getLogger(__name__)
+    try:
+        import edge_tts
+        speaker_key = (speaker or "ritu").lower()
+        cfg = PERSONA_TO_EDGE_VOICE.get(speaker_key, PERSONA_TO_EDGE_VOICE["ritu"])
+        communicate = edge_tts.Communicate(text, cfg["voice"], rate=cfg["rate"], pitch=cfg["pitch"])
+        audio_data = bytearray()
+        async for chunk in communicate.stream():
+            if chunk["type"] == "audio":
+                audio_data.extend(chunk["data"])
+        if audio_data:
+            logger.info(f"[TTS_NEURAL_FALLBACK] Synthesized {len(audio_data)} bytes for speaker={speaker_key} voice={cfg['voice']}")
+            return bytes(audio_data)
+    except Exception as e:
+        logger.error(f"[TTS_NEURAL_FALLBACK_ERROR] {e}")
+    return b""
+
 async def realtime_tts(
     text: str,
     language: str = "en-IN",
-    speaker: str = "anushka"
+    speaker: str = "ritu"
 ) -> bytes:
-    """Synthesize speech - returns raw audio (mp3) with connection pooling."""
+    """Synthesize speech - returns raw audio (mp3) with connection pooling and neural fallback."""
     import logging
     logger = logging.getLogger(__name__)
     pool_key = f"{language}_{speaker}"
     
+    if not is_sarvam_available():
+        return await fallback_neural_tts(text, speaker)
+
     for attempt in range(2):
         tts = await _acquire_tts(language, speaker)
         if not tts:
             if attempt == 1:
-                logger.error(f"[VOICE_TTS_POOL_RECOVERY_FAILED] key={pool_key}")
-            return b""
+                logger.info(f"[VOICE_TTS_SARVAM_OFFLINE] Using neural fallback for speaker={speaker}")
+                return await fallback_neural_tts(text, speaker)
+            continue
             
         try:
             await tts.send_text(text)
             await tts.flush()
             chunks = await tts.receive_all()
             _release_tts(language, speaker, tts)
-            if attempt == 1:
-                logger.info(f"[VOICE_TTS_POOL_RECOVERY_SUCCESS] key={pool_key}")
-            return b"".join(chunks)
+            audio = b"".join(chunks)
+            if audio and len(audio) > 200:
+                if attempt == 1:
+                    logger.info(f"[VOICE_TTS_POOL_RECOVERY_SUCCESS] key={pool_key}")
+                return audio
+            else:
+                logger.info(f"[VOICE_TTS_EMPTY_SARVAM] Empty chunks returned, using neural fallback for speaker={speaker}")
+                mark_sarvam_failed("Empty chunks from Sarvam")
+                return await fallback_neural_tts(text, speaker)
         except Exception as e:
             logger.warning(f"Pooled TTS error (attempt {attempt+1}): {e}")
             await tts.disconnect()
@@ -418,21 +488,25 @@ async def realtime_tts(
                 logger.info(f"[VOICE_TTS_POOL_STALE] key={pool_key}")
                 logger.info(f"[VOICE_TTS_POOL_RECREATE] Retrying request")
             else:
-                logger.error(f"[VOICE_TTS_POOL_RECOVERY_FAILED] key={pool_key}")
-                return b""
+                logger.info(f"[VOICE_TTS_SARVAM_FAILED] Using neural fallback for speaker={speaker}")
+                mark_sarvam_failed(f"Sarvam error: {e}")
+                return await fallback_neural_tts(text, speaker)
                 
-    return b""
+    return await fallback_neural_tts(text, speaker)
 
 async def realtime_tts_stream(
     text: str,
     language: str = "en-IN",
-    speaker: str = "anushka"
+    speaker: str = "ritu"
 ):
     """Synthesize speech - yields raw audio chunks (linear16 24kHz) with connection pooling."""
     import logging
     logger = logging.getLogger(__name__)
     pool_key = f"{language}_{speaker}"
     
+    if not is_sarvam_available():
+        return
+        
     for attempt in range(2):
         tts = await _acquire_tts(language, speaker)
         if not tts:
@@ -458,6 +532,9 @@ async def realtime_tts_stream(
                 chunks_yielded += 1
                 
             _release_tts(language, speaker, tts)
+            if chunks_yielded == 0:
+                mark_sarvam_failed("Sarvam stream returned 0 chunks")
+                return
             if attempt == 1:
                 logger.info(f"[VOICE_TTS_POOL_RECOVERY_SUCCESS] key={pool_key}")
             return

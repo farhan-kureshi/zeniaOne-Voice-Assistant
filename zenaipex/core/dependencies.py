@@ -158,13 +158,13 @@ async def get_auth_context(
         if sub.get("status") == "suspended":
             raise TenantSuspendedError()
 
-        if sub.get("plan") == "free_trial":
-            trial_ends = sub.get("trial_ends_at")
-            if trial_ends:
-                if trial_ends.tzinfo is None:
-                    trial_ends = trial_ends.replace(tzinfo=timezone.utc)
-                if datetime.now(timezone.utc) > trial_ends:
-                    raise TrialExpiredError()
+        # if sub.get("plan") == "free_trial":
+        #     trial_ends = sub.get("trial_ends_at")
+        #     if trial_ends:
+        #         if trial_ends.tzinfo is None:
+        #             trial_ends = trial_ends.replace(tzinfo=timezone.utc)
+        #         if datetime.now(timezone.utc) > trial_ends:
+        #             pass # raise TrialExpiredError() -> Unlimited Plan applied
 
     return AuthContext(
         user_id=user_id,

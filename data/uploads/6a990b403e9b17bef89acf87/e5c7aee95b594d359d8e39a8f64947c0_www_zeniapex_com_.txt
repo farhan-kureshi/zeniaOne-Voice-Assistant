@@ -1,0 +1,2129 @@
+--- SOURCE URL: https://www.zeniapex.com/ ---
+You think. We code. | ZeniaPex
+
+Software, AI & IT services · Made in India
+You
+
+think.
+
+We
+
+code.
+We build
+ERP platforms
+mobile apps
+One team for the whole build: design, development, cloud, data and QA. We ship our own products, and we ship yours.
+Start a project
+See what we build
+ZeniaHR
+Zenia Fleets
+Tender Guruji
+Zenia Chat
+Trusted by teams building across India
+What we build
+You
+
+think
+
+it.
+
+We
+
+build
+
+it.
+Five capabilities, twelve disciplines, one team. Hover any tile to see exactly what sits inside it.
+Build
+The product itself: web, mobile and the fastest route to a working MVP.
+Web development
+Mobile apps
+Startup solutions
+Intelligence
+Make the product think: AI that acts, and data you can decide on.
+AI & machine learning
+Data & analytics
+Design
+Interfaces people enjoy using.
+UI/UX design
+Run
+Ship it, scale it, keep it safe.
+Cloud & DevOps
+QA & testing
+Cyber security
+Connect & grow
+Tie your systems together and bring the right people in.
+Integrations & business systems
+Digital marketing
+IT consulting & staffing
+Not on the list? Tell us the idea, we've probably built something close.
+Start a project
+Our toolbox
+Whatever
+
+it
+
+takes
+
+to
+
+build
+
+it
+We pick the stack that fits the problem, not the other way round. Hover a discipline to see what we reach for.
+Frontend
+Mobile
+Backend
+AI & data
+Cloud & DevOps
+Databases
+Business systems
+React
+Next.js
+TypeScript
+Tailwind CSS
+Vue
+Flutter
+React Native
+Kotlin
+Swift
+Firebase
+Node.js
+Python
+Laravel
+PHP
+FastAPI
+OpenAI
+PyTorch
+OpenCV
+LangChain
+Power BI
+AWS
+Azure
+Docker
+Kubernetes
+GitHub Actions
+PostgreSQL
+MySQL
+MongoDB
+Redis
+Supabase
+Zoho
+Stripe
+Razorpay
+Twilio
+WhatsApp API
+Our products
+A suite of AI products, owned in-house
+Workforce & Payroll
+ZeniaHR
+Hire, deploy, pay, comply. One platform.
+6,000+
+Workers managed
+Minutes
+Not days, to run payroll
+Multi-entity
+One brain, many companies
+Explore ZeniaHR
+Visit zeniahr.com
+Multi-entity, one login
+Run several companies from a single HQ view without switching systems.
+Site-level attendance
+Track deployment across dozens of sites without a spreadsheet per site.
+Payroll at scale
+Process thousands of workers in minutes, with statutory deductions handled.
+Compliance built in
+PF, ESI, PT and registers kept audit-ready as you go, not at month end.
+Fleet Intelligence
+Zenia Fleets
+Your entire fleet, one login away.
+Live
+Vehicle visibility
+Per vehicle
+Priced, never per user
+Audit-ready
+Government contracts
+Explore Zenia Fleets
+Visit zeniafleets.com
+Dispatcher control tower
+Assign and dispatch trips live, with every vehicle on one screen.
+SOS & female-safety routing
+Safety escalation and routing built for real duty-of-care obligations.
+OTP boarding & duty slips
+Digital logbooks that stand up to an audit.
+Fuel, FASTag & maintenance
+Track spend per vehicle and catch leakage before it compounds.
+Procurement Intelligence
+Tender Guruji
+Find every government tender. Win more with AI.
+3,000+
+Procurement portals
+22M+
+Historical bid results
+12M+
+Vendor profiles
+Explore Tender Guruji
+Visit tenderguruji.com
+Live tenders
+Every active opportunity across 3,000+ portals, in one place.
+22M+ tender results
+Historical outcomes so you can price against what actually won.
+BOQ-level pricing analytics
+Line-item pricing intelligence, not just headline values.
+12M+ company profiles
+Know the vendor landscape and follow the competitors that matter.
+Conversational AI
+Zenia Chat
+An AI assistant that works where your customers already are.
+24/7
+Always answering
+WhatsApp
+Where customers are
+Multilingual
+Hindi & regional
+Explore Zenia Chat
+Visit wa.zeniapex.com
+WhatsApp-first
+Meet customers on the channel they already use every day.
+Multilingual
+Hindi, English and major regional languages out of the box.
+Grounded on your content
+Answers from your catalogue, policies and docs, not guesses.
+Round-the-clock support
+Resolve routine questions without staffing a night shift.
+YOU THINK
+WE CODE
+WEB · MOBILE · AI
+CLOUD · DATA · DESIGN
+MADE IN INDIA
+YOU THINK
+WE CODE
+WEB · MOBILE · AI
+CLOUD · DATA · DESIGN
+MADE IN INDIA
+YOU THINK
+WE CODE
+WEB · MOBILE · AI
+CLOUD · DATA · DESIGN
+MADE IN INDIA
+Industries
+We
+
+speak
+
+your
+
+industry
+Six sectors we've shipped in. Hover one to see the systems it usually needs.
+01
+Healthcare
+02
+Banking & finance
+03
+Retail & D2C
+04
+Logistics & transport
+05
+Education
+06
+Real estate & manufacturing
+Healthcare
+Patient & appointment portals · Records and compliance · Diagnostic document AI · Pharmacy & inventory
+Banking & finance
+KYC and document OCR · Loan workflows · Reporting dashboards · Payment integrations
+Retail & D2C
+Ecommerce & booking · Inventory and orders · WhatsApp automation · SEO & performance
+Logistics & transport
+Fleet & trip management · Driver onboarding · Route optimisation · Delivery tracking
+Education
+Student & admissions portals · Learning platforms · Attendance & fees · Parent comms
+Real estate & manufacturing
+Custom ERP modules · Inventory & supply chain · Site and asset tracking · Zoho / CRM integration
+Why ZeniaPex
+A
+
+tech
+
+partner
+
+that
+
+actually
+
+delivers
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
++
+Services under one roof
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
++
+Businesses served
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Products of our own
+0
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+Industries delivered
+One team, the whole build
+Design, development, cloud, data and QA in one place. No stitching vendors together.
+Built for India
+Compliance, languages and workflows that match how business actually runs here.
+Ship in weeks, not quarters
+We start with one measurable win, prove value fast, then scale from there.
+Support that lasts
+We stay in the loop after launch, training your team and improving what we ship.
+The people
+Built
+
+by
+
+a
+
+team
+
+that
+
+cares
+A small, senior team working directly with you. No layers, no hand-offs, no account manager in the middle.
+YS
+Yogesh Sharma
+Founder
+Founded ZeniaPex and leads the company's direction, building a team that can take an idea from first sketch to production.
+PK
+Patel Kaushik
+Operation Head
+IP
+Isha Parmar
+E-Commerce Executive
+OP
+Om Patel
+Web Developer
+RS
+Rutv Soni
+Web Developer
+PK
+Patel Krish
+Web Developer Intern
+Want to join them?
+Tell us what you build
+.
+Tender Management
+Tender Management System
+Tender Guruji
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+Mobile App
+Urban Neta
+Urban Neta
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Tender Management
+Tender Management System
+Tender Guruji
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+Mobile App
+Urban Neta
+Urban Neta
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Tender Management
+Tender Management System
+Tender Guruji
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+Mobile App
+Urban Neta
+Urban Neta
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Mobile App
+Urban Neta
+Urban Neta
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+Tender Management
+Tender Management System
+Tender Guruji
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Mobile App
+Urban Neta
+Urban Neta
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+Tender Management
+Tender Management System
+Tender Guruji
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+Mobile App
+Urban Neta
+Urban Neta
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+Tender Management
+Tender Management System
+Tender Guruji
+Work with us
+Let's
+collaborate
+Real systems we've shipped for real clients. Drag the rows, then go have a proper look.
+See our work
+Start a project
+Client voices
+"ZeniaPex understood our tendering process end to end and shipped something our whole team actually uses."
+PL
+Procurement Lead
+Tender Guruji client
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/services ---
+Services | ZeniaPex
+
+Our services
+You think it.
+We build it.
+One team for the whole build. From a landing page to a platform with AI at its core, we design it, ship it and keep it running.
+What we build
+You
+
+think
+
+it.
+
+We
+
+build
+
+it.
+Five capabilities, twelve disciplines, one team. Hover any tile to see exactly what sits inside it.
+Build
+The product itself: web, mobile and the fastest route to a working MVP.
+Web development
+Mobile apps
+Startup solutions
+Intelligence
+Make the product think: AI that acts, and data you can decide on.
+AI & machine learning
+Data & analytics
+Design
+Interfaces people enjoy using.
+UI/UX design
+Run
+Ship it, scale it, keep it safe.
+Cloud & DevOps
+QA & testing
+Cyber security
+Connect & grow
+Tie your systems together and bring the right people in.
+Integrations & business systems
+Digital marketing
+IT consulting & staffing
+Not on the list? Tell us the idea, we've probably built something close.
+Start a project
+How we engage
+Work
+
+with
+
+us
+
+your
+
+way
+Three ways to bring us in. We'll tell you honestly which one fits.
+Fixed scope
+Best when the goal is clear
+We scope it, quote it and deliver it for an agreed price and timeline.
+Defined deliverables & milestones
+Fixed price, no surprises
+Ideal for MVPs and redesigns
+Talk to us
+Most chosen
+Dedicated team
+Best for evolving products
+A ring-fenced squad working only on your roadmap, month to month.
+Designers, engineers and QA together
+Priorities you control each sprint
+Scale the team up or down
+Talk to us
+Staff augmentation
+Best when you have a team already
+Our engineers join yours, work your process and report to your leads.
+Vetted, senior engineers
+Your tools, your standups
+Start small, add as you go
+Talk to us
+How we work
+Four simple steps to
+real impact
+01
+Discover
+We map your workflows and find where AI moves the needle for your business.
+02
+Design
+We scope a solution and agree on a single, measurable success metric together.
+03
+Build
+We develop, integrate and iterate fast, with you in the loop the whole way.
+04
+Deploy
+We launch, train your team and keep improving it in production. No hand-offs.
+Ready when you are.
+Book a free 30-minute consult and we'll map step 01 together.
+Book a consult
+Ballpark in 20 seconds
+What
+
+would
+
+your
+
+build
+
+take?
+Three quick answers and we'll show a rough range, then hand you a pre-filled brief so you don't retype any of it.
+01
+What are you building?
+Website / landing
+Web platform or portal
+Mobile app
+AI / automation
+ERP / internal system
+02
+Roughly how big?
+Small, one core flow
+Medium, a few modules
+Large, many modules
+03
+Anything else you need?
+UI/UX design from scratch
+Third-party integrations
+Cloud setup & DevOps
+Data migration
+Ongoing support
+Questions
+Things
+
+people
+
+ask
+
+us
+What kinds of projects do you take on?
+Anything software-shaped: websites and web platforms, mobile apps, AI systems, ERP and HRMS builds, integrations, cloud setup and data work. If you are not sure it fits, ask. We have usually built something close.
+How quickly can you start?
+How do you price work?
+Do you work with startups or only established businesses?
+Who owns the code?
+What happens after launch?
+Do you sign NDAs?
+Tell us what you're trying to build.
+Send us the idea in a sentence. We'll come back with how we'd approach it, what it takes and what it costs.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/work ---
+Our work | ZeniaPex
+
+Our work
+Things we've
+actually shipped
+Real clients, real systems in production. Here's what we built, how long it took and what it runs on.
+All work
+AI & machine learning
+Cloud & DevOps
+Data & analytics
+Digital marketing
+Integrations & business systems
+Mobile apps
+UI/UX design
+Web development
+Tender Management
+Tender Management System
+Tender Guruji
+A GeM-based tender platform with predictive bid analysis, vendor and contract management, and automated invoicing.
+React
+Node.js
+PostgreSQL
+SQL
+AWS
+Document AI
+Document OCR Platform
+Mobitech India Pvt. Ltd.
+An OCR engine that reads Aadhaar, PAN, Driving Licence and RC documents with high accuracy, packaged as a reusable module.
+Python
+OpenCV
+Azure
+HRMS & Payroll
+Vishv Enterprise HRMS
+Vishv Enterprise
+A workforce management portal with HRMS, payroll, manpower tracking and Zoho Books accounting built in.
+React
+PHP
+Laravel
+MySQL
+AWS
+ERP & Operations
+Ishu Petro ERP
+Ishu Petro
+A website plus integrated ERP with inventory, driver onboarding, trips and fleet management for a petrochemical business.
+React
+AWS
+Azure
+OpenAI
+Mobile App
+Urban Neta
+Urban Neta
+A photo editing and merging app with advanced filters, festival poster templates and a full admin panel.
+Flutter
+Firebase
+PHP
+Laravel
+AWS
+Booking Website
+GhummiGhummi Travels
+GhummiGhummi Travels
+A tour booking website with package comparison, destination showcases, a user dashboard and SEO built in.
+HTML
+CSS
+JavaScript
+Node.js
+SEO
+Start your project
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/products ---
+Products | ZeniaPex
+
+Our products
+Products you can
+put to work today
+Four products we own and operate end to end, each live and running in production for Indian businesses.
+ZeniaHR
+Workforce & Payroll
+Hire, deploy, pay, comply. One platform.
+The workforce platform for manpower and staffing companies: hire, deploy, pay and comply for thousands of contract workers from one place.
+View ZeniaHR
+zeniahr.com
+Multi-entity, one login
+Site-level attendance
+Payroll at scale
+Compliance built in
+Zenia Fleets
+Fleet Intelligence
+Your entire fleet, one login away.
+Fleet intelligence for operators, corporate transport and government contracts: live visibility, dispatch, compliance and billing that adds up.
+View Zenia Fleets
+zeniafleets.com
+Dispatcher control tower
+SOS & female-safety routing
+OTP boarding & duty slips
+Fuel, FASTag & maintenance
+Tender Guruji
+Procurement Intelligence
+Find every government tender. Win more with AI.
+The government procurement intelligence platform for India: live tenders, 22M+ historical bid results, BOQ-level pricing and 12M+ vendor profiles in one workspace.
+View Tender Guruji
+tenderguruji.com
+Live tenders
+22M+ tender results
+BOQ-level pricing analytics
+12M+ company profiles
+Zenia Chat
+Conversational AI
+An AI assistant that works where your customers already are.
+WhatsApp-first AI that answers customers in their own language, resolves routine queries around the clock and hands real leads to your team.
+View Zenia Chat
+wa.zeniapex.com
+WhatsApp-first
+Multilingual
+Grounded on your content
+Round-the-clock support
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/about ---
+About | ZeniaPex
+
+About ZeniaPex
+We build the software
+Indian businesses run on
+ZeniaPex is a product-and-engineering company with a simple belief: good software should quietly do the heavy lifting so your team can focus on what matters.
+We started ZeniaPex to close a gap we kept seeing: businesses had ideas, but got either off-the-shelf tools that didn't fit, or agencies that handed over a deck and disappeared.
+So we built a team that can take an idea all the way. Web and mobile, AI and data, cloud and design, testing and support. And we proved it on ourselves, shipping our own products: ZeniaHR, Zenia Fleets, Tender Guruji and Zenia Chat.
+That's the whole promise, and the reason for our name on the door: you think it, we code it. Grounded in one market we understand deeply, India.
+12+
+Services under one roof
+30+
+Businesses served
+4
+Products of our own
+6
+Industries delivered
+What we stand for
+Values that shape
+how we work
+01
+Outcomes over hype
+We measure success by the value we create, not the buzzwords we use.
+02
+Built for India
+We design for local compliance, languages and the way business runs here.
+03
+Trust & clarity
+Honest advice, clear scope and no lock-in. We recommend what's right for you.
+04
+Ship and improve
+We launch fast, learn from real usage and keep making it better.
+The people
+Built
+
+by
+
+a
+
+team
+
+that
+
+cares
+A small, senior team working directly with you. No layers, no hand-offs, no account manager in the middle.
+YS
+Yogesh Sharma
+Founder
+Founded ZeniaPex and leads the company's direction, building a team that can take an idea from first sketch to production.
+PK
+Patel Kaushik
+Operation Head
+IP
+Isha Parmar
+E-Commerce Executive
+OP
+Om Patel
+Web Developer
+RS
+Rutv Soni
+Web Developer
+PK
+Patel Krish
+Web Developer Intern
+Want to join them?
+Tell us what you build
+.
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/blog ---
+Insights | ZeniaPex
+
+Insights
+Notes from
+actually shipping
+What we've learned building software and AI for Indian businesses. Opinionated, specific, and free of the usual noise.
+All
+Product
+Strategy
+Data
+Guide
+Product
+Latest
+Software that survives contact with Indian operations
+Most enterprise software is designed for a workplace that does not exist here. What actually holds up looks different, and the differences are not cosmetic.
+YS
+Yogesh Sharma ·
+22 Jul 2026
+·
+7 min
+Read it
+Strategy
+Why most AI pilots quietly die
+They rarely fail loudly. They get a good demo, a positive meeting, and then nothing. The reasons are consistent enough to be predictable.
+YS
+8 Jul 2026
+·
+6 min
+Data
+The hidden cost of unsearchable data
+India's government tender system is not broken. It is scattered across thousands of portals, which for a bidding team amounts to the same thing.
+YS
+19 Jun 2026
+·
+8 min
+Guide
+Buy or build: a framework that survives contact with reality
+We sell both our own products and custom development, which forces us to be honest about when each one is genuinely the right answer.
+YS
+28 May 2026
+·
+6 min
+Product
+Multilingual support that people actually trust
+Adding Hindi to a chatbot is straightforward. Making customers believe it understands them is a different problem entirely.
+YS
+6 May 2026
+·
+5 min
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://www.zeniapex.com/contact ---
+Contact | ZeniaPex
+
+Contact us
+Let's talk about your
+next move
+Tell us what you're trying to build. We usually reply within one business day.
+Email
+info@zeniapex.com
+Phone
++91 62621 81099
+WhatsApp
+Chat with us
+Office
+305, Capitol Icon, Opp. Aashka Hospital, Nr. Sargasan Cross Road, Gandhinagar, Gujarat 382421, India
+Full name
+*
+Company
+*
+Email
+*
+Phone
+*
+What do you need?
+Web development
+Mobile app
+AI / automation
+ERP or internal system
+Cloud & DevOps
+Data & analytics
+UI/UX design
+IT consulting / staffing
+ZeniaHR
+Zenia Fleets
+Tender Guruji
+Zenia Chat
+Something else
+Indicative budget
+Under ₹2 lakh
+₹2 - 5 lakh
+₹5 - 15 lakh
+₹15 lakh+
+Not sure yet
+Timeline
+ASAP
+Within a month
+1 - 3 months
+Just exploring
+Tell us more
+*
+Send enquiry
+We only use these details to reply to you. No lists, no sharing.
+
+--- SOURCE URL: https://www.zeniapex.com/products/zeniahr ---
+ZeniaHR | ZeniaPex
+
+Workforce & Payroll
+ZeniaHR
+Hire, deploy, pay, comply. One platform.
+Book a demo
+Visit zeniahr.com
+app.zeniapex.com/zeniahr
+Revenue
+₹12.2L
+Active
+148
+Growth
++18%
+The challenge
+Staffing companies run dozens of sites on dozens of spreadsheets. Attendance arrives by WhatsApp, payroll takes a week, and every audit is a scramble.
+How ZeniaHR helps
+ZeniaHR puts the whole contract-workforce lifecycle in one system. Multiple entities under one login, attendance that reconciles itself, and payroll for thousands of people that runs in minutes rather than days.
+6,000+
+Workers managed
+Minutes
+Not days, to run payroll
+Multi-entity
+One brain, many companies
+Capabilities
+Everything you need,
+in one product
+Multi-entity, one login
+Run several companies from a single HQ view without switching systems.
+Site-level attendance
+Track deployment across dozens of sites without a spreadsheet per site.
+Payroll at scale
+Process thousands of workers in minutes, with statutory deductions handled.
+Compliance built in
+PF, ESI, PT and registers kept audit-ready as you go, not at month end.
+Deployment tracking
+Know who is where, on which contract, on any given day.
+Who it's for
+Manpower & staffing firms
+Facility management
+Security & healthcare staffing
+All products
+Next: Zenia Fleets
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://zeniahr.com ---
+Payroll & HR Software for Manpower & Staffing | ZeniaHR
+
+Built only for manpower & staffing
+
+Hire,
+
+Deploy,
+
+Pay,
+
+Comply.
+
+One Platform.
+
+ZeniaHR is payroll and HR software built only for manpower and staffing
+companies. From winning the tender to the last payslip: onboarding, biometric attendance,
+statutory filings and invoicing for thousands of workers, across every site you run, in one system.
+
+Book a demo
+→
+
+See how it works
+
+Scroll
+
+The human side
+
+6,000 workers is not a number.
+It is 6,000 people who showed up.
+
+Every dot below is a shift worked, a family fed, a payslip that landed on time. ZeniaHR keeps the machinery invisible so your team can look after people, not paperwork.
+
+Ravi Kumar
+Security · Site 07 · Night shift
+Payslip sent
+
+Meena Sharma
+Housekeeping · City Hospital
+PF credited
+
+Arjun Nair
+Facility · IT Park, Pune
+Attendance 26 / 26
+
+Every worker you run
+
+One platform for
+every worker you manage.
+
+Security guards, housekeeping, nurses, drivers, technicians, contract labour. Different work, one system, from the day they join to the payslip they are paid.
+
+Security
+
+Housekeeping
+
+Healthcare
+
+Drivers
+
+Technicians
+
+Industrial
+
+Contract
+
+Office
+
+Shift
+›
+Attendance
+›
+Deployment
+›
+Payroll
+›
+Compliance
+
+Different workers.
+One workforce system.
+
+The old way
+
+47 sites. 47 spreadsheets.
+One heart attack a month.
+
+Muster rolls in photocopies. Attendance on WhatsApp. Salary sheets named final_v7. It works, until the month it does not.
+
+EXCELS
+REGISTERS
+WHATSAPP
+PHOTOCOPIES
+EXCELS
+REGISTERS
+WHATSAPP
+PHOTOCOPIES
+
+FOLLOW-UPS
+PENALTIES
+GHOST WORKERS
+FOLLOW-UPS
+PENALTIES
+GHOST WORKERS
+
+salary_final_FINAL_v7.xlsx
+Modified 11:58 PM
+
+"bhaiya attendance bhej do"
+WhatsApp · Site 12
+
+=SUM(D2:D998) → #REF!
+OT sheet
+
+Muster roll, page 47
+Photocopy, torn
+
+PF challan?
+Due yesterday
+
+One system. Zero scraps.
+Everything above becomes a record in ZeniaHR.
+
+Architecture
+
+One brain.
+Many companies.
+
+A control plane for the group. A private workspace for every entity. Staffing groups rarely run one company, so ZeniaHR never assumed you would.
+
+Isolated data for every tenant
+
+Group level billing and oversight
+
+Audited support access, never silent entry
+
+Group view
+Super admin · Control plane
+ZeniaHR HQ
+Tenants
+Billing
+Licenses
+Audit
+
+2,140 workers
+Tenant workspace
+Facilities entity
+Payroll
+Attendance
+Compliance
+
+3,480 workers
+Tenant workspace
+Healthcare staffing entity
+Payroll
+Tenders
+ID cards
+
+594 workers
+Tenant workspace
+Security services entity
+Payroll
+Sites
+Invoicing
+
+See it run
+
+Payroll for 6,214 people.
+Two minutes, forty seven seconds.
+
+Attendance in, payslips out. Watch the engine make the pass.
+
+Payroll run · June 2026
+LIVE
+
+Pull attendance from 47 sites
+
+Apply pay rules and wage states
+
+Compute PF, ESI, PT, LWF
+
+Generate payslips and bank sheet
+
+Run time
+0:00
+
+Workers processed
+0
+
+Disbursed
+₹0.0 Cr
+
+Run complete · Bank sheet ready · PF and ESI challans queued
+
+Compliance
+
+The 15th arrives.
+You feel nothing.
+
+PF on the 15th. ESI on the 15th. PT and LWF by month end. Calculated, filed and archived without a single reminder set by you.
+
+₹0
+Penalties this year
+
+PF ECR · June
+✓
+
+ESI return · June
+✓
+
+PT paid · June
+✓
+
+July 2026
+Filing calendar
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+✓
+16
+17
+18
+19
+20
+21
+✓
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+✓
+
+Ground reality
+
+Built for the way
+India actually works.
+
+Punches from the factory gate, wages by state rules, challans by the 15th. ZeniaHR speaks the language of sites, shifts and statutory law.
+
+Delhi NCR
+
+Jaipur
+
+Lucknow
+
+Ahmedabad
+
+Kolkata
+
+Mumbai
+
+Hyderabad
+
+Bengaluru
+
+Chennai
+
+eSSL
+ZKTeco
+Matrix
+
+0
+Workers per tenant
+
+0
+Biometric brands synced
+
+0
+Statutory filings automated
+
+0
+Platform, end to end
+
+Pricing
+
+Pricing that
+respects your math.
+
+No per-module pricing. No surprise slabs. One volume rate that rewards scale.
+
+Quarterly
+
+Yearly
+20% off
+
+Free
+For your first fifty
+
+₹0
+up to 50 workers
+
+50 workers, 2 admins
+Attendance without geotagging
+8 core reports
+Email support, reply in 24h
+
+Start free
+
+Paid
+Every feature unlocked, whole headcount at one rate
+
+250 workers
+₹20 per worker
+
+10
+1,000
+
+₹5,000
+/month
+
+Billed quarterly as ₹15,000 · switch to yearly for 20% off
+
+Book a demo
+
+501 and above
+Published rate, custom terms on request
+
+₹15
+per worker / month
+
+₹12 billed yearly
+Every feature unlocked
+Onboarding done by our team
+Phone support, 10am to 10pm
+
+Talk to us
+
+Rates are per worker per month, in rupees. Yearly billing saves 20% at every tier.
+
+Compare plans in full →
+
+Hire, deploy, pay, comply.
+One platform.
+
+Free for your first 50 workers. A demo takes thirty minutes.
+
+Prefer to pick a time now? Book a 30-minute demo →
+
+Full name
+*
+
+Please tell us your name.
+
+Work email
+*
+
+Please enter a valid email address.
+
+Phone
+*
+
++91
+
+Enter a 10 digit mobile number starting with 6, 7, 8 or 9.
+
+Company name
+*
+
+Please tell us your company.
+
+City
+*
+
+Please tell us your city.
+
+State
+
+Select a state
+
+Andhra Pradesh
+Arunachal Pradesh
+Assam
+
+Bihar
+Chhattisgarh
+Goa
+Gujarat
+
+Haryana
+Himachal Pradesh
+Jharkhand
+
+Karnataka
+Kerala
+Madhya Pradesh
+
+Maharashtra
+Manipur
+Meghalaya
+
+Mizoram
+Nagaland
+Odisha
+Punjab
+
+Rajasthan
+Sikkim
+Tamil Nadu
+Telangana
+
+Tripura
+Uttar Pradesh
+Uttarakhand
+West Bengal
+
+Andaman and Nicobar Islands
+Chandigarh
+
+Dadra and Nagar Haveli and Daman and Diu
+Delhi
+
+Jammu and Kashmir
+Ladakh
+Lakshadweep
+Puducherry
+
+Leave blank if you are outside India.
+
+My company is located outside India
+
+Tick this and tell us where. We work with teams in other countries too.
+
+Your location details
+
+How many people do you employ?
+*
+
+Select a range
+
+1 to 100
+
+51 to 500
+
+501 to 2000
+
+2001 to 8000
+
+More than 8000
+
+Please pick a range.
+
+Industry
+
+Select an industry
+
+Manpower & Staffing
+
+Facility Management
+
+Manufacturing
+
+Logistics & Warehousing
+
+Construction
+
+Healthcare
+
+Hospitality
+
+Retail
+
+Other
+
+Company website
+
+Optional.
+
+What is your biggest HR headache right now?
+
+Book my demo →
+
+Thirty minutes, no slide deck.
+Free for your first 50 workers.
+
+ZeniaHR Demo Request
+
+Leads Name
+
+Last Name
+
+Email
+
+Phone
+
+Mailing City
+
+Description
+
+Company Name
+
+City
+
+State
+
+Company Size
+
+Industry
+
+HR Requirement
+
+Website
+
+ZeniaHr Leads Standard
+
+Inquiries
+
+Talk to ZeniaHR
+Hello How can we Help you ?
+
+--- SOURCE URL: https://www.zeniapex.com/products/zenia-fleets ---
+Zenia Fleets | ZeniaPex
+
+Fleet Intelligence
+Zenia Fleets
+Your entire fleet, one login away.
+Book a demo
+Visit zeniafleets.com
+app.zeniapex.com/zenia-fleets
+Live · 12 vehicles
+On-time 96%
+The challenge
+Fleet data lives in three places and none of them agree. Dispatch runs on phone calls, fuel leaks go unnoticed, and billing a corporate client means rebuilding the month by hand.
+How Zenia Fleets helps
+Zenia Fleets is a control room for vehicles, drivers and trips. One connected system covering live tracking, dispatch, fuel and FASTag, maintenance, compliance and cost-centre billing.
+Live
+Vehicle visibility
+Per vehicle
+Priced, never per user
+Audit-ready
+Government contracts
+Capabilities
+Everything you need,
+in one product
+Dispatcher control tower
+Assign and dispatch trips live, with every vehicle on one screen.
+SOS & female-safety routing
+Safety escalation and routing built for real duty-of-care obligations.
+OTP boarding & duty slips
+Digital logbooks that stand up to an audit.
+Fuel, FASTag & maintenance
+Track spend per vehicle and catch leakage before it compounds.
+Cost-centre billing
+Bill corporate clients by department with the trip data behind it.
+Utilisation & profit
+See which vehicles earn and which ones quietly cost you.
+Who it's for
+Fleet operators
+Corporate employee transport
+Government contract fleets
+All products
+Next: Tender Guruji
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://zeniafleets.com ---
+ZeniaFleets: Fleet, Cab, Corporate Transport and Rental Software
+
+Built for Indian fleet operators
+
+One platform.
+Every fleet.
+Complete control.
+
+ZeniaFleets runs cab operations, corporate car rental, employee transport, government contracts, vehicle rental and fleet finance from one intelligent console. GST, logbooks and settlements included.
+
+Book a demo
+
+See the platform
+
+✓
+No card required
+✓
+Onboards in a week
+✓
+Made in India
+
+Corporate dashboard
+
+ZeniaFleets console
+Active contracts
+3
+Vehicles deployed
+24
+Trips today
+1,284
+Invoiced this week
+Rs 18.4L
+Unassigned duties
+2
+
+Six modules, one database
+
+Software for every kind of fleet business
+
+Whether you run daily cab duties, a corporate travel desk, office employee transport, government vehicle contracts or a self drive rental fleet, ZeniaFleets has a module built for it.
+
+Fleet operations software
+
+Run day to day cab and fleet duties end to end: enquiries, bookings, drivers, vehicles, rate cards and settlements in one console.
+Explore Fleet Ops →
+
+Corporate cab and travel desk software
+
+Manage corporate clients, contracts, quotations and monthly invoicing for car rental and travel desk businesses.
+Explore Corporate →
+
+Employee transportation management software
+
+A full ETMS for office cab operations: rosters, routing, cab allocation, live dispatch, SOS and OTP boarding, and transport billing.
+Explore Employee Transport →
+
+Government cab contract management software
+
+Win and run government and PSU vehicle contracts: tenders, contracts, digital logbooks, billing, payments reconciliation and bank guarantees.
+Explore Government Contracts →
+
+Vehicle rental and self drive management software
+
+Run a rental and self drive fleet like the leading marketplaces: reservations, availability, agreements, handover, returns and claims.
+Explore Vehicle Rental →
+
+Fleet finance, GST and accounting software
+
+A finance backbone built for Indian transport: GST invoices, receivables, expenses with ITC and TDS, driver wallet, banking reconciliation and GST returns.
+Explore Finance →
+
+6
+Operating modules
+
+50+
+Screens in the console
+
+GST
+Invoicing and returns built in
+
+1 week
+Typical go live
+
+Why ZeniaFleets
+Made for how India runs fleets
+
+Built for Indian fleets
+GST, TDS, e way, state rate cards and government logbooks are first class, not bolt ons.
+
+One platform, six modules
+Fleet ops, corporate, employee transport, government, rental and finance share one clean database.
+
+Live, not spreadsheets
+Real time boards for bookings, dispatch and dues replace WhatsApp groups and Excel.
+
+Onboards in a week
+Import your vehicles, drivers and rate cards and go live fast with guided setup.
+
+Ready to run your fleet on one platform?
+
+Book a 30 minute demo. We will map your cab, corporate, government or rental operations to ZeniaFleets and show you the console live.
+
+Book a demo
+
+WhatsApp us
+
+--- SOURCE URL: https://www.zeniapex.com/products/tender-guruji ---
+Tender Guruji | ZeniaPex
+
+Procurement Intelligence
+Tender Guruji
+Find every government tender. Win more with AI.
+Book a demo
+Visit tenderguruji.com
+app.zeniapex.com/tender-guruji
+The challenge
+India's tender system isn't broken, it's unsearchable. Opportunities sit across thousands of portals, and pricing history that would tell you how to bid is effectively invisible.
+How Tender Guruji helps
+Tender Guruji indexes 3,000+ Indian procurement portals into one searchable workspace, then layers AI on top so bid teams can see what won before, at what price, against whom.
+3,000+
+Procurement portals
+22M+
+Historical bid results
+12M+
+Vendor profiles
+Capabilities
+Everything you need,
+in one product
+Live tenders
+Every active opportunity across 3,000+ portals, in one place.
+22M+ tender results
+Historical outcomes so you can price against what actually won.
+BOQ-level pricing analytics
+Line-item pricing intelligence, not just headline values.
+12M+ company profiles
+Know the vendor landscape and follow the competitors that matter.
+Head-to-head analysis
+See your win rate against a specific rival before you bid.
+Market share & org analytics
+Understand which buyers spend, on what, and how often.
+Who it's for
+Government contractors
+Bid & tender teams
+Enterprises selling to the public sector
+All products
+Next: Zenia Chat
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
+
+--- SOURCE URL: https://tenderguruji.com ---
+TenderGuruji - The government procurement intelligence platform for India.
+Skip to content
+AI-powered · 3,000+ portals · 120K+ live tenders
+Find every government tender.
+
+Win more with AI.
+TenderGuruji's AI scans every Indian procurement portal 24/7 - matching live tenders to your keywords, predicting competitors with BOQ-level pricing data, and delivering results before your deadline.
+Search live government tenders
+Search
+Popular:
+IT
+Medical Equipment
+Construction
+Vehicles
+Maharashtra
+Uttar Pradesh
+Karnataka
+Delhi
+All categories →
+Get a free demo
+Explore the platform
+Live Tender
+97
+% AI match
+390 585 569
+Mobility
+Monthly Cab Hiring Services - Belapur Division
+National Telecom Corporation Ltd.
+
+·
+
+Maharashtra
+Est. Value
+₹ 84 L
+Bid Due
+14 days
+Bidders
+~ 11
+AI-predicted competitors
+SwiftWheels Pvt. Ltd.
+92
+%
+RapidFleet Solutions
+81
+%
+UrbanDrive Technologies
+64
+%
+Shortlist this tender
+1
+/
+4
+Trusted by 40+ bid desks across India
+M
+MediCore Pharma
+T
+TechInfra Solutions
+B
+Buildsworth Engg.
+S
+SwiftWheels Pvt.
+A
+Apex Pharmaceuticals
+G
+Greenspan Infra
+D
+DataEdge India
+U
+UrbanDrive Tech
+N
+NexaTech Systems
+SR
+SunRise Lifesciences
+M
+MediCore Pharma
+T
+TechInfra Solutions
+B
+Buildsworth Engg.
+S
+SwiftWheels Pvt.
+A
+Apex Pharmaceuticals
+G
+Greenspan Infra
+D
+DataEdge India
+U
+UrbanDrive Tech
+N
+NexaTech Systems
+SR
+SunRise Lifesciences
+3,000+
+Procurement portals indexed
+CPPP · GeM · State · PSU
+120K+
+Live tenders tracked daily
+Central · State · PSU · GeM
+22M+
+Historical bidding records
+L1-Ln rank · price · organisation
+12M+
+Vendor profiles indexed
+Bid history · win rate · contact
+The Indian tender system
+
+isn't broken.
+
+It's just unsearchable.
+Rs 30 lakh crore
+of public procurement is published every year across 3,000+ portals, in 22 formats, in a dozen languages, with no canonical IDs.
+Most vendors monitor four portals. They miss the other 2,996. The teams that win at scale don't have better luck.
+
+They have better intelligence.
+tenderguruji.com/dashboard
+cab hire, vehicle hiring
+LIVE
+Supply of Office Furniture
+
+MH
+PWD Maharashtra
+18 L
+97
+% match
+IT Hardware Procurement Q2
+URGENT
+
+KA
+State Bank Officers Cell
+1.1 Cr
+94
+% match
+Road Marking Works - Zone 4
+
+GJ
+NHAI Gujarat
+42 L
+89
+% match
+Annual AMC for UPS Systems
+
+DL
+Central Govt. Hospital
+6.4 L
+83
+% match
+2,163 live tenders today
++ 4 new in last hour
+Live workspace preview
+92%
+of relevant tenders go unnoticed
+when teams monitor only 1-4 portals
+3.4 hrs
+wasted per analyst per day
+on manual scraping and copy-paste work
+1 in 7
+tenders cancelled without notice
+wasted bid prep, missed re-tender
+Platform · 10 modules
+Stop searching. Start winning with
+
+AI-powered intelligence.
+Ten focused modules - from AI-powered discovery to competitor tracking - built on India's most comprehensive procurement database.
+DISCOVER
+Live Tenders
+Every live tender from every Indian government source, normalised into a single, searchable feed.
+Full-text + BOQ-level search across 120K+ active tenders
+7 status filters, 9 sort orders, 16 saved-search modes
+Shortlist, alerts, and one-click downloads
+Live tenders matching a typical keyword set
+2,100+
+Learn more →
+LEARN
+Tender Results
+The country's deepest historical results database - who bid, at what price, who won, who lost.
+L1, L2 and Ln rank for every closed tender
+BOQ line-item awarded values where published
+Tender result records, growing daily
+22.6M
+Learn more →
+PRICE
+Pricing Analytics
+Know exactly what the government has paid for any item, in any state, at any time.
+Rolling price history per indexed item
+5 yr
+Learn more →
+MAP
+Org Analytics
+A live map of every buyer organisation - who buys what, from whom, how often.
+Government buyer organisations mapped
+6.4K
+Learn more →
+COMPETE
+Market Share
+Two complementary views - L1 bids won, and amount won. See who dominates your market.
+Vendors ranked across 80+ categories
+34K
+Learn more →
+OUTRANK
+Head-to-Head
+Pick up to 30 competitors. See win rate, price delta, and tender overlap side-by-side.
+Competitors trackable in one dashboard view
+30
+Learn more →
+PROFILE
+Company Profiles
+A LinkedIn-style profile for every government vendor in India - bids, wins, partners.
+Company profiles with bidding fingerprint
+12M+
+Learn more →
+WATCH
+Follow Companies
+Save a buyer or a competitor. Get a notification the moment they touch a new tender.
+Companies followable per account
+∞
+Learn more →
+See all 10 modules
+From signup to winning bids in
+
+one week.
+3,000+
+Government portals
+CPPP · GeM · State · PSU
+TenderGuruji AI
+Filters by your needs
+Keywords · Geo · Value
+3
+Your team
+Only what matters
+Inbox · Dashboard · API
+Step
+1
+Tell us your vertical.
+Five minutes with the onboarding team. Keywords, geographies, value bands, exclusions - captured into your tenant.
+Step
+2
+We index your universe.
+TenderGuruji back-fills 5 years of relevant tenders, results, prices and vendor profiles for your scope. Within hours, not weeks.
+Step
+3
+You set your alerts.
+Choose what reaches your inbox, when, and in what format. Per-user, per-team, per-buyer if you want.
+Step
+4
+Bid teams win more.
+Shortlist live tenders, price against historical data, and out-position competitors with head-to-head dashboards.
+Step
+5
+You renew.
+Every customer who has crossed the 6-month mark with us has renewed. We work hard to keep it that way.
+Command dashboard
+Your command center for
+every live bid.
+Live tender count, expiring bids, competitor activity, and pricing intelligence - all refreshed automatically, in one clean dashboard.
+app.tenderguruji.com / dashboard
+TenderGuruji
+TenderGuruji
+Growth plan
+New tenders
+142
++12%
+Expiring today
+8
+3 < 6 hrs
+Total live
+2,163
+9 followed cos.
+Quarter-wise bids
+Q2 2026 · pacing +18% vs Q1
+Your bids
+L1 wins
+J
+F
+M
+A
+M
+J
+J
+A
+S
+O
+N
+D
+Competitive performance
+1 / 9
+SwiftWheels Pvt. Ltd.
+You 47%
+They 25%
+Neither 28%
+You L1
+34
+They L1
+18
+Common
+71
+Built for every industry that
+
+bids for government contracts.
+Pre-built keyword funnels, top buyer maps, and historical BOQ patterns ready on day one for the six sectors where we are deepest.
+Pharmaceuticals
+Hospital tenders, vaccine procurement, generics, consumables
+Live tenders
+4,200+
+IT & Electronics
+Laptops, servers, networking, software licences, AMC
+Live tenders
+6,800+
+Mobility & Transport
+Cab hire, fleet contracts, ticketing systems, logistics
+Live tenders
+2,900+
+Healthcare Services
+Diagnostics, hospital management, medical equipment
+Live tenders
+3,400+
+Defence
+MoD vendors, ordnance, specialised equipment, R&D
+Live tenders
+1,600+
+Infrastructure
+Construction, roads, urban development, PWD works
+Live tenders
+8,100+
+See all industry playbooks
+Real results from teams using
+
+TenderGuruji every day.
+"
+We replaced three full-time tender-watchers and a paid newspaper subscription with one TenderGuruji seat. Our shortlist quality is unrecognisable from last year.
+"
+P
+Head of Business Development
+Pharma manufacturer · Ahmedabad
+FAQ
+Common questions,
+answered plainly.
+Have something not covered here? Email us at
+
+info@tenderguruji.com
+
+or schedule a call from the contact page.
+How current is the tender data?
+Our crawlers refresh CPPP and GeM every 30 minutes. State portals refresh every 2-4 hours. Live tenders appear in your feed within an hour of publication on the source portal.
+Do you support BOQ-level price extraction?
+Is my data secure under DPDP Act 2023?
+Can we get a custom feed via API?
+What does onboarding actually look like?
+How does pricing compare to Palladium and others?
+Your competitors are already using AI.
+
+Don't get left behind.
+Book a 30-minute demo. Bring your last 6 months of bid history. We'll show you, in your own data, exactly which tenders you missed and which competitors you out-priced.
+Book a free demo
+30-minute demo
+48-hour production access
+No credit card required
+We use essential cookies to run this site and, with your consent, optional analytics cookies to improve it. All data handling complies with the
+DPDP Act 2023
+.
+Decline optional
+Accept all
+
+--- SOURCE URL: https://www.zeniapex.com/products/zenia-chat ---
+Zenia Chat | ZeniaPex
+
+Conversational AI
+Zenia Chat
+An AI assistant that works where your customers already are.
+Book a demo
+Visit wa.zeniapex.com
+app.zeniapex.com/zenia-chat
+नमस्ते! क्या आप ऑर्डर ट्रैक करना चाहते हैं?
+Yes, order #4821 please
+It's out for delivery, arriving today by 6 PM 🚚
+Great, thanks!
+Type a message…
+The challenge
+Indian customers ask on WhatsApp, at all hours, in several languages. No team can staff that, so questions go unanswered and leads quietly go cold overnight.
+How Zenia Chat helps
+Zenia Chat puts an AI assistant on WhatsApp and the web that understands Hindi and regional languages, answers from your own content, and escalates to a human when it should.
+24/7
+Always answering
+WhatsApp
+Where customers are
+Multilingual
+Hindi & regional
+Capabilities
+Everything you need,
+in one product
+WhatsApp-first
+Meet customers on the channel they already use every day.
+Multilingual
+Hindi, English and major regional languages out of the box.
+Grounded on your content
+Answers from your catalogue, policies and docs, not guesses.
+Round-the-clock support
+Resolve routine questions without staffing a night shift.
+Lead capture & handoff
+Qualify interest and pass hot leads to a human with context.
+Who it's for
+D2C & retail brands
+Service businesses
+Sales-led teams
+All products
+Next: ZeniaHR
+You think it. We'll code it.
+Tell us what you're trying to build. We'll come back with how we'd approach it, what it takes, and what it costs. No obligation.
+Book a free consult
+See what we build
